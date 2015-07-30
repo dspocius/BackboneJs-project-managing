@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" data-framework="marionettejs">
+	<head>
+		<meta charset="utf-8">
+		<title>Backbone.Marionette with RequireJS</title>
+
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/orangestyle.css">
+		<link rel="stylesheet" href="css/style.css">
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=3.0; minimum-scale=1.0; user-scalable=no;" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+	</head>
+
+    <body ondragend="dataDrop(event)">
+        <div>
+            <div id="left-menu"></div>
+            <div class="header-height"></div>
+            <div class="header">
+                <div class="container">
+                    <span id="main-nav-left"></span>
+                    <span id="main-nav"></span>
+                </div>
+                <div class="clear_both"></div>
+            </div>
+            <div class="container" ondragenter="return resetData(event);" >
+                <div id="notification"></div><!-- /#notification -->
+            <div id="main-header"></div>
+            </div>
+            <div id="main"></div>
+            <div class="footer-container" ondragenter="return resetData(event);" >
+                <div class="footer" id="footer">
+                    <span id="footer-nav-left"></span>
+                    <div id="footer-nav-center"></div>
+                    <span id="footer-nav-right"></span>
+                </div>
+            </div>
+
+            <div class="container" ondragenter="return resetData(event);" >
+                <!-- To be used as modal and notifications-->
+                <div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-hidden="true">
+                </div><!-- /.modal -->
+            </div>
+        </div> <!-- /container -->
+
+
+
+
+        <script data-main="js/main" src="bower_components/requirejs/require.js"></script>
+    </body>
+
+</html>
