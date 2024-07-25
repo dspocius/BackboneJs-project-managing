@@ -1,0 +1,186 @@
+var appControllers = angular.module('appControllers', []);
+
+appControllers.controller('IndexCtrl', ['$scope', 'ExternalTools', '$location', '$window', '$sce','RoutesService','AuthenticationService',
+function IndexCtrl($scope, ExternalTools, $location, $window, $sce,RoutesService,AuthenticationService) {
+  if(!AuthenticationService.UserIsAuthenticated(AuthenticationService)){
+		$location.path("/login");
+  }else{
+  $scope.routeslist = [];
+	RoutesService.findAllRoutes().success(function(data) {
+console.log("DT:"+data);
+	var obj = JSON.parse(data);
+	if(obj.length != 0){
+		$scope.routeslist = obj;
+	}else{
+		$scope.status = "You have no routes yet";
+	}
+    }).error(function(status, data) {
+        console.log("DATA"+status);
+        console.log("DATA"+data);
+    });
+	
+    $scope.deleteRoute = function deleteRoute(id) {
+        if (AuthenticationService.UserIsAuthenticated(AuthenticationService)) {
+				RoutesService.deleteRoute(id).success(function(data) {
+					RoutesService.findAllRoutes().success(function(data) {
+						$scope.routeslist = data;
+					}).error(function(status, data) {
+						console.log(status);
+						console.log(data);
+					});
+				}).error(function(status, data) {
+					$scope.status = status;
+					console.log(status);
+					console.log(data);
+				});
+        }
+        else {
+            $location.path("/login");
+        }
+    }	
+	
+    $scope.logOut = function logOut() {
+        if (AuthenticationService.UserIsAuthenticated(AuthenticationService)) {
+        	AuthenticationService.LogOutUser();
+            $location.path("/login");
+        }
+        else {
+            $location.path("/login");
+        }
+    }
+  }
+}
+]);
+
+appControllers.controller('UserCtrl', ['$scope', 'ExternalTools', '$location', '$window', '$sce','RoutesService','UserService','AuthenticationService',
+function UserCtrl($scope, ExternalTools, $location, $window,  $sce, RoutesService, UserService, AuthenticationService) {
+  if(AuthenticationService.UserIsAuthenticated(AuthenticationService)){
+	  $location.path("/");
+  }else{
+	$scope.signIn = function signIn(username, password) {
+        if (username != null && password != null) {
+
+            UserService.signIn(username, password).success(function(data) {
+                AuthenticationService.AuthenticateUser(username);
+				
+                $location.path("/");
+            }).error(function(status, data) {
+                $scope.status = "Wrong username or password";
+            	console.log(status);
+                console.log(data);
+            });
+			
+        }
+    }
+
+    $scope.register = function register(username, password, passwordConfirm) {
+        if (AuthenticationService.UserIsAuthenticated(AuthenticationService)) {
+            $location.path("/");
+        }
+        else {
+            UserService.register(username, password, passwordConfirm).success(function(data) {
+                $location.path("/login");
+            }).error(function(status, data) {
+            	$scope.status = "Passwords do not match or user with username already exists";
+                console.log(status);
+                console.log(data);
+            });
+        }
+    }
+  }
+}
+]);
+
+appControllers.controller('RouteCreateCtrl', ['$scope', 'ExternalTools', '$location', 'RoutesService','AuthenticationService',
+function RouteCreateCtrl($scope, ExternalTools, $location, RoutesService, AuthenticationService) {
+if(!AuthenticationService.UserIsAuthenticated(AuthenticationService)){
+	$location.path("/login");
+}else{
+	$scope.save = function save(route) {
+		if (route != undefined && route.from != undefined && route.to != undefined) {
+			//var content = $('#textareaContent').val();
+			var content = route.content;
+			if (content != undefined) {
+			route.content = content;
+			route.username = AuthenticationService.username;
+				RoutesService.createRoute(route).success(function(data) {
+					$location.path("/");
+				}).error(function(status, data) {
+					$scope.status = status;
+					console.log(status);
+					console.log(data);
+				});
+			}else{ 
+				$scope.status = "Content field is required";
+				$('#textareaContent').css('border','1px solid red');
+			}
+		}else{
+			$scope.status = "Wrong data";
+		}
+	}
+}
+}
+]);
+
+appControllers.controller('RouteUpdateCtrl', ['$scope', 'ExternalTools', '$location', '$routeParams', 'RoutesService','AuthenticationService',
+function RouteUpdateCtrl($scope, ExternalTools, $location, $routeParams, RoutesService, AuthenticationService) {
+	if(!AuthenticationService.UserIsAuthenticated(AuthenticationService)){
+		$location.path("/login");
+	}else{
+	
+        $scope.route = {};
+        var id = $routeParams.id;
+
+        RoutesService.getRoute(id).success(function(data) {
+            $scope.route = JSON.parse(data);
+        }).error(function(status, data) {
+            $location.path("/");
+        });
+	
+	$scope.save = function save(route) {
+		if (route != undefined && route.from != undefined && route.to != undefined && route.to != "") {
+			var content = route.content;
+			if (content != undefined) {
+			route.content = content;
+			route.username = AuthenticationService.username;
+				RoutesService.updateRoute(route).success(function(data) {
+					$location.path("/");
+				}).error(function(status, data) {
+					$scope.status = status;
+					console.log(status);
+					console.log(data);
+				});
+			}else{ 
+				$scope.status = "Content field is required";
+				$('#textareaContent').css('border','1px solid red');
+			}
+		}else{
+			$scope.status = "Wrong data";
+		}
+	}
+	}
+}
+]);
+
+appControllers.controller('GoogleMapRouteCtrl', ['$scope', 'ExternalTools', '$location', '$routeParams', 'RoutesService','AuthenticationService',
+function GoogleMapRouteCtrl($scope, ExternalTools, $location, $routeParams, RoutesService, AuthenticationService) {
+	if(!AuthenticationService.UserIsAuthenticated(AuthenticationService)){
+		$location.path("/login");
+	}else{
+	
+        $scope.route = {};
+        var id = $routeParams.id;
+
+        RoutesService.getRoute(id).success(function(data) {
+	var obj = JSON.parse(data)
+			initialize();
+calcRoute(obj.from, obj.to); calcRoute(obj.from, obj.to);
+			calcRoute(obj.from, obj.to);
+            $scope.googlemapinfo = "From: "+obj.from+" To: "+obj.to+" About: "+obj.content;
+        }).error(function(status, data) {
+            $location.path("/");
+        });
+	
+	}
+}
+]);

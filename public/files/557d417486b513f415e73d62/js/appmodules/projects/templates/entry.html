@@ -1,0 +1,38 @@
+	<% var countHistory = 0; %>
+	<% var countComments = 0; %>
+	<% var tasksCnts = 0; %>
+		<% _.each(messages, function(message){ %>
+			<% if(typeof message != "undefined" && typeof message.message != "undefined" && message.message.indexOf("hhhhistoryyy") > -1){ %>
+			<% countHistory = countHistory+1; %>
+			<% }else{ if(message != null && typeof message != "undefined" && typeof message.message != "undefined"){ %>
+			<% countComments = countComments+1; %>
+			<% }} %>
+		<% }); %>
+		<% _.each(tasks, function(task){ %>
+			<% if(typeof task != "undefined" && task != null){ %>
+			<% tasksCnts = tasksCnts+1; %>
+			<% } %>
+
+		<% }); %>
+<div id="navigation_main"></div>
+<div class="container">
+<div class="whitebackground project_one container project_entry_one" id="project_<%= _id %>" style="width:auto; border:2px solid <%= color %>;">
+        <% if(isHeader) { %>
+		<div style="text-align:right;">
+            <div style="display:inline-block;"><a href="#/projectsinlist/<%= _id %>/_" class="project_dialog_links open_edit_in_project_it"><span style="" class="glyphLink glyphicon glyphicon-equalizer"></span></a></div>
+		</div>
+		<% } %>
+        <% if(isProject) { %>
+		<div style="text-align:right;">
+            <div style="display:inline-block;"><a href="#/project/<%= _id %>" class="project_dialog_links open_edit_in_project_it"><span style="" class="glyphLink glyphicon glyphicon-list-alt"></span></a></div>
+		</div>
+		<% } %>
+<div>
+<div id="simple_text_name">
+	<div id="text_entry" style="padding-bottom:15px;"><%= text %></div>
+	<div id="name_entry"><%= name %></div>
+</div>
+<div id="entry_right_meniu_modal"></div>
+</div>
+</div>
+</div>

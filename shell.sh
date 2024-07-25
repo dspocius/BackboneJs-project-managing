@@ -1,0 +1,1 @@
+node bin/www > my_app_log.log 2> my_app_err.log &

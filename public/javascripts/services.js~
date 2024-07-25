@@ -1,0 +1,111 @@
+var options = {};
+options.api = {};
+options.api.base_url = "http://localhost:3000";
+var appServices = angular.module('appServices', []);
+appServices.factory('RoutesService', function($http) {
+    return {
+    	findAllRoutes: function() {
+            return $http.get(options.api.base_url + '/routes');
+        },
+        createRoute: function(route) {
+            return $http.post(options.api.base_url + '/route', {'route': route});
+        },
+        deleteRoute: function(id) {
+            return $http.delete(options.api.base_url + '/route/'+id);
+        },
+        getRoute: function(id) {
+            return $http.get(options.api.base_url + '/route/'+id);
+        },
+        updateRoute: function(route) {
+            return $http.put(options.api.base_url + '/route', {'route': route});
+        }
+    };
+});
+appServices.factory('ExternalTools', function ($http) {
+    return {
+        checkifuserloggedin: function() {
+            return $http.get(options.api.base_url + '/checkifuserloggedin');
+        }
+	}
+});
+appServices.factory('UserService', function ($http) {
+    return {
+        signIn: function(username, password) {
+            return $http.post(options.api.base_url + '/login', {username: username, password: password});
+        },
+
+        logout: function(username, password) {
+            return $http.delete(options.api.base_url + '/logout');
+        },
+		
+        register: function(username, password, passwordConfirmation) {
+            return $http.post(options.api.base_url + '/register', {username: username, password: password, passwordConfirmation: passwordConfirmation });
+        }
+    }
+});
+appServices.factory('AuthenticationService', function(ExternalTools,UserService) {
+    var auth = {
+        isAuthenticated: false,
+        username: "",
+        isAdmin: false,
+		UserIsAuthenticated: function(auth){
+			if(!auth.isAuthenticated){
+					ExternalTools.checkifuserloggedin().success(function(data) {
+						if(typeof data.username === "undefined" || typeof data.token === "undefined"){
+							return false;
+						}else{
+							auth.username = data.username;
+							auth.isAuthenticated = true;
+							return true;
+						}
+					}).error(function(status, data) {
+						console.log(status);
+						console.log(data);
+					});
+			}else {
+				return true;
+			}
+		},
+		AuthenticateUser: function(usernamelocal){
+			this.isAuthenticated = true;
+			this.username = usernamelocal;
+		},
+		LogOutUser: function(){
+			UserService.logout();
+			this.isAuthenticated = false;
+			this.username = "";
+		}
+    }
+	
+    return auth;
+});
+appServices.factory('TokenInterceptor', function ($q, $window, $location) {
+    return {
+        request: function (config) {
+            config.headers = config.headers || {};
+            //if (AuthenticationService.sessionStorage) {
+            //    config.headers.Authorization = 'Bearer ' + AuthenticationService.sessionStorage;
+            //}
+            return config;
+        },
+
+        requestError: function(rejection) {
+            return $q.reject(rejection);
+        },
+
+        response: function (response) {
+            if (response != null && response.status == 401) {
+                //AuthenticationService.isAuthenticated = true;
+            }
+            return response || $q.when(response);
+        },
+
+        responseError: function(rejection) {
+            if (rejection != null && rejection.status === 401) {
+                $location.path("/logout");
+            }
+
+            return $q.reject(rejection);
+        }
+    };
+}); 

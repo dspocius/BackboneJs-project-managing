@@ -1,0 +1,106 @@
+<div id="navigation_main"></div>
+<div class="container">
+<div class="whitebackground container" style="width:auto;">
+	<div>
+		<div style="padding-bottom:10px; "><%= translate("Settings") %></div>
+		<div style="clear:both;"></div>
+		<div class="general_info_about">
+		<div class="general_info_about_description"><%= translate("General information") %></div>
+			<div><%= translate("Show information tips:") %>
+				<select id="default_show_information_tips">
+					<option value="yes"><%= translate("Yes") %></option>
+					<option value="no"><%= translate("No") %></option>
+				</select><%=addInfoAbout("This is an information tip") %>
+			</div>
+			<div><%= translate("About:") %><input class="about_long_info" type="text" id="info_about" value="<%=info_about %>"><%=addInfoAbout("Short description - it will show up in the front page of your account") %></div>
+			<div class="meniu_links_settings"><%= translate("Meniu:") %>
+				<div class="settings_meniu_links_here">
+				<%  var spliturls = urls.split(";"); %>
+				<%  for(var ii=0; spliturls.length > ii; ii++){ %>
+					<%  if(spliturls[ii] != ""){ %>
+						<%  var spliturlsdata = spliturls[ii].split(","); %>
+						<div>Link: <input style="width:300px;" type="text" class="urls_link" value="<%=spliturlsdata[0] %>" />
+						 Name: <input style="width:300px;" type="text" class="urls_name" value="<%=spliturlsdata[1] %>" /></div>
+					<%  } %>
+				<%  } %>
+				</div>
+				<button class="general_button add_new_meniu_links"><%= translate("Add link") %></button> <%=addInfoAbout("Add link - and create your own navigation! When there can be so much projects - it can make easier navigation")%>
+			</div>
+		</div>
+		<div class="general_info_about">
+		<div class="general_info_about_description"><%= translate("Default colors used when you create new entry") %></div>
+			<div><%= translate("Default project color:") %><input type="color" id="settingColor" value="<%=color %>" /></div>
+			<div><%= translate("Default lists color:") %><input type="color" id="listsColor" value="<%=listsColor %>" /></div>
+			<div><%= translate("Default entry color:") %><input type="color" id="entryColorrr" value="<%=entryColor %>" /></div>
+		</div>
+		<div class="general_info_about">
+		<div class="general_info_about_description"><%= translate("Default information - when creating entry and when opening first page") %></div>
+				<div><%= translate("Make entry old when there is more than (entries):") %><input type="number" id="make_old_when" value="<%=make_old_when %>" /><%=addInfoAbout("When there are more than your chosen number of entries then every new entry will make last old entry - old. If you drag and drop entries - then those entries will be marked as new again") %></div>
+			<div><%= translate("Default view:") %>
+				<select id="defaultViewOfSite">
+					<option value="board_view_show"><%= translate("Board view") %></option>
+					<option value="calendar_view_show"><%= translate("Calendar view") %></option>
+					<option value="list_view_show"><%= translate("List view") %></option>
+					<option value="routes_view_show"><%= translate("Routes view") %></option>
+					<option value="time_view_show"><%= translate("Time view") %></option>
+					<option value="article_view_show"><%= translate("Article view") %></option>
+					<option value="catalog_view_show"><%= translate("Catalog view") %></option>
+					<option value="showcase_view_show"><%= translate("Showcase view") %></option>
+				</select><%=addInfoAbout("Default view on your front page") %>
+			</div>
+			<div><%= translate("Default project visibility when added:") %>
+				<select id="defaultVisibilityAdded">
+					<option value="editcommentpublic"><%= translate("Public") %></option>
+					<option value="editcommentfriends"><%= translate("Friends") %></option>
+					<option value="editcommentprivate"><%= translate("Private") %></option>
+					<option value="public"><%= translate("Public (comments disabled)") %></option>
+					<option value="friends"><%= translate("Friends (comments disabled)") %></option>
+					<option value="private"><%= translate("Private (comments disabled)") %></option>
+					<option value="editpublic"><%= translate("Public (edit post)") %></option>
+					<option value="editfriends"><%= translate("Friends (edit post)") %></option>
+					<option value="editprivate"><%= translate("Private (edit post)") %></option>
+				</select><%=addInfoAbout("When you create a new entry - it has a visibility. It can be seen to everyone and no one and for people you would choose") %>
+			</div>
+			<div><%= translate("Default entry view when added:") %>
+				<select id="defaultEntryViewWhenAdded">
+					<option value="all"><%= translate("All information") %></option>
+					<option value="comments"><%= translate("Only comments") %></option>
+					<option value="nothing"><%= translate("Nothing") %></option>
+				</select><%=addInfoAbout("When you create a new entry - it does not matter if it is list, project or simple entry. They all have an entry view(/entry/...). In that views bottom can be: All the information - files, comments and so on. Only comments and nothing (only text)") %>
+			</div>
+		</div>
+		<div class="general_info_about">
+		<div class="general_info_about_description"><%= translate("Upload image - but remember to save") %></div>
+			<div id="projectManagementFilesProgAccount">
+			<%= translate("Upload background of account:") %>
+				<input type="file" id="fileToUploadAccount" identity="ProjectManagementFilesAccount" style="display:none;" />
+				<input readonly type="text" id="backgroundPictureAccount" value="<%=backgroundPictureAccount %>" />
+				 Use?<input type="checkbox" id="useBackgroundpictureAccount" checked />
+				<button identity="ProjectManagementFilesAccount" class="projectsUploadFile glyphicon glyphicon-open-file"></button>
+			</div>
+			<div id="projectManagementFilesProg">
+			<%= translate("Upload background picture:") %>
+				<input type="file" id="fileToUpload" identity="ProjectManagementFiles" style="display:none;" />
+				<input readonly type="text" id="backgroundPicture" value="<%=backgroundPicture %>" />
+				 Use?<input type="checkbox" id="usebackgroundcolor" checked />
+				<button identity="ProjectManagementFiles" class="projectsUploadFile glyphicon glyphicon-open-file"></button>
+			</div>
+		</div>
+		<div class="general_info_about">
+		<div class="general_info_about_description"><%= translate("Website colors") %></div>
+			<div id="use_def_style" style="cursor:pointer;">
+				<%= translate("Change more colors:") %><input onclick="$('#use_defined_style').trigger('click'); " type="checkbox" id="use_defined_style" />
+				<%=addInfoAbout("You can customise your websites colors here") %>
+			</div>
+			<div id="optional_fields_on_off" style="display:none;">
+			<div><%= translate("Text background color:") %><input type="color" id="textbackgroundcolor" value="<%=textbackgroundcolor %>" /></div>
+			<div><%= translate("Icons inner color:") %> <input type="color" id="innerIconsColor" value="<%=innerIconsColor %>" /></div>
+			<div><%= translate("Icons outer color:") %> <input type="color" id="outerIconsColor" value="<%=outerIconsColor %>" /></div>
+			</div>
+		</div>
+		<div style="padding-top:10px; ">
+			<button class="btn btn-default" type="button" id="changeSettings"><%= translate("Change") %></button>
+		</div>
+	</div>
+</div>
+</div>

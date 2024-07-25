@@ -1,0 +1,39 @@
+<% if(isHeader) { %>
+    <div class="projects_one_in_header width_all projectclass_<%= _id %>" id="project_<%= _id %>" style="background:<%= color %>;">
+        <span class="my_radio">
+                <button data-id="<%= _id %>" id="projectsExpandCollapse" class="expandCollapseInListView glyphicon glyphicon-menu-down"></button><a href="#projectsinlist/<%= _id %>/_"><span id="text_id<%= _id %>"><%= text %></span></a>
+            <span identity="<%= _id %>" class="projectsEdit glyphicon glyphicon-edit"></span>
+			<% if(parentvisibility == "editpublic" || parentvisibility == "editprivate"){ %>
+				<span identity="<%= _id %>" class="projectsDelete glyphicon glyphicon-remove"></span>
+			<% } %>
+        </span>
+        <div class="projects_all_the_in_header" id="projects_one_in<%= _id %>"></div>
+    </div>
+<% }else{ %>
+<li class="project_one projectclass_<%= _id %>" id="project_<%= _id %>" style="border:1px solid <%= color %>; position:relative;">
+<div class="project_one_good"></div>
+<div class="project_one_good_loading"><%= translate("Drop file here") %></div>
+    <input type="file" id="fileToUpload" identity="<%= _id %>" class="FileUploadIt<%= _id %>" identity="<%= _id %>" style="display:none;" />
+    <div identity="<%= _id %>" class="projectMain projectClickIn" id="text_id<%= _id %>" style="background:<%= color %>;"><%= text %></div>
+    <div class="project_one_buttons">
+		<% if(parentvisibility == "editpublic" || parentvisibility == "editprivate"){ %>
+			<button identity="<%= _id %>" class="projectsDelete glyphicon glyphicon-remove"></button>
+			<button identity="<%= _id %>" class="projectsUploadFile glyphicon glyphicon-open-file"></button>
+		<% } %>
+			<button identity="<%= _id %>" class="projectsEdit glyphicon glyphicon-edit"></button>
+        <a href="#/entry/<%= _id %>"><span class="glyphicon glyphicon-arrow-right"></span></a>
+        <% if(isProject) { %>
+            <a href="#/project/<%= _id %>"><span style="color:<%= color %>;" class="glyphLink glyphicon glyphicon-list-alt"></span></a>
+			<button style="margin-left:5px;" identity="<%= _id %>" class="projectsOpenTreeView glyphicon glyphicon-fullscreen"></button>
+		<% } %>
+		<div id="friendsInThisProjects<%= _id %>">
+<% if(friendsThere != "") { %>
+			<% _.each(friendsThere.split(","), function(ofriend) { %> 
+				<div class="friendInProjectMini"><%= ofriend %></div>
+			<% }); %> 
+<% } %>
+		</div>
+    </div>
+	<div id="treeInShowHere<%= _id %>" class="treeShowContainer"></div>
+</li>
+<% } %>

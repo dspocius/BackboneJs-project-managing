@@ -1,0 +1,44 @@
+<div id="navigation_main"></div>
+<div class="container create_project">
+    <div class="row">
+        <span class=radio">
+            <label>
+                <input type="radio" name="radioSelectProjectType" value="entry" id="is_entry" checked />
+                Entry
+            </label>
+        </span>
+        <span class=radio">
+            <label>
+                <input type="radio" name="radioSelectProjectType" value="project" id="is_project" />
+                Project
+            </label>
+        </span>
+        <span class=radio">
+            <label>
+                <input type="radio" name="radioSelectProjectType"value="list" id="is_list" />
+                List
+            </label>
+        </span>
+        <input type="color" id="color_this" value="#80BCF0" />
+    </div>
+    <div class="row">
+        <textarea class="form-control" id="project_text"></textarea>
+    </div>
+    <% if(projects != '' && projects != 'list'){ %>
+    <div class="row">
+        <select id="inprojectwhich">
+            <%= projects %>
+        </select>
+    </div>
+    <% } %>
+            <span class=checkbox">
+            <label>
+                <input type="checkbox" id="add_more" />
+                Add more
+            </label>
+        </span>
+    <div class="row">
+        <input type="hidden" id="project_id" value="<%= id %>" />
+        <button class="btn btn-default" type="button" id="create_project">Create</button>
+    </div>
+</div>

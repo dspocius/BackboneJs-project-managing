@@ -1,0 +1,7 @@
+Sertifikata betkam - ir kai baigsis:
+certbot certonly --manual
+
+sudo cp /etc/letsencrypt/live/awwbee.com-0001/fullchain.pem /home/god/nodejs/frontend/bin/awwbee/fullchain.pem
+sudo cp /etc/letsencrypt/live/awwbee.com-0001/privkey.pem /home/god/nodejs/frontend/bin/awwbee/privkey.pem
+
+sudo chown -R god awwbee

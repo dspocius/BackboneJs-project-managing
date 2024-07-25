@@ -1,0 +1,12 @@
+{
+    "name": "Talk",
+    "short_name": "Talk",
+    "icons": [{
+        "src": "images/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+        }],
+    "start_url": "/index.html",
+    "display": "Fullscreen",
+    "gcm_sender_id": "221004296062"
+}

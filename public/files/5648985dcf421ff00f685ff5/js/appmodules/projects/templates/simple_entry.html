@@ -1,0 +1,33 @@
+<div id="navigation_main"></div>
+<div class="container">
+<div class="whitebackground project_one container" id="project_<%= _id %>" style="width:auto;">
+    <div id="projectText"><%= text %></div>
+    <div id="projectName"><%= name %></div>
+    <div><%= cFiles %></div>
+    <div><%= cFriendsOn %></div>
+		<% if(isProject) { %>
+            <a href="#/project/<%= email %>/<%= _id %>"><span style="color:<%= color %>;" class="glyphLink glyphicon glyphicon-list-alt"></span></a>
+        <% } %>
+	<div>
+		<div class="commentHeader">Comments</div>
+		<div id="comments">
+		<% _.each(messages, function(message){ %>
+            <div class="comment">
+				<div>
+					<%= message.from %> <span style="font-size:12px;"><%= message.date %></span>
+					<% if(loggedIn) { %>
+						<button id="removeComment" data-date="<%= message.date %>" class="background_comment"><span data-date="<%= message.date %>" class="glyphicon glyphicon-remove icon-in-menu icon-turn-off"></span></button>
+					<% } %>
+				</div>
+				<%= message.message %>
+			</div>
+        <% }); %>
+		</div>
+		<div style="clear:both;"></div>
+		<div>
+			<textarea id="commentAdd"></textarea>
+		</div>
+		<div><button id="commentSubmit">Add comment</button></div>
+	</div>
+</div>
+</div>

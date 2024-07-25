@@ -1,0 +1,96 @@
+<div id="navigation_main"></div>
+<%
+var styleadd = "";
+if (backgroundPictureAccount != "") {
+	styleadd = "background-image: url(&quot;"+getFilesUrl()+"/files/project_managing_files/ProjectManagementFiles/"+backgroundPictureAccount+"&quot;);";
+}
+%>
+<div id="users_account_in_project_small" style="<%=styleadd%> background-size: cover;">
+	<div class="all_users_info_in_front_page">
+		<div class="profile_data_all_front_page">
+		<div class="users_user_glyph_on_top_front_page glyphicon glyphicon-user"></div>
+			<div class="users_info_all_about">
+				<div class="users_info_in_projects">
+					<div class="usersEmail_of"><%=email%></div>
+					<div class="usersInfo_of">
+						<b><%=firstname%> <%=lastname%></b>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="clear:both;"></div>
+		<div class="meniuContentOfAcc">
+			<a href="#<%=email%>" class="btn btn-default viewButtonsIn marginbottom0 meniuContentElement meniuContentTopFRadius">Timeline</a>
+			<a href="#<%=email%>/about" class="btn btn-default viewButtonsIn meniuContentElement meniuContentLastOneEl meniuSelectedOfAcc">About</a>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+<div class="whitebackground container" style="width:auto;">
+	<div>
+		<div style="clear:both;"></div>
+		<div class="containerOfContentAcc">
+			<div class="aboutPart leftfloatuserinfo">
+				<div><b>About</b></div>
+				<div class="general_info_about">
+					<div class="general_info_about_description">First Name</div>
+					<div><%= firstname %></div>
+					<div class="general_info_about_description">Last Name</div>
+					<div><%= lastname %></div>
+					<div class="general_info_about_description">Country</div>
+					<div><%=yaddress %></div>
+					<div class="general_info_about_description">City</div>
+					<div><%=city %></div>
+<% if (birthmonth) { %>
+					<div class="general_info_about_description">Birthday</div>
+					<div>
+					
+							<% if (birthmonth == 1) { %><div class="monthabout inlineblock">January </div><% } %>
+							<% if (birthmonth == 2) { %><div class="monthabout inlineblock">February </div><%}%>
+							<% if (birthmonth == 3) { %><div class="monthabout inlineblock">March </div><%}%>
+							<% if (birthmonth == 4) { %><div class="monthabout inlineblock">April </div><%}%>
+							<% if (birthmonth == 5) { %><div class="monthabout inlineblock">May </div><%}%>
+							<% if (birthmonth == 6) { %><div class="monthabout inlineblock">June </div><%}%>
+							<% if (birthmonth == 7) { %><div class="monthabout inlineblock">July </div><%}%>
+							<% if (birthmonth == 8) { %><div class="monthabout inlineblock">August </div><%}%>
+							<% if (birthmonth == 9) { %><div class="monthabout inlineblock">September </div><%}%>
+							<% if (birthmonth == 10) { %><div class="monthabout inlineblock">October </div><%}%>
+							<% if (birthmonth == 11) { %><div class="monthabout inlineblock">November </div><%}%>
+							<% if (birthmonth == 12) { %><div class="monthabout inlineblock">December </div><%}%>
+							<div class="birthday inlineblock">&nbsp;<%=birthday%>,&nbsp;</div>
+							<div class="birthyear inlineblock"><%=birthyear%></div>
+					</div>
+					<% } %>
+					<div class="general_info_about_description">About</div>
+					<div><%=about %></div>
+					<div class="general_info_about_description">Last logged</div>
+					<div><%=last_logged.replace("T"," ").split(".")[0] %></div>
+				</div>
+			</div>
+			
+			<% 
+	var approvedFr = friends.filter(function(fr) { return (fr.approved == true || fr.approved == "true")
+	&& (fr.blocked == false || fr.blocked == "false") && (fr.blockedBy == false || fr.blockedBy == "false")});
+			if(approvedFr.length > 0){ %>
+			<div class="friends_data_in_acc"><div><b>Friends</b></div>
+			<% _.each(approvedFr, function(friendOne){ %>
+		
+			<div class="big_image_about_chatUser">
+				<div class="minichatMakeCircleImage imageCircleForChat">
+					<a href="#<%=friendOne.email %>"><img class="miniChatFloatingFriendsPhoto" src="<%=getFilesUrl() %>/files/<%=friendOne.email %>/<%=friendOne.pic %>" alt=""></a>
+				</div>
+				<div class="big_img_chatRight"><a href="#<%=friendOne.email %>"><%= friendOne.firstname %> <%= friendOne.lastname %></a></div>
+				<div class="big_img_chatRight rightMessageButton">
+					<% if (friendOne.follower == true || friendOne.follower == "true") { %>Follower<% } %>
+					<% if (friendOne.following == true || friendOne.following == "true") { %><div title="Following" class="glyphicon glyphicon-signal icon-in-menu icon-turn-off" aria-hidden="true"></div><% } %>
+				</div>
+			</div>
+				
+			<% }); %>
+			</div>
+			<% } %>
+		</div>
+	</div>
+</div>
+</div>

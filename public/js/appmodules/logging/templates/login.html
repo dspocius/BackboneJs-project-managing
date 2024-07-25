@@ -1,0 +1,20 @@
+
+	<div class="container" style="text-align:center">
+		<div class="login-screen-container">
+		<div class="login-screen">
+		<div class="logotype"></div>
+		<h1 class="login-header"><%= translate("Login") %></h1>
+			<div class="login-background"></div>
+			<input type="text" id="username" value="" placeholder="<%= translate("Write your username here!") %>" />
+			<input type="password" id="password" value="" placeholder="<%= translate("Write your password here!") %>" />
+			<% if(can_login){ %>
+			<button style="float:left;" class="btn btn-default bubble_button login_button" type="button" id="try_login"><%= translate("Login") %></button>
+			<% } %>
+			<% if(can_register){ %>
+			<button style="float:right; background:#999;" class="btn btn-default bubble_button register_button" type="button" id="go_to_register"><%= translate("Register") %></button>
+			<button style="float:right; background:#999;" class="btn btn-default bubble_button remember_button" type="button" id="remember_button"><%= translate("Forget password?") %></button>
+			<% } %>
+			<div style="clear:both;"></div>
+		</div>
+		</div>
+	</div>

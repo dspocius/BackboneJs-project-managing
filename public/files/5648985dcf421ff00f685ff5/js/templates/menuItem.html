@@ -1,0 +1,11 @@
+<% if(name == 'right'){ %>
+<div id="rightitem"><%= title %></div>
+<% } %>
+<% if(name == 'link'){ %>
+<a href="<%= link %>"><%= title %></a>
+<% } %>
+<% if(name == ''){ %>
+<button id="menitem"><%= title %></button>
+<% } if(name != '' && name != 'right' && name != 'link'){ %>
+<a href="#<%= name %>"><%= title %></a>
+<% } %>

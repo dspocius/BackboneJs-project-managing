@@ -1,0 +1,34 @@
+<div class="chat_background">
+<span id="custom_data_text"></span>
+  <div class="usersLeftMenu">
+	  <div class="innerUsersLeftMenu">
+			<div class="channelsInnerLeftMenu" id="channelsGridView"></div>
+			<div class="usersInnerLeftMenu" id="usersGridView"></div>
+	  </div>
+  </div>
+  <div class="containerMessages">
+    <div id="messagesContainer" class="allmessages"></div>
+    <input type="search" class="form-control input-lg auth-biginput search_textarea search_in_messages" ng-model="qqmessages" placeholder="{{'Filter' | translate}}" />
+    <div class="onWrittingToUser">{{"Writting ..." | translate}}</div>
+    <div class="onFileUploadProgress"></div>
+    <div class="bottomsendmsg">
+	  <div class="leftButtonsHere">
+		<button ng-class="{'disabledButton': !isConnectedToScope}" class="sendButton addFileButton glyphicon glyphicon-file icon-in-menu icon-turn-off" ng-click="uploadFilesToServer()"></button>
+		<input type="file" id="fileToUpload" style="display:none;" />
+	  </div>
+	  
+	  <span ng-show="!isConnectedToScope">Lost connection to server. Trying to reconnect ...</span>
+	  
+      <textarea ng-class="{'disabledTextarea': !isConnectedToScope}" placeholder="{{'Message ...' | translate}}" id="homeTextUser" ng-change="onWrittingToUser()" ng-model="usersMsgTextareas" class="textareaforuser">
+	  </textarea>
+      <div class="miniChatLeftSendMsgs rightButtonsHere">
+		<button ng-class="{'disabledButton': !isConnectedToScope}" class="sendButton" ng-click="sendMessage()">{{"Send" | translate}}</button>
+	  </div>
+    </div>
+  </div>
+  <div class="rightInfoAboutMessages">
+	<div class="rightInfoContainer">
+		<span id="custom_data_text_groups"></span>
+	</div>
+  </div>
+</div>

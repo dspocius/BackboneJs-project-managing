@@ -1,0 +1,26 @@
+<div id="navigation_main"></div>
+<div class="container">
+<div class="whitebackground container" style="width:auto;">
+	<div>
+		<div class="forms_data_view_cont"></div>
+		<% print(whenempty) %>
+		<% if(whenempty == "" && show_submit == "address_missing"){ %>
+			<div>Address missing - <button class="general_button" onclick="location.href = '/#account';">Create address</button></div>
+		<% } %>
+		<% if(whenempty == "" && show_submit == "true"){ %>
+			<div><b>Country:</b> <%= address.country_info %></div>
+			<div><b>Address 1:</b>  <%= address.address1_info %></div>
+			<div><b>Address 2:</b>  <%= address.address2_info %></div>
+			<div><b>City:</b>  <%= address.city_info %></div>
+			<%if(address.state_info !== ""){%>
+				<div><b>State:</b>  <%= address.state_info %></div>
+			<%}%>
+			<div><b>ZIP code:</b>  <%= address.zip_code_info %></div>
+			<div><b>Telephone:</b>  <%= address.telephone_info %></div>
+			<div style="margin-bottom:5px;"><button class="general_button" onclick="location.href = '/#account';">Change address</button></div>
+			<div><%= totalHtml %></div>
+			<button class="general_button submit_data_to_history">Submit</button>
+		<% } %>
+	</div>
+</div>
+</div>

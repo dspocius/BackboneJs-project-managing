@@ -1,0 +1,108 @@
+<% 
+var loggedinuser = getLoggedInEmail();
+var userspath = "";
+
+if (belongs_to_is_email) {
+	email = belongs_to;
+	if (loggedinuser == email) {
+		parentvisibility = "editpublic";
+	}
+}
+if (loggedinuser != email) {
+	userspath = "/"+email;
+}
+if(isHeader) { %>
+    <div class="projects_one_in_header projectclass_<%= _id %>" id="project_<%= _id %>" style="background:<%= color %>; background: linear-gradient(to bottom right, <%= color %>, <%= colorLighter %>); box-shadow: none; border:none; ">
+        <span class="my_radio" style="padding-left:5px;">
+            <a href="#projectsinlist/<%= _id %>/<% if(_id == "friends"){ %>friends<% }else{ %>_<% } %><%=userspath%>"><span id="text_id<%= _id %>"><%= text %></span></a>
+			<% if(parentvisibility == "editpublic" || parentvisibility == "editprivate"){ %>
+			<span identity="<%= _id %>" class="projectsEdit glyphicon glyphicon-edit"></span>
+				<span identity="<%= _id %>" class="projectsDelete glyphicon glyphicon-remove"></span>
+			<% } %>
+        </span>
+        <div class="projects_in_in_header" id="projects_one_in<%= _id %>"></div>
+    </div>
+<% }else{ %>
+<div class="project_one projectclass_<%= _id %>" id="project_<%= _id %>" style="background:<%= color %>; border:none; position:relative;">
+    <div class="project_one_buttons">
+		<% if(parentvisibility == "editpublic" || parentvisibility == "editprivate"){ %>
+			<button identity="<%= _id %>" class="projectsDelete glyphicon glyphicon-remove"></button>
+			<button identity="<%= _id %>" class="projectsUploadFile glyphicon glyphicon-open-file"></button>
+			<button identity="<%= _id %>" class="projectsEdit glyphicon glyphicon-edit"></button>
+		<% } %>
+        <a href="#/entry/<%= _id %>"><span class="glyphicon glyphicon-arrow-right"></span></a>
+        <% if(isProject) { %>
+            <a href="#/project/<%= _id %>"><span style="" class="glyphLink glyphicon glyphicon-list-alt"></span></a>
+		<% } %>
+		<div id="friendsInThisProjects<%= _id %>">
+<% if(friendsThere != "") { %>
+			<% _.each(friendsThere.split(","), function(ofriend) { %> 
+				<div class="friendInProjectMini"><%= ofriend %></div>
+			<% }); %> 
+<% } %>
+		</div>
+    </div>
+	
+<div class="project_one_good"></div>
+<div class="project_one_good_loading"><%= translate("Drop file here") %></div>
+    <input type="file" id="fileToUpload" identity="<%= _id %>" class="FileUploadIt<%= _id %>" identity="<%= _id %>" style="display:none;" />
+    <% if(text != "" && text != "-") { %>
+		<% if(parentvisibility == "editpublic" || parentvisibility == "editprivate"){ %>
+			<div identity="<%= _id %>" class="projectMain projectClickIn" id="text_id<%= _id %>" style="background:none;">
+				<span class="project_text_back_main"><%= text %></span>
+			</div>
+		<% }else{ %>
+			<div identity="<%= _id %>" class="projectMain files_images_show project_click_in_client" id="text_id<%= _id %>" style="background:none;">
+				<span class="project_text_back_main"><%= text %></span>
+			</div>
+		<% } %>
+	<% } %>
+<% if(typeof files_show != "undefined" && files_show != "") { %>
+			<div class="files_images_show list_files_images_show_on" identity="<%= _id %>">
+			<div class="absolute_comments_count_on_img_show">
+				<div class="comments_on_count_data"><div class="glyphicon glyphicon-comment icon-in-menu icon-turn-off" aria-hidden="true"></div> <%= comments_count %></div>
+			</div>
+			<% _.each(files_show.split(","), function(offile) { %> 
+				<% 
+				if(typeof offile.split(";")[0] != "undefined" && offile.split(";")[0] != ""){
+					if(offile.split(";")[0].split(".").length > 1 && 
+					(offile.split(";")[0].split(".")[1] === "jpg" || offile.split(";")[0].split(".")[1] === "png")){
+					%>
+						<img src="<%=filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>" alt="" />
+					<%
+					}
+					if(offile.split(";")[0].split(".").length > 1 && 
+					(offile.split(";")[0].split(".")[1] === "mp4" || offile.split(";")[0].split(".")[1] === "ogg" || offile.split(";")[0].split(".")[1] === "webm")){
+					%>
+						<video controls>
+						  <source src="<%=filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>" type="video/<%= offile.split(";")[0].split(".")[1] %>">
+						Your browser does not support the video tag.
+						</video>
+					<%
+					}
+					if(offile.split(";")[0].split(".").length > 1 && 
+					(offile.split(";")[0].split(".")[1] === "mp3")){
+					%>
+					<audio controls>
+					  <source src="<%=filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>" type="audio/mpeg">
+					Your browser does not support the audio element.
+					</audio>
+					<%
+					}
+					if(offile.split(";")[0].split(".").length > 1 && 
+					(offile.split(";")[0].split(".")[1] === "wav")){
+					%>
+					<audio controls>
+					  <source src="<%=filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>" type="audio/wav">
+					Your browser does not support the audio element.
+					</audio>
+					<%
+					}
+				}
+				%>
+			<% }); %> 
+			</div>
+		<% } %>
+	<div id="treeInShowHere<%= _id %>" class="treeShowContainer treeInShowHere<%= _id %>"></div>
+</div>
+<% } %>

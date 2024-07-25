@@ -1,0 +1,21 @@
+<div id="project_all_inner_container_one_list">
+			<div class="viewChooseDivB">
+			<% if(typeof not_show_buttons == "undefined"){ %>
+					<div class="dropdown">
+					  <button class="btn btn-default dropdown-toggle viewButtonsIn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<span id="selectedViewInGeneralViews"><%= translate("Board view") %></span>
+						<span class="caret"></span>
+					  </button>
+					  <ul id="viewsAdded" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li id="board_view_show" class="viewButtonsIn"><%= translate("Board view") %></li>
+					  </ul>
+					</div>
+			<% } %>
+			<div id="navigation_main"></div>
+			</div>
+<div class="projects row list_view_all_projects_default" id="the_all_projects">
+    <div class="tsortable"></div>
+</div>
+</div>
+<div class="clear_both"></div>
+<button style="display:none;" class="load_more_for_header_navigation_model general_button"><%=translate("Load more")%></button>

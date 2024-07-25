@@ -1,0 +1,19 @@
+<div id="peopleV" class="container" style="text-align:left; padding:0px;">
+    <div class="menuContainer">
+        <span ng-click="menuItemRightPeopleClick('friendsMenu', 'friendsGridView');" id="friendsMenu" class="menuItem menuItemSelected">{{"Connected" | translate}}<div id="friendsNumb" class="numberInPeople"></div></span>
+		<span ng-click="menuItemRightPeopleClick('activeMenu', 'activeGridView');" id="activeMenu" class="menuItem">{{"Archived" | translate}}<div id="activeNumb" class="numberInPeople"></div></span>
+		<span ng-click="menuItemRightPeopleClick('requestsMenu', 'requestsGridView');" id="requestsMenu" class="menuItem">{{"Blocked" | translate}}<div id="requestsNumb" class="numberInPeople"></div></span>
+		<span ng-click="menuItemRightPeopleClick('peopleMenu', 'usersGridView');" id="peopleMenu" class="menuItemLast">{{"People" | translate}}</span>
+    </div>
+    <div style="display:none;" class="peopleView" id="requestsGridView"></div>
+    <div style="clear:both;"></div>
+    <div class="peopleView showingInPeople" id="friendsGridView"></div>
+    <div style="clear:both;"></div>
+    <div style="display:none;" class="peopleView showingInPeople" id="activeGridView"></div>
+    <div style="clear:both;"></div>
+    <div style="display:none;" class="peopleView" id="usersGridView">
+		<input type="search" id="people_search" class="form-control input-lg auth-biginput search_textarea ng-scope ng-pristine ng-valid" placeholder="{{'Search by firstname, lastname or email' | translate}}" />
+		<button class="sendButton" ng-click="searchPeople()">{{"Search" | translate}}</button>
+			<div id="usersGridViewRows"></div>
+	</div>
+</div>

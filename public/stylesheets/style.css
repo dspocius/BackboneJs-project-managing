@@ -1,0 +1,338 @@
+/* LOGIN - FIRST VIEW */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,300,400);
+body,html{
+    -webkit-text-size-adjust: 100%;
+    font-family:"Open Sans", Helvetica, Arial, Verdana, sans-serif;
+    font-size:16px;
+    font-weight:300!important;
+    min-height:100vh;
+}
+/*NEW*/
+.program_one .buttonsAndText{
+padding-left:5px;
+padding-right:5px;
+}
+.program_one{
+    float:left;
+    margin-right:10px;
+}
+.descriptionProgram{
+    font-size:12px;
+}
+.programsContainer a{
+    cursor:pointer;
+}
+.programsContainer{
+    padding-top:10px;
+}
+/*NEW END*/
+/*TOP NAVIGATION*/
+#top-nav-center a{
+    text-decoration:none!important;
+    border:none!important;
+    padding:0px;
+    margin:0px;
+}
+#top-nav-center{
+    text-align:center;
+    padding-top:5px;
+    padding-bottom:0px;
+}
+/*END TOP NAVIGATION*/
+/*NAVIGATION*/
+.nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.nav li{
+    list-style: none!important;
+    padding-left:12px;
+    padding-right:12px;
+}
+.nav li a{
+    cursor:pointer;
+}
+.nav>li>button:hover{
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+#rightitem:hover{
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+#rightitem:active{
+    background-color: rgba(0,0,0,0);
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+.nav>li>button:active{
+    background-color: rgba(0,0,0,0);
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+.nav>li>button:focus{
+    outline: 0;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+/*END NAVIGATION*/
+.nav img{
+    max-width:36px;
+    max-height:36px;
+}
+.header{
+    position:fixed;
+    width:100%;
+    top:0px;
+    left:0px;
+}
+.header-height{
+    height:20px;
+}
+#rightitem{
+ float:right;
+ font-size:20px;
+ cursor:pointer;
+}
+#footer-nav-center{
+    text-align:center;
+}
+.nav-center li {
+    float: left;
+}
+.nav-center {
+    float:none;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.nav>li>a{
+    font-size:13px;
+    padding:0px;
+    margin:0px;
+}
+.nav>li>button{
+    font-size:13px;
+    padding:0px;
+    margin:0px;
+    background:none;
+}
+#menitem{
+    outline:none!important;
+    border:none!important;
+    vertical-align:middle;
+}
+.icon-turn-off{
+font-size:24px;
+outline:none!important;
+border:none!important;
+}
+#left-menu{
+    width:250px;
+    height:100%;
+    position:fixed;
+    left:0px;
+    top:0px;
+    z-index:99999;
+    display:none;
+}
+#left-menu .nav>li{
+    padding:0px;
+    margin:0px;
+    width: 250px;
+}
+#left-menu .nav>li>div img{
+    cursor:pointer;
+}
+#left-menu .nav>li>div{
+    float:right;
+    font-size:17px!important;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+#left-menu .nav>li>a{
+    border:none;
+    font-size:17px!important;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+#left-menu .nav>li>button{
+    border:none;
+    text-align:left;
+    font-size:17px!important;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+button{
+    font-weight:300!important;
+    padding:0px;
+    margin:0px;
+}
+
+.login-screen button{
+font-size:16px;
+width:100%;
+border:none;
+height:50px;
+outline:none!important;
+border-radius:0px;
+}
+.login-screen input{
+width:100%;
+border:none;
+height:50px;
+margin-bottom:10px;
+outline:none!important;
+}
+.login-screen input:focus{
+border:none!important;
+outline:none!important;
+}
+.login-header{
+    font-weight:300!important;
+
+}
+.login-screen{
+width:600px;
+margin:auto;
+padding:15px;
+margin-top:50px;
+margin-bottom:50px;
+}
+@media (max-width: 768px) and (orientation:portrait) {
+    .login-screen{
+        width:100%;
+    }
+    #top-nav-center ul li{
+        padding-left:1px!important;
+        padding-right:1px!important;
+    }
+}
+/*IPHONE */
+
+/* IPHONE END */
+/* LOGIN END */
+.nav li a{
+    border-radius:0px;
+}
+
+.footer {
+    position:fixed;
+    bottom:0px;
+    left:0px;
+    width:100%;
+    padding:5px;
+    padding-bottom:1px;
+}
+.footer-container{
+    margin-bottom:80px;
+}
+
+#main{
+    margin-top:20px;
+    margin-bottom:20px;
+}
+/*PROJECT ------------------------------------------ */
+.projectMain{
+     cursor:pointer;
+     padding-left:10px;
+ }
+.projectMainFiles{
+    border-radius:5px;
+    padding:5px;
+    margin-bottom:5px;
+}
+.projects td{
+vertical-align:top;
+}
+.row{
+    margin:0px;
+}
+.my_radio label{
+    cursor:pointer;
+}
+.projectsEdit{
+    cursor:pointer;
+}
+.project_one_good_loading{
+    display:none;
+}
+.projectsDelete{
+    cursor:pointer;
+}
+.projects_one_in_header li{
+list-style:none;
+}
+.tsortable{
+    -ms-user-select: none; /* IE 10+ */
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+.projects_one_in_header{
+    -ms-user-select: none; /* IE 10+ */
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+    border-radius:5px;
+    font-weight:bold;
+    padding-right:10px;
+    padding-left:10px;
+    padding-bottom:1px;
+    width:194px;
+    margin-left:5px;
+}
+.project_one{
+    position:relative;
+    font-weight:normal;
+    width:174px;
+    padding-top:10px;
+    padding-bottom:10px;
+    border-radius:3px;
+    margin-bottom:10px;
+    word-wrap: break-word;
+}
+.project_one_buttons{
+    padding-left:10px;
+}
+.project_one button{
+    border:none;
+    border-radius:3px;
+
+}
+#create_project{
+    margin-top:10px;
+}
+.create_project{
+    margin-bottom:10px;
+}
+.clear_both{
+    clear:both;
+}
+#notification {
+    display: none;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    opacity: .94;
+    top: 20px;
+}
+/*IPHONE*/
+
+/*IPHONE END*/

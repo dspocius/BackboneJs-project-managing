@@ -1,0 +1,44 @@
+<div id="navigation_main"></div>
+<div class="container create_project">
+    <div class="row">
+        <span class=radio">
+            <label>
+                <input type="radio" name="radioSelectProjectType" value="entry" id="is_entry" checked />
+                <%= translate("Entry") %>
+            </label>
+        </span><%=addInfoAbout("Simple entry with text. Upload image and it will be mains entry image. Press on it - and write a comment!")%>
+        <span class=radio">
+            <label>
+                <input type="radio" name="radioSelectProjectType" value="project" id="is_project" />
+                <%= translate("Project") %>
+            </label>
+        </span><%=addInfoAbout("Project - it is a container for other entries (where list, other projects and entries lies). For project there you would see one more icon (only in board view) - press on it and you would see what is inside that project and drag and drop items in and out. Uploaded image will be mains project image.")%>
+        <span class=radio">
+            <label>
+                <input type="radio" name="radioSelectProjectType"value="list" id="is_list" />
+                <%= translate("List") %>
+            </label>
+        </span><%=addInfoAbout("List - it is a container for entries (where project and entries lies). Tip: upload file - will create new entry with uploaded image")%>
+        <input type="color" id="color_this" value="<%=color%>" />
+    </div>
+    <div class="row">
+        <textarea class="form-control" id="project_text"></textarea>
+    </div>
+    <% if(projects != '' && projects != 'list'){ %>
+    <div class="row">
+        <select id="inprojectwhich">
+            <%= projects %>
+        </select>
+    </div>
+    <% } %>
+            <span class=checkbox">
+            <label>
+                <input type="checkbox" id="add_more" />
+                <%= translate("Add more") %>
+            </label>
+        </span>
+    <div class="row">
+        <input type="hidden" id="project_id" value="<%= id %>" />
+        <button class="btn btn-default" type="button" id="create_project"><%= translate("Create") %></button>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+var http = require('http');
+exports.checkifuserloggedin = function(req, res) {
+	if(typeof req.cookies.username === "undefined" || typeof req.cookies.token === "undefined"){
+		return res.status(401).end();
+	}else{
+
+var options = {
+  host: '127.0.0.1',
+  path: '/checkifloggedin',
+  port: '3002',
+  method: 'GET',
+  headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+req.cookies.token
+  }
+};
+
+
+var reqq = http.request(options, function(response) {
+  var str = '';
+  response.on('data', function (data) {
+		str += data;
+  });
+
+  response.on('end', function () {
+		if(str == "Unauthorized" || str == "Bad Request" || str == "Internal Server Error"){
+			return res.status(401).end();
+		}else{
+			return res.json({username:req.cookies.username,token:req.cookies.token});
+		}
+
+  });
+});
+
+reqq.end();
+
+	}
+};

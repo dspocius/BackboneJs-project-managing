@@ -1,0 +1,35 @@
+<% 
+var hreff = "#"+email;
+if (firstname == "") {
+ hreff = "#entry/"+_id;
+}
+%>
+<a class="searchOnePerson" href="<%= hreff %>">
+	<div class="break searchOne">
+		<div class="searchOneTypeOf">
+		<% if (firstname == "") { %>
+			<div class="searchOneTypeOf"><div class="glyphicon glyphicon-link icon-in-menu icon-turn-off" aria-hidden="true"></div></div>
+		<% }else{ %>
+			<img src="<%=getFilesUrl() %>/files/<%= email %>/<%= email %>.jpg" alt="" />
+		<% } %>
+		</div>
+		<div class="searchAboutComplete">
+		<% if (firstname == "") { %>
+			<%= text.substring(0,20) %>
+			<div class="searchOneBottomSmall">
+				<%= name.substring(0,20) %>
+			</div>
+		<% }else{ %>
+		<% if (is_logged == 1) { %><span class="user_loggedin"></span><%  } %>
+			<%= firstname.substring(0,20) %> <%= lastname.substring(0,20) %>
+			<div class="searchOneBottomSmall">
+				<%= email.substring(0,20) %>
+			</div>
+			<% if (about && about != "") { %>
+		<div class="searchAbout"><%= about.substring(0,60) %></div>
+		<% } %>
+		<% } %>
+				
+		</div>
+	</div>
+</a>

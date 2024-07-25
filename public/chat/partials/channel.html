@@ -1,0 +1,30 @@
+<div id="peopleV" class="container channelsView" style="text-align:left; padding:0px;">
+    <div class="menuContainer">
+        <span ng-click="menuItemRightPeopleClick('addChannelMenu', 'addChannelGridView');" id="addChannelMenu" class="menuItem">{{"Create channel" | translate}}</span>
+        <span ng-click="menuItemRightPeopleClick('friendsMenu', 'friendsGridView');" id="friendsMenu" class="menuItem menuItemSelected">{{"Connected" | translate}}<div id="friendsNumb" class="numberInPeople"></div></span>
+		<span ng-click="menuItemRightPeopleClick('activeMenu', 'activeGridView');" id="activeMenu" class="menuItem">{{"Archived" | translate}}<div id="activeNumb" class="numberInPeople"></div></span>
+		<span ng-click="menuItemRightPeopleClick('peopleMenu', 'usersGridView');" id="peopleMenu" class="menuItemLast">{{"Channels" | translate}}</span>
+    </div>
+    <div style="display:none;" class="peopleView" id="requestsGridView"></div>
+    <div style="clear:both;"></div>
+    <div class="peopleView showingInPeople" id="friendsGridView"></div>
+    <div style="clear:both;"></div>
+    <div style="display:none;" class="peopleView showingInPeople" id="activeGridView"></div>
+    <div style="clear:both;"></div>
+    <div style="display:none;" class="peopleView" id="usersGridView">
+		<input type="search" id="people_search" class="form-control input-lg auth-biginput search_textarea ng-scope ng-pristine ng-valid" placeholder="{{'Search channel' | translate}}" />
+		<button class="sendButton" ng-click="searchChannel()">{{"Search" | translate}}</button>
+			<div id="usersGridViewRows"></div>
+	</div>
+    <div style="clear:both;"></div>
+    <div style="display:none;" class="peopleView" id="addChannelGridView">
+		<input type="text" placeholder="Channels name" id="channelName" />
+		<input type="text" placeholder="About channel" id="channelAbout" />
+		<select id="channelsType">
+			<option value="Private">Private</option>
+			<option value="Open">Open</option>
+		</select>
+		<button class="addNewChannel" ng-click="addChannelNew()">{{"Add channel" | translate}}</button>
+		<div id="peopleToAdd"></div>
+	</div>
+</div>

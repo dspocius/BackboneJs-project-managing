@@ -1,0 +1,82 @@
+<% 
+var loggedinuser = getLoggedInEmail();
+var userspath = "";
+
+if (belongs_to_is_email) {
+	email = belongs_to;
+	if (loggedinuser == email) {
+		parentvisibility = "editpublic";
+	}
+}
+if (loggedinuser != email) {
+	userspath = "/"+email;
+}
+if(isHeader) { %>
+    <div class="projects_one_in_header width_all projectclass_<%= _id %>" id="project_<%= _id %>" style="background:<%= color %>; box-shadow: 0px 0px 30px <%= color %>; background: linear-gradient(to bottom right, <%= color %>, <%= colorLighter %>);">
+        <span class="my_radio">
+                <button data-id="<%= _id %>" id="projectsExpandCollapse" class="expandCollapseInListView glyphicon glyphicon-menu-down"></button><a href="#projectsinlist/<%= _id %>/_<%=userspath%>"><span id="text_id<%= _id %>"><%= text %></span></a>
+			<% if(parentvisibility == "editpublic" || parentvisibility == "editprivate"){ %>
+				<span identity="<%= _id %>" class="projectsEdit glyphicon glyphicon-edit"></span>
+				<span identity="<%= _id %>" class="projectsDelete glyphicon glyphicon-remove"></span>
+				<button isheader="true" identity="<%= _id %>" class="headerAddImgButton projectsUploadFile glyphicon glyphicon-open-file"></button>
+				<input isheader="true" type="file" id="fileToUpload" identity="<%= _id %>" class="FileUploadIt<%= _id %>" identity="<%= _id %>" style="display:none;" />
+			<% } %>
+			<% if (loggedinuser != "" && loggedinuser != "_") { %>
+					<div class="containerOfInputs">
+						<textarea id="project_text_entry<%= _id %>" identity="<%= _id %>" placeholder="<%= translate("Entry") %>" type="text" data-text="entry" class="addentryinput goonnewtext"></textarea>
+						<textarea id="project_text_project<%= _id %>" identity="<%= _id %>" placeholder="<%= translate("Project") %>" type="text" data-text="project" class="addprojectinput goonnewtext"></textarea>
+					</div>
+					<% } %>
+			<div>
+				<div id="showAddNew" class="showAddNewButtonFor<%= _id %> containerOfNewAdd" style="display:none;">
+					<div>
+						<select class="modalTextareaMine modalSelectAreaMin" id="visibilityOfNewHere<%= _id %>">
+							<option <% if (getDefaultVisibility() == "editcommentpublic"){ %>selected<% } %> value="editcommentpublic"><%= translate("Public") %></option>
+							<option <% if (getDefaultVisibility() == "editcommentfriends"){ %>selected<% } %> value="editcommentfriends"><%= translate("Friends") %></option>
+							<option <% if (getDefaultVisibility() == "editcommentprivate"){ %>selected<% } %> value="editcommentprivate"><%= translate("Private") %></option>
+							<option <% if (getDefaultVisibility() == "public"){ %>selected<% } %> value="public"><%= translate("Public (comments disabled)") %></option>
+							<option <% if (getDefaultVisibility() == "friends"){ %>selected<% } %> value="friends"><%= translate("Friends (comments disabled)") %></option>
+							<option <% if (getDefaultVisibility() == "private"){ %>selected<% } %> value="private"><%= translate("Private (comments disabled)") %></option>
+							<option <% if (getDefaultVisibility() == "editpublic"){ %>selected<% } %> value="editpublic"><%= translate("Public (edit post)") %></option>
+							<option <% if (getDefaultVisibility() == "editfriends"){ %>selected<% } %> value="editfriends"><%= translate("Friends (edit post)") %></option>
+							<option <% if (getDefaultVisibility() == "editprivate"){ %>selected<% } %> value="editprivate"><%= translate("Private (edit post)") %></option>
+						</select>
+						<button pid_project="<%= hisinproject_this %>" pid="<%= _id %>" identity="<%= _id %>" id="createThisNewButton" class="btn btn-default viewButtonsIn saveNewPostHere"><%= translate("Create") %></button>
+						<button identity="<%= _id %>" id="cancelCreateButton" class="btn btn-default viewButtonsIn createNewButton"><%= translate("Cancel") %></button>
+					</div>
+				</div>
+			</div>
+        </span>
+        <div class="projects_all_the_in_header" id="projects_one_in<%= _id %>"></div>
+		<% if(header_count_old_numb > 0){ %>
+			<button count="<%=header_count_old_numb%>" class="load_more_for_header general_button"><%=translate("Load more")%></button>
+		<% } %>
+    </div>
+<% }else{ %>
+<li class="project_one projectclass_<%= _id %>" id="project_<%= _id %>" style="border:1px solid <%= color %>; position:relative;">
+<div class="project_one_good"></div>
+<div class="project_one_good_loading"><%= translate("Drop file here") %></div>
+    <input type="file" id="fileToUpload" identity="<%= _id %>" class="FileUploadIt<%= _id %>" identity="<%= _id %>" style="display:none;" />
+    <div identity="<%= _id %>" class="projectMain projectClickIn" id="text_id<%= _id %>" style="background:<%= color %>;"><%= text %></div>
+    <div class="project_one_buttons">
+		<% if(parentvisibility == "editpublic" || parentvisibility == "editprivate"){ %>
+			<button identity="<%= _id %>" class="projectsDelete glyphicon glyphicon-remove"></button>
+			<button identity="<%= _id %>" class="projectsUploadFile glyphicon glyphicon-open-file"></button>
+			<button identity="<%= _id %>" class="projectsEdit glyphicon glyphicon-edit"></button>
+		<% } %>
+        <a href="#/entry/<%= _id %>"><span class="glyphicon glyphicon-arrow-right"></span></a>
+        <% if(isProject) { %>
+            <a href="#/project/<%= _id %>"><span style="color:<%= color %>;" class="glyphLink glyphicon glyphicon-list-alt"></span></a>
+			<button style="margin-left:5px;" identity="<%= _id %>" class="projectsOpenTreeView glyphicon glyphicon-fullscreen"></button>
+		<% } %>
+		<div id="friendsInThisProjects<%= _id %>">
+<% if(friendsThere != "") { %>
+			<% _.each(friendsThere.split(","), function(ofriend) { %> 
+				<div class="friendInProjectMini"><%= ofriend %></div>
+			<% }); %> 
+<% } %>
+		</div>
+    </div>
+	<div id="treeInShowHere<%= _id %>" class="treeShowContainer"></div>
+</li>
+<% } %>

@@ -1,0 +1,25 @@
+
+	<div class="container" style="text-align:center">
+		<div class="login-screen-container">
+		<div class="login-screen">
+		<div class="logotype"></div>
+				<h1 class="login-header"><%= translate("Register") %></h1>
+			<div class="login-background"></div>
+			<input maxlength="40" type="text" id="username" value="" placeholder="<%= translate("Your username") %>" />
+			<input maxlength="40" type="text" id="real_email" value="" placeholder="<%= translate("Your email") %>" />
+			<input maxlength="40" type="text" id="firstname" value="" placeholder="<%= translate("First name") %>" />
+			<input maxlength="40" type="text" id="lastname" value="" placeholder="<%= translate("Last name") %>" />
+			
+			<input maxlength="80" type="password" id="password" value="" placeholder="<%= translate("Your password") %>" />
+			<input maxlength="80" type="password" id="passwordConfirmation" value="" placeholder="<%= translate("Your password again!") %>" />
+			<input type="hidden" id="google_id_token" value="" />
+			<% if(can_login){ %>
+			<button style="float:right;  background:#999;" class="btn btn-default bubble_button register_button" type="button" id="go_to_login"><%= translate("Login") %></button>
+			<% } %>
+			<% if(can_register){ %>
+			<button style="float:left;" class="btn btn-default bubble_button login_button" type="button" id="try_register"><%= translate("Register") %></button>
+			<% } %>
+			<div style="clear:both;"></div>
+		</div>
+		</div>
+	</div>

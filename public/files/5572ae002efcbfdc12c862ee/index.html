@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=3.0; minimum-scale=1.0; user-scalable=no;" />
+  <title>My AngularJS AngularJS + RequireJS App</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" id="looking_style" href="/stylesheets/projects/blue_silver_style.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/custom_2ee.css">
+  <style id="manual_style"></style>
+</head>
+<body>
+<div id="left-menu" style="display: none;">
+  <ul class="nav nav-pills pull-left"></ul>
+</div>
+<div class="header-height"></div>
+<div class="header"id="header_elem">
+  <div class="container">
+    <div id="main-nav-left">
+      <ul class="nav nav-pills pull-left">
+      </ul>
+    </div>
+    <div id="main-nav">
+      <ul class="nav nav-pills pull-right">
+      </ul>
+    </div>
+    <span id="custom_data_text"></span>
+    <span id="custom_data_text_groups"></span>
+  </div>
+</div>
+<div id="main">
+  <div class="" style="text-align:center;">
+    <div data-ng-view></div>
+  </div>
+</div>
+<div class="footer-container">
+  <div class="footer" id="footer">
+      <span id="footer-nav-left"></span>
+      <div id="footer-nav-center">
+        <ul class="nav nav-pills nav-center navbar-inner">
+        </ul>
+      </div>
+      <span id="footer-nav-right"></span>
+  </div>
+</div>
+  <script src="lib/requirejs/require.js" data-main="js/main.js"></script>
+</body>
+</html>

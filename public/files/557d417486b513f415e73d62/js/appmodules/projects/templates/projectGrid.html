@@ -1,0 +1,18 @@
+<div id="navigation_main"></div>
+			<div class="viewChooseDivB">
+			<% if(typeof not_show_buttons == "undefined"){ %>
+					<div class="dropdown">
+					  <button class="btn btn-default dropdown-toggle viewButtonsIn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<span id="selectedViewInGeneralViews"><%= translate("Board view") %></span>
+						<span class="caret"></span>
+					  </button>
+					  <ul id="viewsAdded" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li id="board_view_show" class="viewButtonsIn viewButtonsInSelected"><%= translate("Board view") %></li>
+					  </ul>
+					</div>
+			<% } %>
+			</div>
+<table class="projects row" id="the_all_projects">
+    <tr class="tsortable"></tr>
+</table>
+<div class="clear_both"></div>

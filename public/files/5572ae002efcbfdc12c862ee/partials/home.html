@@ -1,0 +1,20 @@
+<div class="chat_background">
+  <div class="usersLeftMenu">
+	  <div class="innerUsersLeftMenu">
+			<div class="channelsInnerLeftMenu" id="channelsGridView"></div>
+			<div class="usersInnerLeftMenu" id="usersGridView"></div>
+	  </div>
+  </div>
+  <div class="containerMessages" style="margin-top:-100px;">
+    <div id="messagesContainer" class="allmessages"></div>
+    <input type="search" class="form-control input-lg auth-biginput search_textarea search_in_messages" ng-model="qqmessages" placeholder="{{'Filter' | translate}}" />
+    <div class="onWrittingToUser">{{"Writting ..." | translate}}</div>
+    <div class="onFileUploadProgress"></div>
+    <div class="bottomsendmsg">
+      <textarea placeholder="{{'Message ...' | translate}}" id="homeTextUser" ng-change="onWrittingToUser()" ng-model="usersMsgTextareas" class="textareaforuser"></textarea>
+      <button class="sendButton" ng-click="sendMessage()">{{"Send" | translate}}</button>
+      <button class="sendButton addFileButton glyphicon glyphicon-file icon-in-menu icon-turn-off" ng-click="uploadFilesToServer()"></button>
+      <input type="file" id="fileToUpload" style="display:none;" />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,231 @@
+	<% 
+var loggedinuser = getLoggedInEmail();
+var userspath = "";
+
+if (belongs_to_is_email) {
+	email = belongs_to;
+	if (loggedinuser == email) {
+		parentvisibility = "editpublic";
+	}
+}
+if (loggedinuser != email) {
+	userspath = "/"+email;
+}
+	var countHistory = 0; %>
+	<% var countComments = 0; %>
+	<% var tasksCnts = 0; %>
+	<% var selectedDataTableRow = {}; %>
+	<% var countFilesIn = 0; %>
+	<% var showSubmitButton = false; %>
+		<% _.each(messages, function(message){ %>
+			<% if(typeof message != "undefined" && typeof message.message != "undefined" && message.message.indexOf("hhhhistoryyy") > -1){ %>
+			<% countHistory = countHistory+1; %>
+			<% }else{ if(message != null && typeof message != "undefined" && typeof message.message != "undefined"){ %>
+			<% countComments = countComments+1; %>
+			<% }} %>
+		<% }); %>
+		<% _.each(tasks, function(task){ %>
+			<% if(typeof task != "undefined" && task != null){ %>
+			<% tasksCnts = tasksCnts+1; %>
+			<% } %>
+
+		<% }); %>
+<div id="navigation_main"></div>
+<% if(show_main_html){ %>
+<div class="container">
+<div class="whitebackground project_one container project_entry_one" id="project_<%= _id %>" style="padding-top:0px; width:auto; border:2px solid <%= color %>;">
+        <% if(isHeader) { %>
+		<div style="text-align:right;">
+            <div style="display:inline-block;"><a href="#/projectsinlist/<%= _id %>/_<%=userspath%>" class="project_dialog_links open_edit_in_project_it"><span style="" class="glyphLink glyphicon glyphicon-equalizer"></span></a></div>
+		</div>
+		<% } %>
+        <% if(isProject) { %>
+		<div style="text-align:right;">
+            <div style="display:inline-block;"><a href="#/project/<%= _id %><%=userspath%>" class="project_dialog_links open_edit_in_project_it"><span style="" class="glyphLink glyphicon glyphicon-list-alt"></span></a></div>
+		</div>
+		<% } %>
+<div>
+<div id="simple_text_name">
+
+<% if(files_show != "") { %>
+	<div class="entry_multimedia_data">
+			<% if(files_show != "") { %>
+			<% _.each(files_show.split(","), function(offile) { %> 
+				<% var was_used_that_file = false;
+				if(typeof offile.split(";")[0] != "undefined" && offile.split(";")[0] != ""){
+					if(offile.split(";")[0].split(".").length > 1 && 
+					(offile.split(";")[0].split(".")[1].toLowerCase() === "jpg" || offile.split(";")[0].split(".")[1].toLowerCase() === "png" || offile.split(";")[0].split(".")[1].toLowerCase() === "gif")){
+						was_used_that_file = true;
+					%>
+						<img src="<%=filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>" alt="" />
+					<%
+					}
+					if(offile.split(";")[0].split(".").length > 1 && 
+					(offile.split(";")[0].split(".")[1].toLowerCase() === "mp4" || offile.split(";")[0].split(".")[1].toLowerCase() === "ogg" || offile.split(";")[0].split(".")[1].toLowerCase() === "webm")){
+						was_used_that_file = true;
+					%>
+						<video controls>
+						  <source src="<%=filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>" type="video/<%= offile.split(";")[0].split(".")[1] %>">
+						Your browser does not support the video tag.
+						</video>
+					<%
+					}
+					if(offile.split(";")[0].split(".").length > 1 && 
+					(offile.split(";")[0].split(".")[1].toLowerCase() === "mp3")){
+						was_used_that_file = true;
+					%>
+					<audio controls>
+					  <source src="<%=filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>" type="audio/mpeg">
+					Your browser does not support the audio element.
+					</audio>
+					<%
+					}
+					if(offile.split(";")[0].split(".").length > 1 && 
+					(offile.split(";")[0].split(".")[1].toLowerCase() === "wav")){
+						was_used_that_file = true;
+					%>
+					<audio controls>
+					  <source src="<%=filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>" type="audio/wav">
+					Your browser does not support the audio element.
+					</audio>
+					<%
+					}
+					if(!was_used_that_file){
+					%>
+					<div class="download_entry_file_in">
+					  <a href="<%= filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>"><%= offile.split(";")[0] %></a>
+					  </div>
+					<%
+					}
+				}
+				%>
+			<% }); %> 
+		<% } %>
+	</div>
+<% } %>
+
+
+<% if(escapeHtml(text) != "" && escapeHtml(text) != "-" && escapeHtml(text) != "<p>-</p>" && escapeHtml(text) != "<p> - </p>") { %>
+	<h2><div id="text_entry" style=""><%= escapeHtml(text) %></div></h2>
+	<div id="date_entry_yep" style="padding-bottom:15px;"><% var date = new Date(created); %><%=date.toISOString().replace("T", " ").split(".")[0] %></div>
+<% } %>
+<% if(name != "" && name != "-" && name != "<p>-</p>" && name != "<p> - </p>") { %>
+	<div id="name_entry"><%= name %></div>
+<% } %>
+
+
+<% if(forms_data_info != "" && forms_data_info != "-" && user_submitted_form == "false") { %>
+	<div class="forms_data_info_class">
+	<% 
+	var fforms = JSON.parse(forms_data_info);
+	_.each(fforms, function(formsdat) { %> 
+		<% if( formsdat.type == "List" ){
+		var sel_disabled = "";
+		var checkWhat = "";
+		if(formsdat.about == "Document size"){
+			if(disabled_list_name_size != ""){
+				sel_disabled = "disabled";
+			}
+		}
+		%>
+		<div class="forms_select_block <%=formsdat.showing %>">
+			<div><%=formsdat.about.replace(/_/g, " ") %><% if(formsdat.showing == "standart_show_forms_required"){ print(" <span style='color:red;'>*</span>") } %></div>
+				<select class="<%=sel_disabled %>select_form" <%=sel_disabled %> date-date="<%=formsdat.date %>">
+					<% _.each(formsdat.listdata, function(ldataone) { %> 
+					
+						<option value="<%=ldataone.value %>" <% if((formsdat.defaultValue == ldataone.value && sel_disabled !="disabled") || (sel_disabled == "disabled" && disabled_list_name_size == ldataone.name)){ %>selected<% } %>><%=ldataone.name %> </option>
+					<% }); %> 
+				</select>
+		</div>
+		<% }else{ %>
+			<% if( formsdat.type == "About" ){ %>
+				<div class="forms_about_block <%=formsdat.showing %>">
+					<%=formsdat.about %>
+				</div>
+			<% }else{ %>
+				<% if( formsdat.type == "Table" ){ %>
+				<div class="forms_table_block <%=formsdat.showing %>">
+				<table class="tableOfPrice">
+				<tr>
+					<% _.each(formsdat.listdata, function(ldataone) { %>
+						<th><%=ldataone.name %></th>
+					<% }); %>
+				</tr>
+				
+					<tr>
+						<% _.each(formsdat.listdata, function(ldataone) { %>
+							<td><%=ldataone.value %></td>
+						<% }); %>
+					</tr>
+					
+				</table>
+				</div>
+				<% }else{ %>
+					<% if( formsdat.type == "Radio" ){ %>
+						<div class="forms_radio_block <%=formsdat.showing %>"><br/>
+							<div><%=formsdat.about.replace(/_/g, " ") %><% if(formsdat.showing == "standart_show_forms_required"){ print(" <span style='color:red;'>*</span>") } %></div>
+								<% _.each(formsdat.listdata, function(ldataone) { %> 
+								<label class="radio-inline"><input date-date="<%=formsdat.date %>" name="<%=formsdat.about.replace(/ /g, "_") %>" type="<%=formsdat.type %>" value="<%=ldataone.value %>" <% if(formsdat.defaultValue == ldataone.value){ %>checked<% } %>> <%=ldataone.name %></label><br/>
+								<% }); %> 
+						</div>
+					<% showSubmitButton = true;  }else{ %>
+							<% if( formsdat.type == "File" ){ countFilesIn = countFilesIn+1; showSubmitButton = true; %>
+								<div class="forms_file_block <%=formsdat.showing %>">
+									<div><%=formsdat.about.replace(/_/g, " ") %><% if(formsdat.showing == "standart_show_forms_required"){ print(" <span style='color:red;'>*</span>") } %></div>
+									<% var acceptt = "Upload file"; if( formsdat.defaultValue !== "" ){ acceptt = formsdat.defaultValue; }  %>
+									<input type="file" id="fileToUpload" class="FileUploadIt<%=_id %> fileToUploadClient" identity="<%=_id %>" style="display:none;" />
+				<div class="projectclass_uploaded_files_for_user<%=_id %>"></div>
+				<div class="projectclass_uploaded_files_for_user<%=_id %><%=countFilesIn %>"></div>
+				<div class="projectclass_<%=_id %>"></div>
+				<button ident="<%=countFilesIn %>" identity="<%=_id %>" class="projectsUploadFileDialog general_button background_default"><%=acceptt %></button>
+								</div>
+							<% }else{ %>
+									<% if( formsdat.type == "TextArea" ){ showSubmitButton = true; %>
+										<div class="forms_textarea_block <%=formsdat.showing %>">
+											<div><%=formsdat.about.replace(/_/g, " ") %><% if(formsdat.showing == "standart_show_forms_required"){ print(" <span style='color:red;'>*</span>") } %></div>
+											<textarea class="textar_in_form" id="<%=formsdat.about.replace(/ /g, "_") %>" date-date="<%=formsdat.date %>"><%=formsdat.defaultValue %></textarea>
+										</div>
+									<% }else{ %>
+									<% showSubmitButton = true;
+									var deffValue = formsdat.defaultValue;
+									var ifwhen = "";
+									var ifCheckbox = "";
+									if(formsdat.type == "Checkbox"){
+										if(formsdat.defaultValue == "true" || formsdat.defaultValue == "True" || formsdat.defaultValue == "checked" || formsdat.defaultValue == "Checked"){
+											ifCheckbox = "checked";
+										}
+									}
+									%>
+										<div class="forms_input_block <%=formsdat.showing %>">
+											<div><%=formsdat.about.replace(/_/g, " ") %><% if(formsdat.showing == "standart_show_forms_required"){ print(" <span style='color:red;'>*</span>") } %></div>
+											<input id="<%=formsdat.about.replace(/ /g, "_") %>" date-date="<%=formsdat.date %>" 
+											value="<%=deffValue %>" type="<%=formsdat.type %>" alt="" <%=ifCheckbox %> />
+										</div>
+									<% } %>
+								<% } %>
+							<% } %>
+						<% } %>
+					<% } %>
+				<% } %>
+	<% }); %> 
+	<% if(showSubmitButton){ %> 
+	<div class="forms_submit_block">
+		<button style="" class="submit_button_on_go viewButtonsIn"><%= translate("Submit") %></button>
+	</div>
+	<% } %> 
+	</div>
+<% } %>
+<% if(user_submitted_form == "voted"){ %>
+<%= translate("Thank you for your answer!") %>
+<% } %>
+<% if(user_submitted_form == "not_logged"){ %>
+<%= translate("There is a form. You have to login to see it and answer it") %>
+<% } %>
+<div style="display:none;" id="updateAllTheViewNotDisplayed"></div>
+</div>
+<div id="entry_right_meniu_modal"></div>
+</div>
+</div>
+</div>
+<% } %>
+<%=custom_view_html %>

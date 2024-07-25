@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=3.0; minimum-scale=1.0; user-scalable=no;" />
+  <title>Chat</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" id="looking_style" href="/stylesheets/projects/blue_grey_lightweight_style.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/custom_2ee.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <style id="manual_style"></style>
+</head>
+<body>
+<div id="left-menu" style="display: none;">
+  <ul class="nav nav-pills"></ul>
+</div>
+<div class="header-height"></div>
+					<div class="logotypeOnLeft">
+						<a href="/#/home" class="home_text">Home</a>
+						<input id="valueSearch" type="text" placeholder="Search" class="searchOnTopHeader" onkeyup="lookup(this.value);">
+							<span>
+								<ul class="nav nav-pills searchPositionIcon">
+									<li style="padding-left:2px;padding-right:0px; position:relative;">
+									<button id="menitem" onclick="goToSearch()"><div class="glyphicon glyphicon-search icon-in-menu icon-turn-off" aria-hidden="true"></div></button>
+									<div id="suggestions"></div>
+									</li>
+								</ul>
+							</span>
+						<script>
+							function goToSearch(){
+							var value = $('#valueSearch').val();
+							location.href = "/#search/"+value;
+							removeValueFromSearch();
+							}
+							function removeValueFromSearch(){
+							$('#valueSearch').val('');
+							$('#suggestions').fadeOut();
+							}
+function lookup(inputString) {
+	if(inputString.length == 0) {
+		$('#suggestions').fadeOut(); // Hide the suggestions box
+	} else {
+		var vv1 = $.get("/users/"+inputString);
+		var sendData = {
+			search: inputString,
+			idd: window.LoadedSettingsData._id,
+			skip: 0,
+			type: '-',
+			assigned: "",
+			infriends: true
+		};
+		
+		var vv2 = $.ajax({
+				  method: "POST",
+				  data: sendData,
+				  url: '/projectsFind',
+				dataType: 'json'
+			});
+	
+		$.when(vv1, vv2).done(function ( dataa, dataa2 ) {
+		var data = dataa2[0];
+		var data2 = dataa[0];
+			var dt = JSON.parse(data2);
+			var showSearch = '';
+			for(var i=0; i < dt.length; i++){
+				var email = dt[i].email;
+				var pic = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-user icon-in-menu icon-turn-off" aria-hidden="true"></div></div>';
+				if(typeof dt[i].pic != "undefined" && dt[i].pic != ""){ pic = '<div class="searchOneTypeOf"><img src="/files/'+dt[i].email+'/'+dt[i].pic+'" alt="" /></div>'; }
+				var first_last = dt[i].firstname+' '+dt[i].lastname;
+				showSearch += '<a onclick="removeValueFromSearch()" href="/#'+email+'"><div class="break searchOne">'+pic+'<div class="searchAboutComplete">'+first_last.substring(0,20)+'<div class="searchOneBottomSmall">'+email.substring(0,20)+'</div></div></div></a><div class="clear_both"></div>';
+			}
+			var infoType = "";
+			for(var i=0; i < data.length; i++){
+				if(data[i].name.match(inputString)){
+				var del = '';
+				if(data[i].name.length > 20){
+					del = ' ...';
+				}
+					infoType = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-link icon-in-menu icon-turn-off" aria-hidden="true"></div></div>';
+					if(data[i].isProject){ infoType = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-list-alt icon-in-menu icon-turn-off" aria-hidden="true"></div></div>'; }
+					if(data[i].isHeader){ infoType = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-equalizer icon-in-menu icon-turn-off" aria-hidden="true"></div></div>'; }
+					showSearch += '<a onclick="removeValueFromSearch()" href="/#/entry/'+data[i]._id+'"><div class="break searchOne searchOneTypeOfText">'+infoType+data[i].name.substring(0,20)+del+'</div></a><div class="clear_both"></div>';
+				}
+				if(data[i].text.match(inputString)){
+					var del = '';
+					if(data[i].text.length > 20){
+						del = ' ...';
+					}
+					infoType = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-link icon-in-menu icon-turn-off" aria-hidden="true"></div></div>';
+					if(data[i].isProject){ infoType = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-list-alt icon-in-menu icon-turn-off" aria-hidden="true"></div></div>'; }
+					if(data[i].isHeader){ infoType = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-equalizer icon-in-menu icon-turn-off" aria-hidden="true"></div></div>'; }
+					showSearch += '<a onclick="removeValueFromSearch()" href="/#/entry/'+data[i]._id+'"><div class="break searchOne searchOneTypeOfText">'+infoType+data[i].text.substring(0,20)+del+'</div></a><div class="clear_both"></div>';
+				}
+			}
+			$('#suggestions').fadeIn();
+			$('#suggestions').html(showSearch);
+		
+		
+		});
+	}
+}
+						</script>
+					</div>
+<div class="header" id="header_elem">
+  <div class="">
+    <div id="main-nav-left">
+      <ul class="nav nav-pills pull-left">
+      </ul>
+    </div>
+    <div id="main-nav">
+      <ul class="nav nav-pills pull-right">
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="main">
+  <div class="" style="text-align:center;">
+    <div data-ng-view></div>
+  </div>
+</div>
+<div class="footer-container">
+  <div class="footer footer_chat headercoloradded" id="footer">
+      <span id="footer-nav-left"></span>
+      <div id="footer-nav-center" class="">
+        <ul class="nav nav-pills nav-center navbar-inner menutoppositioning">
+        </ul>
+      </div>
+      <span id="footer-nav-right"></span>
+  </div>
+</div>
+  <script src="lib/requirejs/require.js" data-main="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+html,body{
+    background:rgb(77, 11, 5);
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%,color-stop(0, rgb(210, 120, 11)),color-stop(1, rgb(77, 11, 5)));
+    /* Android 2.3 */
+    background-image: -webkit-linear-gradient(top,rgb(210, 120, 11) 0%,rgb(77, 11, 5) 100%);
+    /* IE10+ */
+    background-image: linear-gradient(to bottom,rgb(210, 120, 11) 0%,rgb(77, 11, 5) 100%);
+    background-image: -ms-linear-gradient(top,rgb(210, 120, 11) 0%,rgb(77, 11, 5) 100%);
+	min-height:100vh;
+}
+/*NEW*/
+.viewContainer{
+    background:white;
+}
+#top-nav-center{
+    background:linear-gradient(to bottom,rgb(205, 100, 11) 0%,rgb(210, 120, 11) 100%);
+}
+.descriptionProgram{
+    color:#666;
+}
+.glyph-in-content{
+    cursor:pointer;
+}
+.glyph-in-content:hover{
+    color:orange;
+}
+.program_one h1{
+    padding:0px;
+    margin:0px;
+}
+/*END NEW*/
+.chat_background{
+text-align:left;background:white; padding:0px;
+}
+.containerMessages{
+background:white;
+}
+.usersLeftMenu{
+    height: 300px;
+}
+.projects_one_in_header a{
+    color:white;
+}
+.projects_one_in_header a:hover{
+    color:orange;
+    text-decoration: none;
+}
+.glyphLink:hover{
+    color:orange!important;
+}
+.project_one a{
+    color:black;
+}
+.projects_one_in_header .glyphicon:hover{
+    color:orange;
+}
+.header{
+    color: white;
+    background:rgba(210, 120, 11,1.0);
+    z-index:999;
+}
+/*NAVIGATION*/
+.nav>li>button:active{
+    color:white;
+}
+#rightitem:active{
+    color:white;
+}
+@media(min-width:641px) {
+    .nav>li>button:hover{
+        color:white;
+    }
+    #rightitem:hover{
+        color:white;
+    }
+}
+/*NAVIGATION END*/
+#left-menu{
+    background:linear-gradient(to bottom, #FF8000, #B45F04);
+    background-color:#FF8000;
+}
+.nav>li{
+    color:black;
+}
+#left-menu .nav>li button{
+    color:#F5ECCE;
+}
+#left-menu .nav>li>button:hover{
+    background:white;
+    color:black;
+}
+#left-menu .nav>li a{
+    color:#F5ECCE;
+}
+#left-menu .nav>li>a:hover{
+    background:white;
+    color:black;
+}
+#left-menu .nav>li{
+    border-bottom:1px solid #F7BE81;
+}
+
+.nav>li>button{
+    color:rgba(255,255,255,0.4);
+    border:none;
+    border-bottom:2px solid rgba(0,0,0,0);
+}
+.nav>li>a{
+    color:rgba(255,255,255,0.4);
+    border-bottom:2px solid rgba(0,0,0,0);
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus{
+    background:none;
+    border-bottom:2px solid rgba(77, 11, 5,0.4);
+}
+.nav>li>a:hover, .nav>li>a:focus {
+    text-decoration: none;
+    background:none;
+    color:white;
+    border-bottom:2px solid rgba(77, 11, 5,0.4);
+}
+
+/* LOGIN - FIRST VIEW */
+.login-screen button:hover{
+    background:#fff;
+}
+.login-screen button {
+    background: rgba(199, 103, 8, 1);
+    color: rgba(120, 24, 0, 1);
+}
+.login-screen input {
+    color: rgba(120, 24, 0, 1);
+    background: rgba(199, 103, 8, 1);
+}
+.login-screen input:focus{
+    background:white;
+}
+.login-header{
+    color:white;
+}
+.login-screen{
+    background:rgba(77, 11, 5,0.2);
+}
+/* LOGIN - END */
+.footer {
+    color: white;
+    background:rgba(66, 9, 6,1);
+}
+/*ENTRY*/
+.whitebackground{
+    background:white;
+    border-radius:3px;
+    padding:10px;
+}
+/*ENTRY END*/
+/*PROJECT*/
+.projectMain {
+    background: #ffffff;
+}
+.projectMain:hover{
+    background:#F17509!important;
+}
+.project_one_good_loading{
+    color:white;
+}
+.projectsSelected{
+    background:#E37C23!important;
+}
+.currentSelected{
+    border:1px solid #FF9B42;
+}
+.projects_one_in_header {
+    background:linear-gradient(to bottom, rgba(77, 11, 5,0.3) 0%,rgba(77, 11, 5,0.3) 100%);
+    border:1px solid #F17509;
+    color: white;
+}
+.project_one{
+    background:white;
+    color:black;
+}
+.project_one button{
+    background:#ffffff;
+}
+/*PROJECT END*/
+#notification {
+
+}

@@ -1,0 +1,89 @@
+/*html{
+	background-image: url('/files/brand/home.jpg');
+}
+
+.login-screen button:hover{
+    background:#fff;
+}
+.notif_alert{
+	color: white;
+    background: #01A9DB;
+	background: linear-gradient(to bottom right, #81DAF5, #01A9DB);
+	box-shadow: 0px 0px 15px #01A9DB;
+	border:1px solid #81DAF5!important;
+}
+.about button{
+	color: white;
+    background: #01A9DB;
+	background: linear-gradient(to bottom right, #81DAF5, #01A9DB);
+	box-shadow: 0px 0px 15px #01A9DB;
+	border:1px solid #81DAF5!important;
+}
+.about button:hover{
+	color: black;
+	background:white;
+}
+.login-screen button {
+	color: white;
+    background: #01A9DB;
+	background: linear-gradient(to bottom right, #81DAF5, #01A9DB);
+	box-shadow: 0px 0px 15px #01A9DB;
+	border:1px solid #81DAF5!important;
+}
+.login-screen input {
+	color: white;
+    background: #01A9DB;
+    background: linear-gradient(to bottom right, #81DAF5, #01A9DB);
+}
+.login-screen input:focus{
+    background:white;
+	color:#01A9DB;
+}
+.login-header{
+    color:#01A9DB;
+}
+.login-screen{
+    border: 1px solid #01A9DB;
+}
+/* project management ----------------------------------------------------------- */
+/*
+.nav>li{
+	color: white;
+    background: #01A9DB;
+	background: linear-gradient(to bottom right, #81DAF5, #01A9DB);
+	box-shadow: 0px 0px 15px #01A9DB;
+	border:1px solid #81DAF5!important;
+}
+.nav>li>a{
+	color:#CEF6F5;
+}
+.nav>li>button{
+    color:#CEF6F5;
+}
+.nav>li>a:hover{
+	color:#01A9DB!important;
+	background:white!important;
+}
+.nav>li>button:hover{
+	color:#01A9DB!important;
+    background:white!important;
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus{
+    background:white;
+	color:#01A9DB;
+}
+.viewButtonsInSelected{
+    background: #FFFFFF!important;
+    color: #01A9DB!important;
+}
+.viewButtonsIn:hover{
+    background: #FFFFFF!important;
+    color: #01A9DB!important;
+}
+.viewButtonsIn{
+	color: white;
+    background: #01A9DB;
+	background: linear-gradient(to bottom right, #81DAF5, #01A9DB);
+	box-shadow: 0px 0px 15px #01A9DB;
+	border:1px solid #81DAF5!important;
+}*/

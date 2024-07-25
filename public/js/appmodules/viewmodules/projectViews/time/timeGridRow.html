@@ -1,0 +1,164 @@
+<%
+var loggedinuser = getLoggedInEmail();
+var userspath = "";
+
+if (belongs_to_is_email) {
+	email = belongs_to;
+	if (loggedinuser == email) {
+		parentvisibility = "editpublic";
+	}
+}
+if (loggedinuser != email) {
+	userspath = "/"+email;
+}
+ if(isHeader) { %>
+    <div pid_project="<%= hisinproject_this %>" pid="<%= _id %>" class="headerMain projects_one_in_header projectclass_<%= _id %>" id="project_<%= _id %>" style="background:<%= color %>; background: linear-gradient(to bottom right, <%= color %>, <%= colorLighter %>); box-shadow: none; border:none; ">
+        <span class="my_radio timeline_header" style="padding-left:5px;">
+                <a href="#projectsinlist/<%= _id %>/<% if(_id == "friends"){ %>friends<% }else{ %><%= hisinproject_this %><% } %><%=userspath%>"><span id="text_id<%= _id %>"><%= escapeHtml(text) %></span></a>
+			<% if(parentvisibility == "editpublic" || parentvisibility == "editprivate" || parentvisibility == "editfriends"){ %>
+				<div class="button_header_all_in_head">
+					<span identity="<%= _id %>" class="projectsEdit glyphicon glyphicon-edit"></span>
+					
+					<button isheader="true" identity="<%= _id %>" class="headerAddImgButton projectsUploadFile glyphicon glyphicon-open-file"></button>
+					<div class="dropdown showMoreInfoOnPost">
+					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<span id="selectedViewInGeneralViews"><span class="glyphicon glyphicon-option-vertical"></span></span>
+					  </button>
+					  <ul id="viewsAdded" class="dropdown-menu" aria-labelledby="dropdownMenu2">
+						<li id="board_view_show" class=""><span identity="<%= _id %>" class="projectsDelete glyphicon glyphicon-remove"></span></li>
+					  </ul>
+					</div>
+					<input isheader="true" type="file" id="fileToUpload" identity="<%= _id %>" class="FileUploadIt<%= _id %>" identity="<%= _id %>" style="display:none;" />
+				</div>
+			<% } %>
+        </span>
+        <div class="projects_in_in_header" style="border:1px solid <%= color %>;" pid_project="<%= hisinproject_this %>" pid="<%= _id %>" id="projects_one_in<%= _id %>"></div>
+
+		<button count="<%=header_count_old_numb%>" style="<% if(header_count_old_numb == 0){ %>display:none;<% } %>" id="loadMoreGoProGrid<%= _id %>" class="load_more_for_header general_button"><%=translate("Load more")%></button>
+    </div>
+<% }else{ %>
+<li class="project_one projectclass_<%= _id %>" id="project_<%= _id %>" style="background:<%= color %>; border:none; position:relative;">
+<div class="project_one_good"></div>
+<div class="project_one_good_loading"><%= translate("Drop file here") %></div>
+    <input type="file" id="fileToUpload" identity="<%= _id %>" class="FileUploadIt<%= _id %>" identity="<%= _id %>" style="display:none;" />
+	
+			<div class="files_container_for_the_entr_project_all files_container_for_the_entr_project<%= _id %>">
+			<% if(typeof files_show != "undefined" && files_show != "") { %>
+			<div class="files_images_show" identity="<%= _id %>">
+			<div class="absolute_comments_count_on_img_show">
+				<div class="comments_on_count_data"><div class="glyphicon glyphicon-comment icon-in-menu icon-turn-off" aria-hidden="true"></div></div>
+			</div>
+			<% _.each(files_show.split(","), function(offile) { %> 
+				<% var was_used_that_file = false;
+				if(typeof offile.split(";")[0] != "undefined" && offile.split(";")[0] != ""){
+					if(offile.split(";")[0].split(".").length > 1 && 
+					(offile.split(";")[0].split(".")[1].toLowerCase() === "jpg" || offile.split(";")[0].split(".")[1].toLowerCase() === "png" || offile.split(";")[0].split(".")[1].toLowerCase() === "gif")){
+						was_used_that_file = true;
+					%>
+						<img src="<%=filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>" alt="" />
+					<%
+					}
+					if(offile.split(";")[0].split(".").length > 1 && 
+					(offile.split(";")[0].split(".")[1].toLowerCase() === "mp4" || offile.split(";")[0].split(".")[1].toLowerCase() === "ogg" || offile.split(";")[0].split(".")[1].toLowerCase() === "webm")){
+						was_used_that_file = true;
+					%>
+						<video controls>
+						  <source src="<%=filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>" type="video/<%= offile.split(";")[0].split(".")[1] %>">
+						Your browser does not support the video tag.
+						</video>
+					<%
+					}
+					if(offile.split(";")[0].split(".").length > 1 && 
+					(offile.split(";")[0].split(".")[1].toLowerCase() === "mp3")){
+						was_used_that_file = true;
+					%>
+					<audio controls>
+					  <source src="<%=filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>" type="audio/mpeg">
+					Your browser does not support the audio element.
+					</audio>
+					<%
+					}
+					if(offile.split(";")[0].split(".").length > 1 && 
+					(offile.split(";")[0].split(".")[1].toLowerCase() === "wav")){
+						was_used_that_file = true;
+					%>
+					<audio controls>
+					  <source src="<%=filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>" type="audio/wav">
+					Your browser does not support the audio element.
+					</audio>
+					<%
+					}
+					if(!was_used_that_file){
+					%><div class="download_entry_file_in">
+						<a href="<%= filesurl %>/files/project_managing_files/<%= _id %>/<%= offile.split(";")[0] %>"><%= offile.split(";")[0] %></a>
+						</div>
+					<%
+					}
+				}
+				%>
+			<% }); %> 
+			</div>
+		<% } %>
+		</div>
+	
+    <% if(escapeHtml(text) != "" && escapeHtml(text) != "-") { %>
+		<% if(parentvisibility == "editpublic" || parentvisibility == "editprivate" || parentvisibility == "editfriends"){ %>
+			<div identity="<%= _id %>" class="projectMain projectClickIn show_text_only_for_article" id="text_id<%= _id %>" style="background:none;">
+				<span class="project_text_back_main"><%= escapeHtml(text) %></span>
+			</div>
+		<% }else{ %>
+			<div identity="<%= _id %>" class="projectMain projectClickIn show_text_only_for_article" id="text_id<%= _id %>" style="background:none;">
+				<span class="project_text_back_main"><%= escapeHtml(text) %></span>
+			</div>
+		<% } %>
+	<% } 
+	var date_lasttt = created.split("T")[1].split(".")[0].split(":");
+	%>
+	<div class="show_only_for_article"><%= escapeHtml(created.split("T")[0]) %> <%= escapeHtml(date_lasttt[0]) %>:<%= escapeHtml(date_lasttt[1]) %></div>
+    <% if(name != "" && name != "-" && name != "<p>-</p>" && name != "<p> - </p>") { %>
+		<% if(parentvisibility == "editpublic" || parentvisibility == "editprivate" || parentvisibility == "editfriends"){ %>
+			<div identity="<%= _id %>" class=" show_only_for_article" id="text_id_article<%= _id %>" style="background:none;">
+				<span class="project_text_back_main project_text_back_main_inline">
+					<%= name.replace(/<[^>]*>/g, "").substring(0,250) %>
+					<% if( name.replace(/<[^>]*>/g, "").length > 250 ){ %> ... <% } %>
+				</span>
+			</div>
+		<% }else{ %>
+			<div identity="<%= _id %>" class=" show_only_for_article" id="text_id_article<%= _id %>" style="background:none;">
+				<span class="project_text_back_main project_text_back_main_inline">
+					<%= name.replace(/<[^>]*>/g, "").substring(0,250) %>
+					<% if( name.replace(/<[^>]*>/g, "").length > 250 ){ %> ... <% } %>
+				</span>
+			</div>
+		<% } %>
+	<% } %>
+	
+    <div class="project_one_buttons">
+		<% if(shared_model === "true"){ %>
+			<button identity="<%= _id %>" class="projectsSharedRemoveMe glyphicon glyphicon-remove-sign"></button>
+		<% } %>
+		<% if(parentvisibility == "editpublic" || parentvisibility == "editprivate" || parentvisibility == "editfriends"){ %>
+			<button identity="<%= _id %>" class="projectsDelete">Remove <span class="glyphicon glyphicon-remove"></span></button>
+			<button identity="<%= _id %>" class="projectsUploadFile">Add File <span class="glyphicon glyphicon-open-file"></span></button>
+			<button identity="<%= _id %>" class="projectsEdit">Edit <span class="glyphicon glyphicon-edit"></span></button>
+			<a href="#/entry/<%= _id %>"><span class="glyphicon glyphicon-arrow-right"></span></a>
+		<% } %>
+        <% if(isProject) { %>
+            <!-- <a href="#/project/<%= _id %>"><span style="" class="glyphLink glyphicon glyphicon-list-alt"></span></a>
+			<button style="margin-left:5px;" identity="<%= _id %>" class="projectsOpenTreeView glyphicon glyphicon-fullscreen"></button>
+			-->
+			<button style="margin-left:5px;" identity="<%= _id %>" class="projectsOpenTreeView glyphicon glyphicon-fullscreen tree_view_button_show"></button>
+		<% } %>
+		
+		<div id="friendsInThisProjects<%= _id %>">
+<% if(friendsThere != "") { %>
+			<% _.each(friendsThere.split(","), function(ofriend) { %> 
+				<div class="friendInProjectMini"><%= ofriend %></div>
+			<% }); %> 
+<% } %>
+		</div>
+    </div>
+	<div id="treeInShowHere<%= _id %>" class="treeShowContainer treeInShowHere<%= _id %>"></div>
+	<div style="clear:both;"></div>
+</li>
+<% } %>

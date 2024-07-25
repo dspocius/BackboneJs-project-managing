@@ -1,0 +1,29 @@
+			<div class="viewChooseDivB">
+			<% if(typeof not_show_buttons == "undefined"){ %>
+					<div class="dropdown" style="display:inline-block;">
+					  <button class="btn btn-default dropdown-toggle viewButtonsIn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<span id="selectedViewInGeneralViews"><%= translate("Board view") %></span>
+						<span class="caret"></span>
+					  </button>
+					  <ul id="viewsAdded" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li id="board_view_show" class="viewButtonsIn"><%= translate("Board view") %></li>
+					  </ul>
+					</div>
+			<% } %>
+				<button style="display:inline-block;" class="btn btn-default viewButtonsIn" onclick="$('.herearefiltercontainer').toggle()" type="button">
+					<%= translate("Filter") %>
+				</button>
+				<div style="display:none;" class="herearefiltercontainer">
+					<input type="text" class="textgohere" id="textgohere" placeholder="Filter by text" />
+					<input type="text" class="headerhere" id="headerhere" placeholder="Filter by header" />
+					<input type="text" class="assignedhere" id="assignedhere" placeholder="Filter by assigned" />
+					<button style="display:inline-block; position:relative;" class="btn btn-default viewButtonsIn doFiltering" type="button">
+						<%= translate("Filter") %>
+					</button>
+				</div>
+				<div id="navigation_main"></div>
+			</div>
+<div class="projects row" id="the_all_projects">
+    <div class="tsortable"></div>
+</div>
+<div class="clear_both"></div>

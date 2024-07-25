@@ -1,0 +1,312 @@
+#!/usr/bin/env node
+var debug = require('debug')('Polls');
+var app = require('../app');
+var stream = require('../routes/stream');
+const http = require('http');
+//const https = require('https');
+var admin = require("firebase-admin");
+var serviceAccount = require("./doingtalk-8dfef-firebase-adminsdk-w5lk7-ba97c6383b.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+var routes = require('../routes');
+
+Array.prototype.remove = function(from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+};
+
+//app.set('port', process.env.PORT || 3000);
+
+//var server = app.listen(app.get('port'), function() {
+//  debug('Express server listening on port ' + server.address().port);
+//});
+
+//const fs = require('fs');
+
+var server = http.createServer(app);
+//var server = https.createServer({key: fs.readFileSync('./bin/awwbee/privkey.pem'), cert: fs.readFileSync('./bin/awwbee/fullchain.pem')}, app);
+
+
+//var io = require('socket.io').listen(server);
+
+const io = require('socket.io')(server, {});
+io.of( '/stream' ).on( 'connection', stream );
+
+
+//app.set('port', process.env.VCAP_APP_PORT || 3000);
+//app.set('port', process.env.PORT || 80);
+app.set('port', 8001);
+
+var connected_users = [];
+var connected_channels = [];
+		var sendToConnectedDevices = function(toEmail, nameEmit, objEmit){
+			var found = false;
+				for(var i=0; i < connected_users.length; i++){
+					if(connected_users[i].name == toEmail){
+						found = true;
+						for (var ii=0; ii < connected_users[i].socket_id.length; ii++) {
+							io.to(connected_users[i].socket_id[ii]).emit(nameEmit, objEmit);
+						}
+					}
+				}
+				if (!found && (nameEmit == "chat message" || nameEmit == "getcall")) {
+						let goobj = "";
+						if (nameEmit == "getcall") {
+							 goobj = "/__ASDASDASDASDASDASDASDASDZZ__"+objEmit.namelast.replace("'","").replace('"','').replace(":","").replace(")","").replace("(","").replace(" ","%20");
+						}
+					    var options = {
+							host: '127.0.0.1',
+							path: '/user/'+toEmail+goobj,
+							port: '3002',
+							method: 'GET',
+							headers: {
+								'Content-Type': 'application/json'
+								//'Authorization': 'Bearer '+token
+							}
+						};
+
+						var reqq = http.request(options, function(response) {
+							var str = '';
+							response.on('data', function (data) {
+								str += data;
+							});
+
+							response.on('end', function () {
+								if(str == "Unauthorized" || str == "Bad Request" || str == "Internal Server Error"){
+								}else{
+									str = JSON.parse(str);
+									if (str && str.notifs && str.notifs.length > 0) {
+										for (let ii=0; ii < str.notifs.length; ii++) {
+											if (str.notifs[ii] && str.notifs[ii].length > 1) {
+												const message = {
+												  data: {
+													title: 'a',
+													body: 'a'
+												  },
+												  token: str.notifs[ii]
+												};
+												try {
+												admin.messaging().send(message);
+												} catch(e){}
+											}
+										}
+									}
+								}
+							});
+						});
+
+						reqq.end();
+				}
+		}
+		var sendToConnectedDevicesChannel = function(channelId, nameEmit, objEmit){
+				for(var i=0; i < connected_channels.length; i++){
+					if(connected_channels[i].channelId == channelId){
+						for (var ii=0; ii < connected_channels[i].socket_id.length; ii++) {
+							io.to(connected_channels[i].socket_id[ii]).emit(nameEmit, objEmit);
+						}
+					}
+				}
+		}
+
+io.on('connection', function (socket) {
+        socket.on('disconnect', function() {
+			var findDisconnected = connected_users.find(function(usr) {  return usr.socket_id && usr.socket_id.indexOf(socket.id) > -1; });
+			
+            for(var jj in connected_channels){
+                if(connected_channels[jj].socket_id && connected_channels[jj].socket_id.indexOf(socket.id) > -1){
+					if(connected_channels[jj].socket_id.length == 1) {
+						connected_channels.remove(jj);
+					} else {
+						var newsockets = [];
+						for (let ii=0; ii < connected_channels[jj].socket_id.length; ii++) {
+							if (connected_channels[jj].socket_id[ii] != socket.id) {
+								newsockets.push(connected_channels[jj].socket_id[ii]);
+							}
+						}
+						connected_channels[jj].socket_id = newsockets;
+					}
+                }
+			}
+			var cansend = false;
+            for(var ii in connected_users){
+                if(connected_users[ii].socket_id && connected_users[ii].socket_id.indexOf(socket.id) > -1){
+					if (connected_users[ii].socket_id.length == 1) {
+						connected_users.remove(ii);
+						cansend = true;
+					} else {
+						var newsockets = [];
+						if (connected_users[ii].socket_id) {
+							for (let ij=0; ij < connected_users[ii].socket_id.length; ij++) {
+								if (connected_users[ii].socket_id[ij] != socket.id) {
+									newsockets.push(connected_users[ii].socket_id[ij]);
+								}
+							}
+						}
+						connected_users[ii].socket_id = newsockets;
+					}
+                }
+            }
+			
+			if (typeof findDisconnected != "undefined") {
+					var optionss = {
+							host: '127.0.0.1',
+							path: '/setloggedout/'+findDisconnected.name,
+							port: '3002',
+							method: 'GET',
+							headers: {
+								'Content-Type': 'application/json'
+							}
+						};
+						var reqqq = http.request(optionss, function(response) {
+							var str = '';
+							response.on('data', function (data) {
+								str += data;
+							});
+							response.on('end', function () {});
+						});
+
+						reqqq.end();	
+			}
+			if (typeof findDisconnected != "undefined" && cansend) {
+				var fr = findDisconnected.friends;
+				for (var i=0, n = fr.length; i < n; i++) {
+					var findInConnected = connected_users.find(function(usr) {  return usr.name == fr[i].email });
+					
+					if (typeof findInConnected != "undefined") {
+						for (var ii=0; ii < findInConnected.socket_id.length; ii++) {
+							io.to(findInConnected.socket_id[ii]).emit('user_disconnected', { user: findDisconnected });
+						}
+					}
+				}
+			}
+        });
+		
+        socket.on('clientconnected', function (data) {
+              io.to(socket.id).clientName = data.id;
+              var connected_user = {name: data.id, socket_id:[socket.id], friends: data.friendslist};
+			  var findIfUserAlreadyConn = connected_users.find(function(usr) {
+				  if (usr.name == data.id) {
+					  usr.socket_id.push(socket.id);
+				  }
+				  
+				return usr.name == data.id 
+			  });
+			  
+			  if (typeof findIfUserAlreadyConn == "undefined") {
+				connected_users.push(connected_user);
+			  }
+			
+			  var myFriendsConnected = [];
+				
+			  for (var i=0; i < data.friendslist.length; i++) {
+				var friend = data.friendslist[i];
+				var findInConnected = connected_users.find(function(usr) {  return usr.name == friend.email });
+
+				if (typeof findInConnected != "undefined") {
+					myFriendsConnected.push(findInConnected);
+					
+					let sockids = findInConnected.socket_id;
+					for (var ii=0; ii < sockids.length; ii++) {
+						io.to(sockids[ii]).emit('user_connected', { user: connected_user });
+					}
+				}
+			  }
+			  
+			  if (myFriendsConnected.length > 0) {
+				  let usrsocks = [socket.id];
+				  if (typeof findIfUserAlreadyConn != "undefined") {
+					  usrsocks = findIfUserAlreadyConn.socket_id;
+				  }
+					for (var ii=0; ii < usrsocks.length; ii++) {
+						io.to(usrsocks[ii]).emit('user_connected', { users: myFriendsConnected });
+					}
+			  }
+			  
+			  var optionz = {
+							host: '127.0.0.1',
+							path: '/setloggedin/'+connected_user.name,
+							port: '3002',
+							method: 'GET',
+							headers: {
+								'Content-Type': 'application/json'
+							}
+						};
+						var reqz = http.request(optionz, function(response) {
+							var str = '';
+							response.on('data', function (data) {
+								str += data;
+							});
+							response.on('end', function () {});
+						});
+
+						reqz.end();
+        });
+
+        socket.on('channelconnected', function (data) {
+		var dataOf = {channelId: data.channelId, name: data.email, socket_id:[socket.id]};
+              connected_channels.push(dataOf);
+        });
+        socket.on('channelmessage', function(data){
+            if(data.channelId != ''){
+				sendToConnectedDevicesChannel(data.channelId, 'chat message', {channelId:data.channelId, files: data.files, msg: data.msg, from: data.from, from_id: data.from_id, toID:data.toID});
+				//sendToConnectedDevices(data.toEmail, 'chat message', {files: data.files, msg: data.msg, from: data.from, from_id: data.from_id, toID:data.toID});
+            }
+        });
+        socket.on('channel_writting', function(data){
+            if(data.channelId != ''){
+				sendToConnectedDevicesChannel(data.channelId, 'message_writting', {fromName:data.fromName, channelId:data.channelId, from: data.from});
+            }
+        });
+        socket.on('chat message', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'chat message', {files: data.files, msg: data.msg, from: data.from, from_id: data.from_id, toID:data.toID});
+            }
+        });
+		socket.on('calling', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'getcall', {what: data.what, namelast:data.namelast, msg: data.msg, from: data.from, from_id: data.from_id, toID:data.toID});
+            }
+        });		
+		socket.on('declineTheCallDo', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'declineTheCall', {what: data.what, from: data.from, from_id: data.from_id, toID:data.toID});
+            }
+        });
+		socket.on('declinePhoneDo', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'declinePhone', {what: data.what, from: data.from, from_id: data.from_id, toID:data.toID});
+            }
+        });		
+		socket.on('pickPhoneDo', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'pickPhone', {what: data.what, from: data.from, from_id: data.from_id, toID:data.toID});
+            }
+        });
+        socket.on('message_writting', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'message_writting', {from: data.from});
+            }
+        });
+		socket.on('updateFriends', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'updateFriends', data.obj);
+                /*io.to(data.to).emit('updateFriends', data.obj);*/
+            }
+        });
+		socket.on('updateProjectsModel', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'updateProjectsModel', data.obj);
+            }
+        });
+		socket.on('commentSend', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'commentSend', data.obj);
+            }
+        });
+});
+
+        server.listen(8001, function(){
+          console.log('Express server listening on port ' + 8001);
+        });

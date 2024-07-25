@@ -1,1 +1,0 @@
-# BackboneJs-project-managing

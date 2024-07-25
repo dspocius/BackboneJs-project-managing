@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" data-framework="marionettejs">
+	<head>
+		<meta charset="utf-8">
+		<title>Backbone.Marionette with RequireJS</title>
+<style>
+	#calendar {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+
+</style>
+		<link rel="stylesheet" href="/stylesheets/projects/fullcalendar.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="/stylesheets/projects/min_programs.css">
+		<link rel="stylesheet" id="looking_style" href="/stylesheets/projects/neutral_lightweight_style.css">
+		<link rel="stylesheet" id="brand_style" href="/files/brand/brand.css">
+		<link rel="stylesheet" href="css/style.css">
+        <style id="manual_style">
+		
+		</style>
+		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=3.0; minimum-scale=1.0; user-scalable=no;" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+	</head>
+
+    <body ondragend="dataDrop(event)">
+		<div class="info_screen_data text_cookies" style="display:none;">
+		<button type="button" class="cookies_button generalbutton">Close</button>
+				<p style="text-align:left;">
+					<p>Testas</p>
+				</p>
+		</div>
+	
+        <div>
+<button id="showNotifications" style="display:none;">
+<div class="openCloseMiniNot glyphicon glyphicon-menu-down"></div>
+<div class="miniChatmessagesNewUsers"></div>
+</button>
+<div id="miniNotificationsView"></div>
+<div id="notificationsView" style="display:none;">
+	<div id="chatVieww">
+		<div id="friendsView"></div>
+		<div id="channelsView"></div>
+	</div>
+</div>
+<div id="miniChatUsersFriendsViewFloating"></div>
+<div id="notifications"></div>
+            <div id="right_menu_for_data"></div>
+            <div id="left-menu"></div>
+            <div class="header-height"></div>
+            <div class="headerNotLogged" style="display:none;">
+				<div class="marginleft15">
+					<a class="padding5 marginleft15 generalbutton relativezindex" href="#page/first">Login/Register</a>
+					<button onclick="$('.info_about').toggle();" type="button"class="padding5 marginleft5 generalbutton relativezindex" id="about">About</button>
+				</div>
+				<div class="info_about">
+						<div class="info_screen_data">
+						<div class="login-screen info_screen_data">
+							<h1 class="login-header">About</h1>
+							<div style="text-align:left;">
+								<p>Testas</p>
+								<p>Testas</p>
+							</div>
+					</div>
+					</div>
+				</div>
+			</div>
+            <div class="header" style="display:none;">
+                <div class="container">
+                    <span id="main-nav-left"></span>
+					<span><input id="valueSearch" type="text" placeholder="" style="float:left; outline:none; border:none;" onkeyup="lookup(this.value);" />
+						<script>
+function goToSearch(){
+var value = $('#valueSearch').val();
+location.href = "#search/"+value;
+removeValueFromSearch();
+}
+function removeValueFromSearch(){
+$('#valueSearch').val('');
+$('#suggestions').fadeOut();
+}
+function lookup(inputString) {
+	if(inputString.length == 0) {
+		$('#suggestions').fadeOut(); // Hide the suggestions box
+	} else {
+		$.get("/projectsFind/"+inputString+'/'+app.userData._id, function(data) {
+			var showSearch = '';
+			for(var i=0; i < data.length; i++){
+				if(data[i].name.match(inputString)){
+				var del = '';
+				if(data[i].name.length > 20){
+					del = ' ...';
+				}
+					showSearch += '<a onclick="removeValueFromSearch()" href="#/entry/'+data[i]._id+'"><div class="break searchOne">'+data[i].name.substring(0,20)+del+'</div></a>';
+				}
+				if(data[i].text.match(inputString)){
+					var del = '';
+					if(data[i].text.length > 20){
+						del = ' ...';
+					}
+					showSearch += '<a onclick="removeValueFromSearch()" href="#/entry/'+data[i]._id+'"><div class="break searchOne">'+data[i].text.substring(0,20)+del+'</div></a>';
+				}
+			}
+			$('#suggestions').fadeIn();
+			$('#suggestions').html(showSearch);
+		});
+	}
+}
+						</script>
+						<ul class="nav nav-pills pull-left">
+							<li style="padding-left:2px;padding-right:0px; position:relative;">
+							<button id="menitem" onclick="goToSearch()"><div class="glyphicon glyphicon-search icon-in-menu icon-turn-off" aria-hidden="true"></div></button>
+							<div id="suggestions"></div>
+							</li>
+						</ul>
+					</span>
+                    <span id="main-nav"></span>
+                </div>
+                <div class="clear_both"></div>
+            </div>
+            <div class="container" ondragenter="return resetData(event);" >
+                <div id="notification"></div><!-- /#notification -->
+            <div id="main-header"></div>
+            </div>
+            <div id="main"></div>
+            <div class="footer-container" ondragenter="return resetData(event);" >
+                <div class="footer" id="footer" style="display:none;">
+                    <span id="footer-nav-left"></span>
+                    <div id="footer-nav-center"></div>
+                    <span id="footer-nav-right"></span>
+                </div>
+            </div>
+
+            <div class="container" ondragenter="return resetData(event);" >
+                <!-- To be used as modal and notifications-->
+                <div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-hidden="true">
+                </div><!-- /.modal -->
+            </div>
+        </div> <!-- /container -->
+
+
+
+
+        <script data-main="js/main" src="bower_components/requirejs/require.js"></script>
+    </body>
+
+</html>

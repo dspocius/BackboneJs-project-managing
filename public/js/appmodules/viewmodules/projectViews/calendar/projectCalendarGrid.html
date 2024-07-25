@@ -1,0 +1,29 @@
+<div id="users_account_in_project_small"></div>
+<div class="clear_both"></div>
+<div id="project_all_inner_container_one">
+			<div class="viewChooseDivB">
+			<% if(typeof not_show_buttons == "undefined"){ %>
+					<div class="dropdown" style="display: inline-block;">
+					  <button class="btn btn-default dropdown-toggle viewButtonsIn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<span id="selectedViewInGeneralViews"><%= translate("Calendar view") %></span>
+						<span class="caret"></span>
+					  </button>
+					  <ul id="viewsAdded" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li id="board_view_show" class="viewButtonsIn"><%= translate("Board view") %></li>
+					  </ul>
+					</div>
+			<% } %>
+			<div style="display: inline-block;"><b class=""><%= translate("Week number:") %> <%= getWeekNumber() %></b>
+				<button class="viewButtonsIn select_all_true"><%= translate("Select all") %></button>
+				<button class="viewButtonsIn deselect_all_true"><%= translate("Deselect all") %></button>
+			</div>
+			<div style="clear:both;"></div>
+			<div id="the_entries_impacted"></div>
+			<div id="navigation_main"></div>
+			</div>
+<table class="projects row" id="the_all_projects">
+    <tr class="tsortable"></tr>
+</table>
+<div class="clear_both"></div>
+<div id='calendar'></div>
+</div>

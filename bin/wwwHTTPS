@@ -1,0 +1,221 @@
+#!/usr/bin/env node
+var debug = require('debug')('Polls');
+var appFoo = require('../app');
+var appBar = require('../app');
+const http = require('http');
+const https = require('https');
+var express = require('express');
+
+
+var vhost = require('vhost');
+var tls = require('tls');
+
+
+
+Array.prototype.remove = function(from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+};
+
+const fs = require('fs');
+
+//var servert = http.createServer(app).listen(8002);
+//var server = https.createServer({key: fs.readFileSync('./bin/awwbee/privkey.pem'), cert: fs.readFileSync('./bin/awwbee/fullchain.pem')}, app);
+
+
+
+//--------------
+const siteFoo = {
+    app: appFoo,
+    context: tls.createSecureContext({
+        key: fs.readFileSync('./bin/awwbee/privkey.pem').toString(),
+        cert: fs.readFileSync('./bin/awwbee/fullchain.pem').toString()
+    }).context
+};
+
+const siteBar = {
+    app: appBar,
+    context: tls.createSecureContext({
+        key: fs.readFileSync('./bin/ronaldocom/privkey.pem').toString(),
+        cert: fs.readFileSync('./bin/ronaldocom/fullchain.pem').toString()
+    }).context
+};
+
+// Sites
+var sites = {
+    'www.awwbee.com': siteFoo,
+    'awwbee.com': siteFoo,
+
+    'www.ronaldocom.com': siteBar,
+    'ronaldocom.com': siteBar
+}
+
+// Setup vhosts
+var exp = express();
+for (var s in sites) {
+    console.log("add app for " + s);
+    exp.use(vhost(s, sites[s].app));
+}
+
+// Redirect from http port  to https
+http.createServer(function (req, res) {
+    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+    console.log(req.headers['host']);
+    console.log(req.url);
+    res.end();
+}).listen(8002);
+
+// HTTPS Server
+var secureOpts = {
+    SNICallback: function (domain, cb) {
+        if (typeof sites[domain] === "undefined") {
+            cb(new Error("domain not found"), null);
+            console.log("Error: domain not found: " + domain);
+
+        } else {
+            cb(null, sites[domain].context);
+        }
+    },
+    key: fs.readFileSync('./bin/ronaldocom/privkey.pem').toString(),
+	cert: fs.readFileSync('./bin/ronaldocom/fullchain.pem').toString()
+};
+
+var server = https.createServer(secureOpts, exp);
+
+
+appFoo.get('/', function(req,res) {
+   res.send('Foo.com');
+});
+
+appBar.get('/', function(req,res) {
+   res.send('bar.com');
+});
+
+//--------------
+
+const io = require('socket.io')(server, {});
+var connected_users = [];
+var connected_channels = [];
+		var sendToConnectedDevices = function(toEmail, nameEmit, objEmit){
+				for(var i=0; i < connected_users.length; i++){
+					if(connected_users[i].name == toEmail){
+						io.to(connected_users[i].socket_id).emit(nameEmit, objEmit);
+					}
+				}
+		}
+		var sendToConnectedDevicesChannel = function(channelId, nameEmit, objEmit){
+				for(var i=0; i < connected_channels.length; i++){
+					if(connected_channels[i].channelId == channelId){
+						io.to(connected_channels[i].socket_id).emit(nameEmit, objEmit);
+					}
+				}
+		}
+io.on('connection', function (socket) {
+        socket.on('disconnect', function() {
+			var findDisconnected = connected_users.find(function(usr) {  return usr.socket_id == socket.id });
+			
+            for(var jj in connected_channels){
+                if(connected_channels[jj].socket_id == socket.id){
+                    connected_channels.remove(jj);
+                }
+			}
+            for(var ii in connected_users){
+                if(connected_users[ii].socket_id == socket.id){
+                    connected_users.remove(ii);
+                }
+            }
+			//Send only to friends
+			//io.sockets.emit('user_disconnected', { user: findDisconnected });
+			
+			if (typeof findDisconnected != "undefined") {
+				var fr = findDisconnected.friends;
+				for (var i=0, n = fr.length; i < n; i++) {
+					var findInConnected = connected_users.find(function(usr) {  return usr.name == fr[i].email });
+					
+					if (typeof findInConnected != "undefined") {
+						io.to(findInConnected.socket_id).emit('user_disconnected', { user: findDisconnected });
+					}
+				}
+			}
+        });
+		
+        socket.on('clientconnected', function (data) {
+              io.to(socket.id).clientName = data.id;
+              var connected_user = {name: data.id, socket_id:socket.id, friends: data.friendslist};
+			  var findIfUserAlreadyConn = connected_users.find(function(usr) {
+				  if (usr.name == data.id) {
+					  usr.socket_id = socket.id;
+				  }
+				  
+				return usr.name == data.id 
+			  });
+			  
+			  if (typeof findIfUserAlreadyConn == "undefined") {
+				connected_users.push(connected_user);
+			  }
+			
+			  var myFriendsConnected = [];
+				
+			  for (var i=0; i < data.friendslist.length; i++) {
+				var friend = data.friendslist[i];
+				var findInConnected = connected_users.find(function(usr) {  return usr.name == friend.email });
+
+				if (typeof findInConnected != "undefined") {
+					myFriendsConnected.push(findInConnected);
+					
+					io.to(findInConnected.socket_id).emit('user_connected', { user: connected_user });
+				}
+			  }
+			  
+			  if (myFriendsConnected.length > 0) {
+				  io.to(socket.id).emit('user_connected', { users: myFriendsConnected });
+			  }
+        });
+
+        socket.on('channelconnected', function (data) {
+		var dataOf = {channelId: data.channelId, name: data.email, socket_id:socket.id};
+              connected_channels.push(dataOf);
+        });
+        socket.on('channelmessage', function(data){
+            if(data.channelId != ''){
+				sendToConnectedDevicesChannel(data.channelId, 'chat message', {channelId:data.channelId, files: data.files, msg: data.msg, from: data.from, from_id: data.from_id, toID:data.toID});
+				//sendToConnectedDevices(data.toEmail, 'chat message', {files: data.files, msg: data.msg, from: data.from, from_id: data.from_id, toID:data.toID});
+            }
+        });
+        socket.on('channel_writting', function(data){
+            if(data.channelId != ''){
+				sendToConnectedDevicesChannel(data.channelId, 'message_writting', {fromName:data.fromName, channelId:data.channelId, from: data.from});
+            }
+        });
+        socket.on('chat message', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'chat message', {files: data.files, msg: data.msg, from: data.from, from_id: data.from_id, toID:data.toID});
+            }
+        });
+        socket.on('message_writting', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'message_writting', {from: data.from});
+            }
+        });
+		socket.on('updateFriends', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'updateFriends', data.obj);
+                /*io.to(data.to).emit('updateFriends', data.obj);*/
+            }
+        });
+		socket.on('updateProjectsModel', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'updateProjectsModel', data.obj);
+            }
+        });
+		socket.on('commentSend', function(data){
+            if(data.toEmail != ''){
+				sendToConnectedDevices(data.toEmail, 'commentSend', data.obj);
+            }
+        });
+});
+
+        server.listen(8001, function(){
+          console.log('Express server listening on port ' + 8001);
+        });

@@ -1,0 +1,29 @@
+<% if(isHeader) { %>
+    <div class="projects_one_in_header" id="project_<%= _id %>" style="background:<%= color %>;">
+        BBBB
+        <div id="projects_one_in<%= _id %>"></div>
+    </div>
+<% }else{ %>
+<li class="project_one" id="project_<%= _id %>" style="border:1px solid <%= color %>; position:relative;">
+<div class="project_one_good"></div>
+<div class="project_one_good_loading"><%= translate("Drop file here") %></div>
+    <input type="file" id="fileToUpload" identity="<%= _id %>" style="display:none;" />
+    <div class="projectMain" id="text_id<%= _id %>" style="background:<%= color %>;"><%= text %></div>
+    <div class="project_one_buttons">
+        <button identity="<%= _id %>" class="projectsDelete glyphicon glyphicon-remove"></button>
+        <button identity="<%= _id %>" class="projectsEdit glyphicon glyphicon-edit"></button>
+        <button identity="<%= _id %>" class="projectsUploadFile glyphicon glyphicon-open-file"></button>
+        <a href="#/entry/<%= _id %>"><span class="glyphicon glyphicon-arrow-right"></span></a>
+        <% if(isProject) { %>
+            <a href="#/project/<%= _id %>"><span style="color:<%= color %>;" class="glyphLink glyphicon glyphicon-list-alt"></span></a>
+        <% } %>
+		<div id="friendsInThisProjects<%= _id %>">
+<% if(friendsThere != "") { %>
+			<% _.each(friendsThere.split(","), function(ofriend) { %> 
+				<div class="friendInProjectMini"><%= ofriend %></div>
+			<% }); %> 
+<% } %>
+		</div>
+    </div>
+</li>
+<% } %>

@@ -1,0 +1,30 @@
+<% if(isHeader) { %>
+    <div class="projects_one_in_header" id="project_<%= _id %>" style="color: <%= color %>;">
+        <span class="my_radio">
+                <a href="#projectsinlist/<%= email %>/<%= _id %>/_"><span id="text_id<%= _id %>"><%= text %></span></a>
+            <% if(loggedIn){ %>
+				<span identity="<%= _id %>" class="projectsEdit glyphicon glyphicon-edit"></span>
+				<span identity="<%= _id %>" class="projectsDelete glyphicon glyphicon-remove"></span>
+			<% } %>
+		</span>
+        <div id="projects_one_in<%= _id %>"></div>
+    </div>
+<% }else{ %>
+<li class="project_one" id="project_<%= _id %>" style="position:relative; color:<%= color %>; ">
+<div class="project_one_good"></div>
+<div class="project_one_good_loading">Drop file here</div>
+    <input type="file" id="fileToUpload" identity="<%= _id %>" style="display:none;" />
+    <div class="projectMain" id="text_id<%= _id %>"><%= text %></div>
+    <div class="project_one_buttons">
+		<% if(loggedIn){ %>
+			<button identity="<%= _id %>" class="projectsDelete glyphicon glyphicon-remove"></button>
+			<button identity="<%= _id %>" class="projectsEdit glyphicon glyphicon-edit"></button>
+			<button identity="<%= _id %>" class="projectsUploadFile glyphicon glyphicon-open-file"></button>
+			<a href="#/entry/<%= email %>/<%= _id %>"><span class="glyphicon glyphicon-arrow-right"></span></a>
+        <% } %>
+		<% if(isProject) { %>
+            <a href="#/project/<%= email %>/<%= _id %>"><span style="color:<%= color %>;" class="glyphLink glyphicon glyphicon-list-alt"></span></a>
+        <% } %>
+    </div>
+</li>
+<% } %>

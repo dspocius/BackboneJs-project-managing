@@ -1,0 +1,54 @@
+<div id="users_account_in_project_small"></div>
+<div class="clear_both"></div>
+<div id="project_all_inner_container_one">
+			<div class="viewChooseDivB">
+			<% if(typeof not_show_buttons == "undefined"){ %>
+					<div class="dropdown" style="display:inline-block;">
+					  <button class="btn btn-default dropdown-toggle viewButtonsIn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<span id="selectedViewInGeneralViews"><%= translate("List view") %></span>
+						<span class="caret"></span>
+					  </button>
+					  <ul id="viewsAdded" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li id="board_view_show" class="viewButtonsIn"><%= translate("Board view") %></li>
+					  </ul>
+					</div>
+			<% } %>
+				<button style="display:inline-block;" class="btn btn-default viewButtonsIn" onclick="$('.herearefiltercontainer').toggle()" type="button">
+					<%= translate("Filter") %>
+				</button>
+				<div style="display:none;" class="herearefiltercontainer">
+					<input type="text" class="textgohere" id="textgohere" placeholder="Filter by text" />
+					<input type="text" class="headerhere" id="headerhere" placeholder="Filter by header" />
+					<input type="text" class="assignedhere" id="assignedhere" placeholder="Filter by assigned" />
+					<button style="display:inline-block; position:relative;" class="btn btn-default viewButtonsIn doFiltering" type="button">
+						<%= translate("Filter") %>
+					</button>
+				</div>
+				<div id="navigation_main"></div>
+			</div>
+<div class="projects row list_all_view_of_project" id="the_all_projects">
+	<div class="projects_one_in_header width_all">
+		<div style="<% if(!isloggedin()){ %>display:none;<% } %>" class="create_new_list_here containerOfNewAdd">
+		<div>Create a list</div>
+		<textarea class="width100" id="project_list_here"></textarea>
+			<div>
+				<select class="modalTextareaMine modalSelectAreaMin" id="visibilityOfNewHereList">
+							<option <% if (getDefaultVisibility() == "editcommentpublic"){ %>selected<% } %> value="editcommentpublic">Public</option>
+							<option <% if (getDefaultVisibility() == "editcommentfriends"){ %>selected<% } %> value="editcommentfriends">Friends</option>
+							<option <% if (getDefaultVisibility() == "editcommentprivate"){ %>selected<% } %> value="editcommentprivate">Private</option>
+							<option <% if (getDefaultVisibility() == "public"){ %>selected<% } %> value="public">Public (comments disabled)</option>
+							<option <% if (getDefaultVisibility() == "friends"){ %>selected<% } %> value="friends">Friends (comments disabled)</option>
+							<option <% if (getDefaultVisibility() == "private"){ %>selected<% } %> value="private">Private (comments disabled)</option>
+							<option <% if (getDefaultVisibility() == "editpublic"){ %>selected<% } %> value="editpublic">Public (edit post)</option>
+							<option <% if (getDefaultVisibility() == "editfriends"){ %>selected<% } %> value="editfriends">Friends (edit post)</option>
+							<option <% if (getDefaultVisibility() == "editprivate"){ %>selected<% } %> value="editprivate">Private (edit post)</option>
+				</select>
+				<button id="createThisNewButton" class="btn btn-default viewButtonsIn createAlistItem">Create</button>
+			</div>
+		</div>
+	</div>
+	
+	<div class="tsortable listGrid"></div>
+</div>
+</div>
+<div class="clear_both"></div>

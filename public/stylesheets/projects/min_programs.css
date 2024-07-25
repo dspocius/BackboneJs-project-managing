@@ -1,0 +1,435 @@
+#miniNotificationsView{
+position:absolute;
+left:0px;
+top:0px;
+width:100%;
+z-index:999999;
+display:none;
+}
+#showNotifications .showNewMessages{
+	display:inline-block;
+}
+.miniChatmessagesNewUsers{
+display:none;
+border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    color: black;
+    background: white;
+    font-weight: bold;
+    top: 1px;
+    left: 3px;
+    position: relative;
+}
+#notificationsView .profileListPhoto{
+    height: 30px!important;
+}
+#notificationsView .usersNameBv{
+	line-height:20px;
+	margin-top:-3px;
+}
+.userChoose{
+    font-size:13px;
+    padding-left:10px;
+    cursor:pointer;
+    position:relative;
+	height: 45px;
+}
+.user_photos_class {
+    max-width: 100px;
+    max-height: 100px;
+}
+.myMessageInChat {
+    display: block;
+    width: 100%;
+    padding-left: 65px;
+    padding-right: 5px;
+}
+#messagesContainerInnerHere {
+    padding: 4px;
+}
+.message_from_left .profileListPhoto {
+    top: 0px;
+    left: 0px;
+}
+.messages_from_them {
+word-wrap: break-word;
+}
+.messages_from_them .profileListPhoto {
+    height: 45px!important;
+    top: 14px!important;
+    left: 0px;
+    position: relative;
+}
+.profileListPhoto {
+    height: 58px;
+    max-width: 150px;
+    vertical-align: middle;
+}
+.miniChatFloatingUsersFriend .profileListPhoto  {
+    max-height: 30px!important;
+	width:auto!important;
+	height:auto!important;
+}
+.minichatMessages .profileListPhoto  {
+max-height: 40px!important;
+    max-width: 40px!important;
+    top: 0px!important;
+}
+.miniChatFloatingUsersFriend .message_from_left_for_photo {
+
+}
+.message_from_left_for_photo {
+background: white;
+    margin: auto;
+    display: inline-block;
+    text-align: center;
+    margin-right: 3px;
+    margin-left: 3px;
+    float: left;
+    position:relative;
+	top: 0px;
+    height: 35px;
+    width: 35px;
+    overflow: hidden;
+    border-radius: 5555555px;
+    float: left;
+    margin-right: 10px;
+	border:1px solid #ccc;
+	line-height: 30px;
+}
+.miniChatInputs{
+outline: none;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: calc(100% - 20px);
+    background-color: white;
+}
+.miniChatButtons{
+    padding-left: 5px;
+    padding-right: 5px;
+border:none;
+outline:none;
+height:37px;
+}
+#miniNotificationsView .message_text_left{
+max-width:500px;
+}
+.miniChatMiniNotName{
+float: left;
+line-height: 56px;
+font-style:italic;	
+}
+.miniChatBackMessage #minichatMessages{
+display:none;
+}
+.miniChatBottom{
+background:none!important;
+border:none!important;
+}
+#miniNotificationsView .minichatTextarea{
+    padding: 0px;
+    margin: 0px;
+    width: 140px;
+    height: 46px;
+    float: left;
+    margin-top: 2px;
+}
+#miniNotificationsView #messagesContainerInnerHere{
+float:left;
+}
+#miniChatUsersFriendsViewFloating{
+	position:fixed;
+	z-index:9999;
+	right: 288px;
+    bottom: 42px;
+    height: 0px;
+    text-align: right;
+    overflow: visible;
+}
+.miniChatLeftSendMsgs{
+	width:100%;
+    background: rgba(155,155,155,0.1);
+    border-top: 1px solid #ccc;
+    height: 39px;
+}
+.miniChatFloatingUsersFriend{
+    position: relative;
+    margin-left: 5px;
+	
+display:inline-block;
+z-index:999999999999;
+}
+.miniChatFloatingThis{
+cursor:pointer;
+}
+.miniChatFloatingThisTextStyle{
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 13px;
+    width: 90px;
+    text-align: center;
+	max-height:90px;
+}
+.miniChatFloatingFriendsPhoto{
+    max-width: 30px;
+    max-height: 30px;
+}
+.minichatMakeCircleImage{
+border-radius: 50%;
+overflow: hidden;
+width: 30px;
+    height: 30px;
+    position: relative;
+    top: 5px;
+display: inline-block;
+    left: 8px;
+	background:white;
+}
+.miniChatTextOfUser{
+color: white;
+    position: relative;
+    display: inline-block;
+     top: 0px;
+    left: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    word-break: break-all;
+    max-width: 135px;
+    max-height: 20px;
+    overfloW: hidden;
+}
+.miniChatFloatingCircle{
+    width: 240px;
+    height: 42px;
+    background: black;
+	text-align:left;
+}
+.chatWindowView, .miniChatFloatingCircle{
+	z-index:999999;
+}
+.miniChatHeadTitleCloseSmall{
+	z-index:9999999!important;
+}
+#notificationsView{
+	position:fixed;
+	right:30px;
+	bottom:0px;
+	height:400px;
+	z-index:999999;
+	display:none;
+	background:white;
+	font-size:13px;
+    border: 1px solid #ccc;
+    border-bottom: none;
+}
+
+.sendButton{
+	padding: 5px!important;
+    position: relative;
+    border: none!important;
+}
+.addFileButton{
+    margin:0px;
+    padding-right: 7px!important;
+    padding-top: 4px!important;
+    top:0px;
+}
+.pull-right{
+position:relative;
+right:30px;
+}
+#showNotifications{
+z-index:9999;
+position:fixed;
+bottom:0px;
+border:none;
+outline:none;
+    font-size: 20px;
+    width: 252px;
+height:42px;
+    background: black;
+	color:white;
+    padding-left: 10px;
+    padding-right: 10px;
+    right: 30px;
+    text-align: left;
+
+}
+#notificationsView .nocontactstext{
+	padding-top: 10px;
+}
+#notificationsView .nocontacts{
+	padding-left: 10px;
+    padding-right: 10px;
+	text-align:center;
+}
+#showNotifications .openCloseMiniNot{
+	top: 3px;
+}
+#showNotifications span{
+font-size: 15px;
+    font-weight: bold;
+    display: inline-block;
+    padding-left: 5px;
+    position: relative;
+    top: -2px;
+}
+#friendsView{
+width:250px;
+height:400px;
+float:left;
+overflow-y:auto;
+}
+.chatWindowView{
+width:240px;
+height:400px;
+float:left;
+}
+#chatVieww{
+overflow-x:auto;
+}
+.min_chat_choose_user{
+padding-top:5px!important;
+padding-bottom:4px!important;
+margin:0px!important;
+}
+.miniChatListPhoto{
+    max-height: 35px;
+    max-width: 35px;
+}
+.miniChatHeadTitleCloseSmall{
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 6px;
+    color: white;
+    font-weight: bold;
+    background: black;
+    border-radius: 50%;
+    padding: 5px;
+    padding-top: 7px;
+}
+.miniChatHeadTitleCloseSmall:hover{
+    color: black;
+    background: white;
+}
+.miniChatHeadTitleClose{
+float: right;
+cursor:pointer;
+}
+.minichatMessages{
+height:300px;
+overflow-y:auto;
+}
+.minichatTextarea{
+padding:0px;
+margin:0px;
+width:100%;
+height:55px;
+border: none;
+outline: none;
+    font-size: 13px;
+    border-top: 1px solid #ccc;
+    padding: 5px;
+}
+.aboutchannel{
+    display: inline-block;
+    max-width: 70%;
+    overflow: hidden;
+}
+.channelShowMorePeople{
+	cursor:pointer;
+    position: relative;
+    top: -3px;
+}
+.channelOfWindow .minichatTextarea{
+	height:37px;
+}
+.channelType{
+    padding-right: 5px;
+}
+.minichatMessagesTop{
+	text-align: left;
+}
+.aboutSomething, .usersNameBv{
+	word-break: break-all;
+}
+.miniChatBottom{
+position:static!important;
+}
+.miniChatonWrittingToUser{
+    position: absolute;
+    bottom: 99px;
+    width: 100%;
+    color: white;
+    font-style: italic;
+    font-size: 14px;
+	display:none;
+}
+.miniChatIsUserWrittingSmall{
+float:left;
+display:none;
+font-size: 18px;
+}
+.miniChatisLoggedInUser{
+float:left;
+display:none;
+font-size: 18px;
+}
+.miniChatMiniNotifications .minichatTextarea{
+float:none!important;
+}
+.miniChatMiniNotifications .miniChatLeftSendMsgs{
+float:none!important;
+}
+.miniChatMiniNotifications .message_from_left_for_photo{
+float:left!important;
+}
+.miniChatMiniNotifications .minichatMessages{
+display:none!important;
+}
+.miniChatHeadTitleUserWroteIs{
+	display:none;
+	float:left;
+    position: relative;
+    z-index: 9;
+	color:lightgreen;
+}
+.miniChatHeadTitleOnlineIs{
+	display:none;
+	float:left;
+	color:lightgreen;
+    position: relative;
+    z-index: 9;
+	left: 4px;
+    top: 12px;
+}
+
+.daySeparator{
+position: relative;
+    font-size: 13px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    color: #999;
+    top: -9px;
+}
+.daySeparator .dayy{
+position: relative;
+    top: 8px;
+    display: inline;
+    background: white;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.dayyydateright{
+    float: right;
+    font-size: 10px;
+    position: relative;
+    top: -10px;
+	color:#ccc;
+}

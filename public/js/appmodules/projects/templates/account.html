@@ -1,0 +1,472 @@
+<div id="navigation_main"></div>
+<div class="container">
+<div class="whitebackground container" style="width:auto;">
+	<div>
+<%
+var imghere = "";
+if (backgroundPictureAccount != "") {
+	imghere = "background-image: url('"+getFilesUrl()+"/files/project_managing_files/ProjectManagementFiles/"+backgroundPictureAccount+"')";
+}
+%>
+<div class="big_image_about_chatUser frontMainProfileH" style="<%=imghere%>">
+<div class="minichatMakeCircleImage imageCircleForChat">
+<img class="miniChatFloatingFriendsPhoto" src="<%=getFilesUrl() %>/files/<%=username %>/<%=username %>.jpg" alt="">
+<div identity="ProjectManagementFiles" class="uploadimghereback projectsUploadFile"><%= translate("Change") %></div>
+</div>
+<div class="big_img_chatRight"><h1><%= firstname %> <%= lastname %></h1> <a href="#settings"><%= translate("Change Profile Info") %></a></div>
+</div>
+		<div style="clear:both;"></div>
+		<div>
+			<input type="file" id="fileToUpload" identity="ProjectManagementFiles" style="display:none;" />
+		</div>
+		<!--<div>Emai: <%=username %></div>
+		<div>
+			<div>Country</div>
+			<div><input type="text" value="<%= address.country_info %>" id="country_info" /></div>
+			<div>Address 1</div>
+			<div><input type="text" value="<%= address.address1_info %>" id="address1_info" /></div>
+			<div>Address 2</div>
+			<div><input type="text" value="<%= address.address2_info %>" id="address2_info" /></div>
+			<div>City</div>
+			<div><input type="text" value="<%= address.city_info %>" id="city_info" /></div>
+			<div>State</div>
+			<div><input type="text" value="<%= address.state_info %>" id="state_info" /></div>
+			<div>ZIP code</div>
+			<div><input type="text" value="<%= address.zip_code_info %>" id="zip_code_info" /></div>
+			<div>Telephone</div>
+			<div><input type="text" value="<%= address.telephone_info %>" id="telephone_info" /></div>
+			<div><button id="save_address" class="general_button">Save changes</button></div>
+		</div> -->
+		<div id="projectManagementFilesProg"></div>
+		<div class="containerOfContentAcc">
+		
+			<% 
+	var requsts = requestsdata.filter(function(fr) { return fr && fr != 0 && fr.inviter != username && 
+	(fr.approved == false || fr.approved == "false") && 
+	(fr.request_sent == true || fr.request_sent == "true")
+	&& (fr.blocked == false || fr.blocked == "false") && 
+	(fr.blockedBy == false || fr.blockedBy == "false")});
+%>
+			
+			<div style="display:none" class="leftfloatuserinfo marginr3">
+				<div><b>Payment</b></div>
+				<div class="general_info_about">
+					<div class="general_info_about_description">Amount of money that you need to pay</div>
+					<div><%= pay %>€</div>
+					<div><% if (moneyhas >= pay && pay > 0) { %>
+						<button type="button" id="payWithCurrentMon" class="btn btn-default">Pay</button>
+					<% } %></div>
+				</div>
+				<div class="general_info_about">
+					<div class="general_info_about_description">Amount of money in your account</div>
+					<div><%= moneyhas %>€</div>
+	<div>
+	<div>We will automatically process your payments if you have money in your account</div>
+	<div>
+	<input type="number" id="amntpay" name="item_amount" value="2" />
+	<button type="button" id="addmoneyToAcc" class="btn btn-default">Add money to your account</button>
+	</div>
+	</div>
+				</div>
+			</div>
+			<div class="aboutPart leftfloatuserinfo">
+				<div><b><%= translate("About") %></b></div>
+				<div class="general_info_about">
+					<div class="general_info_about_description"><%= translate("First name") %></div>
+					<div><input class="general_acc_input" type="text" id="firstname_acc" value="<%= firstname %>"></div>
+					<div class="general_info_about_description"><%= translate("Last name") %></div>
+					<div><input class="general_acc_input" type="text" id="lastname_acc" value="<%= lastname %>"></div>
+					<div class="general_info_about_description"><%= translate("Country") %></div>
+					<div>
+ <select class="general_acc_input" id="yaddress_acc">
+                <option <% if (yaddress == "") { %>selected<% } %> value="-"></option>
+                <option <% if (yaddress == "Afghanistan") { %>selected<% } %> value="Afghanistan">Afghanistan</option>
+                <option <% if (yaddress == "Åland Islands") { %>selected<% } %> value="Åland Islands">Åland Islands</option>
+                <option <% if (yaddress == "Albania") { %>selected<% } %> value="Albania">Albania</option>
+                <option <% if (yaddress == "Algeria") { %>selected<% } %> value="Algeria">Algeria</option>
+                <option <% if (yaddress == "American Samoa") { %>selected<% } %> value="American Samoa">American Samoa</option>
+                <option <% if (yaddress == "Andorra") { %>selected<% } %> value="Andorra">Andorra</option>
+                <option <% if (yaddress == "Angola") { %>selected<% } %> value="Angola">Angola</option>
+                <option <% if (yaddress == "Anguilla") { %>selected<% } %> value="Anguilla">Anguilla</option>
+                <option <% if (yaddress == "Antarctica") { %>selected<% } %> value="Antarctica">Antarctica</option>
+                <option <% if (yaddress == "Antigua and Barbuda") { %>selected<% } %> value="Antigua and Barbuda">Antigua and Barbuda</option>
+                <option <% if (yaddress == "Argentina") { %>selected<% } %> value="Argentina">Argentina</option>
+                <option <% if (yaddress == "Armenia") { %>selected<% } %> value="Armenia">Armenia</option>
+                <option <% if (yaddress == "Aruba") { %>selected<% } %> value="Aruba">Aruba</option>
+                <option <% if (yaddress == "Australia") { %>selected<% } %> value="Australia">Australia</option>
+                <option <% if (yaddress == "Austria") { %>selected<% } %> value="Austria">Austria</option>
+                <option <% if (yaddress == "Azerbaijan") { %>selected<% } %> value="Azerbaijan">Azerbaijan</option>
+                <option <% if (yaddress == "Bahamas") { %>selected<% } %> value="Bahamas">Bahamas</option>
+                <option <% if (yaddress == "Bahrain") { %>selected<% } %> value="Bahrain">Bahrain</option>
+                <option <% if (yaddress == "Bangladesh") { %>selected<% } %> value="Bangladesh">Bangladesh</option>
+                <option <% if (yaddress == "Barbados") { %>selected<% } %> value="Barbados">Barbados</option>
+                <option <% if (yaddress == "Belarus") { %>selected<% } %> value="Belarus">Belarus</option>
+                <option <% if (yaddress == "Belgium") { %>selected<% } %> value="Belgium">Belgium</option>
+                <option <% if (yaddress == "Belize") { %>selected<% } %> value="Belize">Belize</option>
+                <option <% if (yaddress == "Benin") { %>selected<% } %> value="Benin">Benin</option>
+                <option <% if (yaddress == "Bermuda") { %>selected<% } %> value="Bermuda">Bermuda</option>
+                <option <% if (yaddress == "Bhutan") { %>selected<% } %> value="Bhutan">Bhutan</option>
+                <option <% if (yaddress == "Bolivia") { %>selected<% } %> value="Bolivia">Bolivia</option>
+                <option <% if (yaddress == "Bosnia and Herzegovina") { %>selected<% } %> value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                <option <% if (yaddress == "Botswana") { %>selected<% } %> value="Botswana">Botswana</option>
+                <option <% if (yaddress == "Bouvet Island") { %>selected<% } %> value="Bouvet Island">Bouvet Island</option>
+                <option <% if (yaddress == "Brazil") { %>selected<% } %> value="Brazil">Brazil</option>
+                <option <% if (yaddress == "Brunei Darussalam") { %>selected<% } %> value="Brunei Darussalam">Brunei Darussalam</option>
+                <option <% if (yaddress == "Bulgaria") { %>selected<% } %> value="Bulgaria">Bulgaria</option>
+                <option <% if (yaddress == "Burkina Faso") { %>selected<% } %> value="Burkina Faso">Burkina Faso</option>
+                <option <% if (yaddress == "Burundi") { %>selected<% } %> value="Burundi">Burundi</option>
+                <option <% if (yaddress == "Cambodia") { %>selected<% } %> value="Cambodia">Cambodia</option>
+                <option <% if (yaddress == "Cameroon") { %>selected<% } %> value="Cameroon">Cameroon</option>
+                <option <% if (yaddress == "Canada") { %>selected<% } %> value="Canada">Canada</option>
+                <option <% if (yaddress == "Cape Verde") { %>selected<% } %> value="Cape Verde">Cape Verde</option>
+                <option <% if (yaddress == "Cayman Islands") { %>selected<% } %> value="Cayman Islands">Cayman Islands</option>
+                <option <% if (yaddress == "African Republic") { %>selected<% } %> value="African Republic">African Republic</option>
+                <option <% if (yaddress == "Chad") { %>selected<% } %> value="Chad">Chad</option>
+                <option <% if (yaddress == "Chile") { %>selected<% } %> value="Chile">Chile</option>
+                <option <% if (yaddress == "China") { %>selected<% } %> value="China">China</option>
+                <option <% if (yaddress == "Christmas Island") { %>selected<% } %> value="Christmas Island">Christmas Island</option>
+                <option <% if (yaddress == "Colombia") { %>selected<% } %> value="Colombia">Colombia</option>
+                <option <% if (yaddress == "Comoros") { %>selected<% } %> value="Comoros">Comoros</option>
+                <option <% if (yaddress == "Congo") { %>selected<% } %> value="Congo">Congo</option>
+                <option <% if (yaddress == "Cook Islands") { %>selected<% } %> value="Cook Islands">Cook Islands</option>
+                <option <% if (yaddress == "Costa Rica") { %>selected<% } %> value="Costa Rica">Costa Rica</option>
+                <option <% if (yaddress == "Cote D'ivoire") { %>selected<% } %> value="Cote D'ivoire">Cote D'ivoire</option>
+                <option <% if (yaddress == "Croatia") { %>selected<% } %> value="Croatia">Croatia</option>
+                <option <% if (yaddress == "Cuba") { %>selected<% } %> value="Cuba">Cuba</option>
+                <option <% if (yaddress == "Cyprus") { %>selected<% } %> value="Cyprus">Cyprus</option>
+                <option <% if (yaddress == "Czech Republic") { %>selected<% } %> value="Czech Republic">Czech Republic</option>
+                <option <% if (yaddress == "Denmark") { %>selected<% } %> value="Denmark">Denmark</option>
+                <option <% if (yaddress == "Djibouti") { %>selected<% } %> value="Djibouti">Djibouti</option>
+                <option <% if (yaddress == "Dominica") { %>selected<% } %> value="Dominica">Dominica</option>
+                <option <% if (yaddress == "Dominican Republic") { %>selected<% } %> value="Dominican Republic">Dominican Republic</option>
+                <option <% if (yaddress == "Ecuador") { %>selected<% } %> value="Ecuador">Ecuador</option>
+                <option <% if (yaddress == "Egypt") { %>selected<% } %> value="Egypt">Egypt</option>
+                <option <% if (yaddress == "El Salvador") { %>selected<% } %> value="El Salvador">El Salvador</option>
+                <option <% if (yaddress == "Equatorial Guinea") { %>selected<% } %> value="Equatorial Guinea">Equatorial Guinea</option>
+                <option <% if (yaddress == "Eritrea") { %>selected<% } %> value="Eritrea">Eritrea</option>
+                <option <% if (yaddress == "Estonia") { %>selected<% } %> value="Estonia">Estonia</option>
+                <option <% if (yaddress == "Ethiopia") { %>selected<% } %> value="Ethiopia">Ethiopia</option>
+                <option <% if (yaddress == "Falkland Islands") { %>selected<% } %> value="Falkland Islands">Falkland Islands</option>
+                <option <% if (yaddress == "Faroe Islands") { %>selected<% } %> value="Faroe Islands">Faroe Islands</option>
+                <option <% if (yaddress == "Fiji") { %>selected<% } %> value="Fiji">Fiji</option>
+                <option <% if (yaddress == "Finland") { %>selected<% } %> value="Finland">Finland</option>
+                <option <% if (yaddress == "France") { %>selected<% } %> value="France">France</option>
+                <option <% if (yaddress == "French Guiana") { %>selected<% } %> value="French Guiana">French Guiana</option>
+                <option <% if (yaddress == "French Polynesia") { %>selected<% } %> value="French Polynesia">French Polynesia</option>
+                <option <% if (yaddress == "French Southern") { %>selected<% } %> value="French Southern">French Southern</option>
+                <option <% if (yaddress == "Gabon") { %>selected<% } %> value="Gabon">Gabon</option>
+                <option <% if (yaddress == "Gambia") { %>selected<% } %> value="Gambia">Gambia</option>
+                <option <% if (yaddress == "Georgia") { %>selected<% } %> value="Georgia">Georgia</option>
+                <option <% if (yaddress == "Germany") { %>selected<% } %> value="Germany">Germany</option>
+                <option <% if (yaddress == "Ghana") { %>selected<% } %> value="Ghana">Ghana</option>
+                <option <% if (yaddress == "Gibraltar") { %>selected<% } %> value="Gibraltar">Gibraltar</option>
+                <option <% if (yaddress == "Greece") { %>selected<% } %> value="Greece">Greece</option>
+                <option <% if (yaddress == "Greenland") { %>selected<% } %> value="Greenland">Greenland</option>
+                <option <% if (yaddress == "Grenada") { %>selected<% } %> value="Grenada">Grenada</option>
+                <option <% if (yaddress == "Guadeloupe") { %>selected<% } %> value="Guadeloupe">Guadeloupe</option>
+                <option <% if (yaddress == "Guam") { %>selected<% } %> value="Guam">Guam</option>
+                <option <% if (yaddress == "Guatemala") { %>selected<% } %> value="Guatemala">Guatemala</option>
+                <option <% if (yaddress == "Guernsey") { %>selected<% } %> value="Guernsey">Guernsey</option>
+                <option <% if (yaddress == "Guinea") { %>selected<% } %> value="Guinea">Guinea</option>
+                <option <% if (yaddress == "Guinea-bissau") { %>selected<% } %> value="Guinea-bissau">Guinea-bissau</option>
+                <option <% if (yaddress == "Guyana") { %>selected<% } %> value="Guyana">Guyana</option>
+                <option <% if (yaddress == "Haiti") { %>selected<% } %> value="Haiti">Haiti</option>
+                <option <% if (yaddress == "Heard Island") { %>selected<% } %> value="Heard Island">Heard Island </option>
+                <option <% if (yaddress == "Vatican City State") { %>selected<% } %> value="Vatican City State">Vatican City State</option>
+                <option <% if (yaddress == "Honduras") { %>selected<% } %> value="Honduras">Honduras</option>
+                <option <% if (yaddress == "Hong Kong") { %>selected<% } %> value="Hong Kong">Hong Kong</option>
+                <option <% if (yaddress == "Hungary") { %>selected<% } %> value="Hungary">Hungary</option>
+                <option <% if (yaddress == "Iceland") { %>selected<% } %> value="Iceland">Iceland</option>
+                <option <% if (yaddress == "India") { %>selected<% } %> value="India">India</option>
+                <option <% if (yaddress == "Indonesia") { %>selected<% } %> value="Indonesia">Indonesia</option>
+                <option <% if (yaddress == "Iran") { %>selected<% } %> value="Iran">Iran</option>
+                <option <% if (yaddress == "Iraq") { %>selected<% } %> value="Iraq">Iraq</option>
+                <option <% if (yaddress == "Ireland") { %>selected<% } %> value="Ireland">Ireland</option>
+                <option <% if (yaddress == "Isle of Man") { %>selected<% } %> value="Isle of Man">Isle of Man</option>
+                <option <% if (yaddress == "Israel") { %>selected<% } %> value="Israel">Israel</option>
+                <option <% if (yaddress == "Italy") { %>selected<% } %> value="Italy">Italy</option>
+                <option <% if (yaddress == "Jamaica") { %>selected<% } %> value="Jamaica">Jamaica</option>
+                <option <% if (yaddress == "Japan") { %>selected<% } %> value="Japan">Japan</option>
+                <option <% if (yaddress == "Jersey") { %>selected<% } %> value="Jersey">Jersey</option>
+                <option <% if (yaddress == "Jordan") { %>selected<% } %> value="Jordan">Jordan</option>
+                <option <% if (yaddress == "Kazakhstan") { %>selected<% } %> value="Kazakhstan">Kazakhstan</option>
+                <option <% if (yaddress == "Kenya") { %>selected<% } %> value="Kenya">Kenya</option>
+                <option <% if (yaddress == "Kiribati") { %>selected<% } %> value="Kiribati">Kiribati</option>
+                <option <% if (yaddress == "North Korea") { %>selected<% } %> value="North Korea">North Korea</option>
+                <option <% if (yaddress == "South Korea") { %>selected<% } %> value="South Korea">South Korea</option>
+                <option <% if (yaddress == "Kuwait") { %>selected<% } %> value="Kuwait">Kuwait</option>
+                <option <% if (yaddress == "Kyrgyzstan") { %>selected<% } %> value="Kyrgyzstan">Kyrgyzstan</option>
+                <option <% if (yaddress == "Latvia") { %>selected<% } %> value="Latvia">Latvia</option>
+                <option <% if (yaddress == "Lebanon") { %>selected<% } %> value="Lebanon">Lebanon</option>
+                <option <% if (yaddress == "Lesotho") { %>selected<% } %> value="Lesotho">Lesotho</option>
+                <option <% if (yaddress == "Liberia") { %>selected<% } %> value="Liberia">Liberia</option>
+                <option <% if (yaddress == "Libyan") { %>selected<% } %> value="Libyan">Libyan</option>
+                <option <% if (yaddress == "Liechtenstein") { %>selected<% } %> value="Liechtenstein">Liechtenstein</option>
+                <option <% if (yaddress == "Lithuania") { %>selected<% } %> value="Lithuania">Lithuania</option>
+                <option <% if (yaddress == "Luxembourg") { %>selected<% } %> value="Luxembourg">Luxembourg</option>
+                <option <% if (yaddress == "Macao") { %>selected<% } %> value="Macao">Macao</option>
+                <option <% if (yaddress == "Macedonia") { %>selected<% } %> value="Macedonia">Macedonia</option>
+                <option <% if (yaddress == "Madagascar") { %>selected<% } %> value="Madagascar">Madagascar</option>
+                <option <% if (yaddress == "Malawi") { %>selected<% } %> value="Malawi">Malawi</option>
+                <option <% if (yaddress == "Malaysia") { %>selected<% } %> value="Malaysia">Malaysia</option>
+                <option <% if (yaddress == "Maldives") { %>selected<% } %> value="Maldives">Maldives</option>
+                <option <% if (yaddress == "Mali") { %>selected<% } %> value="Mali">Mali</option>
+                <option <% if (yaddress == "Malta") { %>selected<% } %> value="Malta">Malta</option>
+                <option <% if (yaddress == "Marshall Islands") { %>selected<% } %> value="Marshall Islands">Marshall Islands</option>
+                <option <% if (yaddress == "Martinique") { %>selected<% } %> value="Martinique">Martinique</option>
+                <option <% if (yaddress == "Mauritania") { %>selected<% } %> value="Mauritania">Mauritania</option>
+                <option <% if (yaddress == "Mauritius") { %>selected<% } %> value="Mauritius">Mauritius</option>
+                <option <% if (yaddress == "Mayotte") { %>selected<% } %> value="Mayotte">Mayotte</option>
+                <option <% if (yaddress == "Mexico") { %>selected<% } %> value="Mexico">Mexico</option>
+                <option <% if (yaddress == "Micronesia") { %>selected<% } %> value="Micronesia">Micronesia</option>
+                <option <% if (yaddress == "Moldova") { %>selected<% } %> value="Moldova">Moldova</option>
+                <option <% if (yaddress == "Monaco") { %>selected<% } %> value="Monaco">Monaco</option>
+                <option <% if (yaddress == "Mongolia") { %>selected<% } %> value="Mongolia">Mongolia</option>
+                <option <% if (yaddress == "Montenegro") { %>selected<% } %> value="Montenegro">Montenegro</option>
+                <option <% if (yaddress == "Montserrat") { %>selected<% } %> value="Montserrat">Montserrat</option>
+                <option <% if (yaddress == "Morocco") { %>selected<% } %> value="Morocco">Morocco</option>
+                <option <% if (yaddress == "Mozambique") { %>selected<% } %> value="Mozambique">Mozambique</option>
+                <option <% if (yaddress == "Myanmar") { %>selected<% } %> value="Myanmar">Myanmar</option>
+                <option <% if (yaddress == "Namibia") { %>selected<% } %> value="Namibia">Namibia</option>
+                <option <% if (yaddress == "Nauru") { %>selected<% } %> value="Nauru">Nauru</option>
+                <option <% if (yaddress == "Nepal") { %>selected<% } %> value="Nepal">Nepal</option>
+                <option <% if (yaddress == "Netherlands") { %>selected<% } %> value="Netherlands">Netherlands</option>
+                <option <% if (yaddress == "New Caledonia") { %>selected<% } %> value="New Caledonia">New Caledonia</option>
+                <option <% if (yaddress == "New Zealand") { %>selected<% } %> value="New Zealand">New Zealand</option>
+                <option <% if (yaddress == "Nicaragua") { %>selected<% } %> value="Nicaragua">Nicaragua</option>
+                <option <% if (yaddress == "Niger") { %>selected<% } %> value="Niger">Niger</option>
+                <option <% if (yaddress == "Nigeria") { %>selected<% } %> value="Nigeria">Nigeria</option>
+                <option <% if (yaddress == "Niue") { %>selected<% } %> value="Niue">Niue</option>
+                <option <% if (yaddress == "Norfolk Island") { %>selected<% } %> value="Norfolk Island">Norfolk Island</option>
+                <option <% if (yaddress == "Northern Mariana Islands") { %>selected<% } %> value="Northern Mariana Islands">Northern Mariana Islands</option>
+                <option <% if (yaddress == "Norway") { %>selected<% } %> value="Norway">Norway</option>
+                <option <% if (yaddress == "Oman") { %>selected<% } %> value="Oman">Oman</option>
+                <option <% if (yaddress == "Pakistan") { %>selected<% } %> value="Pakistan">Pakistan</option>
+                <option <% if (yaddress == "Palau") { %>selected<% } %> value="Palau">Palau</option>
+                <option <% if (yaddress == "Palestinian") { %>selected<% } %> value="Palestinian">Palestinian</option>
+                <option <% if (yaddress == "Panama") { %>selected<% } %> value="Panama">Panama</option>
+                <option <% if (yaddress == "Papua New Guinea") { %>selected<% } %> value="Papua New Guinea">Papua New Guinea</option>
+                <option <% if (yaddress == "Paraguay") { %>selected<% } %> value="Paraguay">Paraguay</option>
+                <option <% if (yaddress == "Peru") { %>selected<% } %> value="Peru">Peru</option>
+                <option <% if (yaddress == "Philippines") { %>selected<% } %> value="Philippines">Philippines</option>
+                <option <% if (yaddress == "Pitcairn") { %>selected<% } %> value="Pitcairn">Pitcairn</option>
+                <option <% if (yaddress == "Poland") { %>selected<% } %> value="Poland">Poland</option>
+                <option <% if (yaddress == "Portugal") { %>selected<% } %> value="Portugal">Portugal</option>
+                <option <% if (yaddress == "Puerto Rico") { %>selected<% } %> value="Puerto Rico">Puerto Rico</option>
+                <option <% if (yaddress == "Qatar") { %>selected<% } %> value="Qatar">Qatar</option>
+                <option <% if (yaddress == "Reunion") { %>selected<% } %> value="Reunion">Reunion</option>
+                <option <% if (yaddress == "Romania") { %>selected<% } %> value="Romania">Romania</option>
+                <option <% if (yaddress == "Russian Federation") { %>selected<% } %> value="Russian Federation">Russian Federation</option>
+                <option <% if (yaddress == "Rwanda") { %>selected<% } %> value="Rwanda">Rwanda</option>
+                <option <% if (yaddress == "Saint Helena") { %>selected<% } %> value="Saint Helena">Saint Helena</option>
+                <option <% if (yaddress == "Saint Kitts and Nevis") { %>selected<% } %> value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                <option <% if (yaddress == "Saint Lucia") { %>selected<% } %> value="Saint Lucia">Saint Lucia</option>
+                <option <% if (yaddress == "Saint Pierre and Miquelon") { %>selected<% } %> value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
+                <option <% if (yaddress == "Saint Vincent and The Grenadines") { %>selected<% } %> value="Saint Vincent and The Grenadines">Saint Vincent and The Grenadines</option>
+                <option <% if (yaddress == "Samoa") { %>selected<% } %> value="Samoa">Samoa</option>
+                <option <% if (yaddress == "San Marino") { %>selected<% } %> value="San Marino">San Marino</option>
+                <option <% if (yaddress == "Sao Tome and Principe") { %>selected<% } %> value="Sao Tome and Principe">Sao Tome and Principe</option>
+                <option <% if (yaddress == "Saudi Arabia") { %>selected<% } %> value="Saudi Arabia">Saudi Arabia</option>
+                <option <% if (yaddress == "Senegal") { %>selected<% } %> value="Senegal">Senegal</option>
+                <option <% if (yaddress == "Serbia") { %>selected<% } %> value="Serbia">Serbia</option>
+                <option <% if (yaddress == "Seychelles") { %>selected<% } %> value="Seychelles">Seychelles</option>
+                <option <% if (yaddress == "Sierra Leone") { %>selected<% } %> value="Sierra Leone">Sierra Leone</option>
+                <option <% if (yaddress == "Singapore") { %>selected<% } %> value="Singapore">Singapore</option>
+                <option <% if (yaddress == "Slovakia") { %>selected<% } %> value="Slovakia">Slovakia</option>
+                <option <% if (yaddress == "Slovenia") { %>selected<% } %> value="Slovenia">Slovenia</option>
+                <option <% if (yaddress == "Solomon Islands") { %>selected<% } %> value="Solomon Islands">Solomon Islands</option>
+                <option <% if (yaddress == "Somalia") { %>selected<% } %> value="Somalia">Somalia</option>
+                <option <% if (yaddress == "South Africa") { %>selected<% } %> value="South Africa">South Africa</option>
+                <option <% if (yaddress == "South Georgia") { %>selected<% } %> value="South Georgia">South Georgia</option>
+                <option <% if (yaddress == "Spain") { %>selected<% } %> value="Spain">Spain</option>
+                <option <% if (yaddress == "Sri Lanka") { %>selected<% } %> value="Sri Lanka">Sri Lanka</option>
+                <option <% if (yaddress == "Sudan") { %>selected<% } %> value="Sudan">Sudan</option>
+                <option <% if (yaddress == "Suriname") { %>selected<% } %> value="Suriname">Suriname</option>
+                <option <% if (yaddress == "Svalbard and Jan Mayen") { %>selected<% } %> value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option>
+                <option <% if (yaddress == "Swaziland") { %>selected<% } %> value="Swaziland">Swaziland</option>
+                <option <% if (yaddress == "Sweden") { %>selected<% } %> value="Sweden">Sweden</option>
+                <option <% if (yaddress == "Switzerland") { %>selected<% } %> value="Switzerland">Switzerland</option>
+                <option <% if (yaddress == "Syrian Arab Republic") { %>selected<% } %> value="Syrian Arab Republic">Syrian Arab Republic</option>
+                <option <% if (yaddress == "Taiwan") { %>selected<% } %> value="Taiwan">Taiwan</option>
+                <option <% if (yaddress == "Tajikistan") { %>selected<% } %> value="Tajikistan">Tajikistan</option>
+                <option <% if (yaddress == "Tanzania") { %>selected<% } %> value="Tanzania">Tanzania</option>
+                <option <% if (yaddress == "Thailand") { %>selected<% } %> value="Thailand">Thailand</option>
+                <option <% if (yaddress == "Timor-leste") { %>selected<% } %> value="Timor-leste">Timor-leste</option>
+                <option <% if (yaddress == "Togo") { %>selected<% } %> value="Togo">Togo</option>
+                <option <% if (yaddress == "Tokelau") { %>selected<% } %> value="Tokelau">Tokelau</option>
+                <option <% if (yaddress == "Tonga") { %>selected<% } %> value="Tonga">Tonga</option>
+                <option <% if (yaddress == "Trinidad and Tobago") { %>selected<% } %> value="Trinidad and Tobago">Trinidad and Tobago</option>
+                <option <% if (yaddress == "Tunisia") { %>selected<% } %> value="Tunisia">Tunisia</option>
+                <option <% if (yaddress == "Turkey") { %>selected<% } %> value="Turkey">Turkey</option>
+                <option <% if (yaddress == "Turkmenistan") { %>selected<% } %> value="Turkmenistan">Turkmenistan</option>
+                <option <% if (yaddress == "Turks and Caicos Islands") { %>selected<% } %> value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                <option <% if (yaddress == "Tuvalu") { %>selected<% } %> value="Tuvalu">Tuvalu</option>
+                <option <% if (yaddress == "Uganda") { %>selected<% } %> value="Uganda">Uganda</option>
+                <option <% if (yaddress == "Ukraine") { %>selected<% } %> value="Ukraine">Ukraine</option>
+                <option <% if (yaddress == "United Arab Emirates") { %>selected<% } %> value="United Arab Emirates">United Arab Emirates</option>
+                <option <% if (yaddress == "United Kingdom") { %>selected<% } %> value="United Kingdom">United Kingdom</option>
+                <option <% if (yaddress == "United States") { %>selected<% } %> value="United States">United States</option>
+                <option <% if (yaddress == "Uruguay") { %>selected<% } %> value="Uruguay">Uruguay</option>
+                <option <% if (yaddress == "Uzbekistan") { %>selected<% } %> value="Uzbekistan">Uzbekistan</option>
+                <option <% if (yaddress == "Vanuatu") { %>selected<% } %> value="Vanuatu">Vanuatu</option>
+                <option <% if (yaddress == "Venezuela") { %>selected<% } %> value="Venezuela">Venezuela</option>
+                <option <% if (yaddress == "Viet Nam") { %>selected<% } %> value="Viet Nam">Viet Nam</option>
+                <option <% if (yaddress == "Virgin Islands, British") { %>selected<% } %> value="Virgin Islands, British">Virgin Islands, British</option>
+                <option <% if (yaddress == "Virgin Islands, U.S.") { %>selected<% } %> value="Virgin Islands, U.S.">Virgin Islands, U.S.</option>
+                <option <% if (yaddress == "Wallis and Futuna") { %>selected<% } %> value="Wallis and Futuna">Wallis and Futuna</option>
+                <option <% if (yaddress == "Western Sahara") { %>selected<% } %> value="Western Sahara">Western Sahara</option>
+                <option <% if (yaddress == "Yemen") { %>selected<% } %> value="Yemen">Yemen</option>
+                <option <% if (yaddress == "Zambia") { %>selected<% } %> value="Zambia">Zambia</option>
+                <option <% if (yaddress == "Zimbabwe") { %>selected<% } %> value="Zimbabwe">Zimbabwe</option>
+            </select>
+					</div>
+					<div class="general_info_about_description"><%= translate("City") %></div>
+					<div><input class="general_acc_input" type="text" id="city_acc" value="<%=city %>" /></div>					
+					<div style="display:none" class="general_info_about_description"><%= translate("Your Code (personal or companies)") %></div>
+					<div style="display:none"><input class="general_acc_input" type="text" id="ycode_acc" value="<%=ycode %>"></div>					
+					<div style="display:none" class="general_info_about_description"><%= translate("VAT procents of your country") %></div>
+					<div style="display:none"><input class="general_acc_input" type="number" id="vatnumb_acc" value="<%=vatnumb %>"></div>				
+					<div class="general_info_about_description"><%= translate("Gender") %></div>
+					<div>
+						<span class="radio">
+							<label>
+								<input type="radio" name="gender_acc" value="female" id="gender_acc_female" <% if (gender == "female"){ %>checked<%}%>> <%= translate("Female") %>
+							</label>
+						</span>						
+						<span class="radio">
+							<label>
+								<input type="radio" name="gender_acc" value="male" id="gender_acc_male" <% if (gender == "male"){ %>checked<%}%>> <%= translate("Male") %>
+							</label>
+						</span>
+					</div>
+					<div class="general_info_about_description"><%= translate("Birthday") %></div>
+					<div>
+						<select name="birthday" id="birthday">
+							<% var ii=32; for (var ij=1; ij < ii; ij++){ %>
+							<% var selectedit = ""; if (ij == birthday) { selectedit = "selected"; }%>
+							<option <%=selectedit%> value="<%=ij%>"><%=ij%></option>
+							<% } %>
+						</select>
+						<select name="birthmonth" id="birthmonth">
+							<option <% if (birthmonth == 1) { %>selected<%}%> value="1"><%= translate("January") %></option>
+							<option <% if (birthmonth == 2) { %>selected<%}%> value="2"><%= translate("February") %></option>
+							<option <% if (birthmonth == 3) { %>selected<%}%> value="3"><%= translate("March") %></option>
+							<option <% if (birthmonth == 4) { %>selected<%}%> value="4"><%= translate("April") %></option>
+							<option <% if (birthmonth == 5) { %>selected<%}%> value="5"><%= translate("May") %></option>
+							<option <% if (birthmonth == 6) { %>selected<%}%> value="6"><%= translate("June") %></option>
+							<option <% if (birthmonth == 7) { %>selected<%}%> value="7"><%= translate("July") %></option>
+							<option <% if (birthmonth == 8) { %>selected<%}%> value="8"><%= translate("August") %></option>
+							<option <% if (birthmonth == 9) { %>selected<%}%> value="9"><%= translate("September") %></option>
+							<option <% if (birthmonth == 10) { %>selected<%}%> value="10"><%= translate("October") %></option>
+							<option <% if (birthmonth == 11) { %>selected<%}%> value="11"><%= translate("November") %></option>
+							<option <% if (birthmonth == 12) { %>selected<%}%> value="12"><%= translate("December") %></option>
+						</select>
+						<select name="birthyear" id="birthyear">
+							<% var ii=2010; for (var ij=1950; ij < ii; ij++){ %>
+							<% var selectedit = ""; if (ij == birthyear) { selectedit = "selected"; }%>
+							<option <%=selectedit%> value="<%=ij%>"><%=ij%></option>
+							<% } %>
+						</select>
+					</div>
+					<div class="general_info_about_description"><%= translate("About") %></div>
+					<div><textarea class="general_acc_input" id="about_name"><%=about %></textarea></div>
+					<div><button class="btn btn-default" type="button" id="updateAccInfo"><%= translate("Update") %></button></div>
+					<div class="infomessage" style="display:none;"><%= translate("Updated Successfully") %></div>
+				</div>
+			</div>
+
+			<% 
+			if(requestscount > 0){
+			%>
+			<div class="friends_data_in_acc"><div><b><%= translate("Requests ") %>(<%=requestscount %>)</b></div>
+				<% _.each(requsts, function(friendOne){ %>
+				<div class="big_image_about_chatUser">
+					<div class="minichatMakeCircleImage imageCircleForChat">
+						<a href="#<%=friendOne.email %>"><img class="miniChatFloatingFriendsPhoto" src="<%=getFilesUrl() %>/files/<%=friendOne.email %>/<%=friendOne.pic %>" alt=""></a>
+					</div>
+					<div class="big_img_chatRight"><a href="#<%=friendOne.email %>"><%= friendOne.firstname %> <%= friendOne.lastname %></a></div>
+					<div class="big_img_chatRight rightMessageButton">
+						<button data-user="<%= friendOne._id %>" class="general_button margin2 messageToUserAccApproved frapprov<%= friendOne._id %>"><%= translate("Approve") %></button>
+						<button data-user="<%= friendOne._id %>" class="general_button margin2 messageToUserAccIgnore frignor<%= friendOne._id %>"><%= translate("Ignore") %></button>
+					</div>
+				</div>
+					
+				<% }); %>
+			</div>
+			<% }
+				if (requestsdata.length < requestscount) {
+					%>
+						<div class="loadmorefriends">
+							<button class="general_button loadmorerequestshere"><%= translate("Load more requests") %></button>
+						</div>
+					<%
+				}
+	var approvefrdata = approvedfriendsdata;
+	if (approvedfriendsdatasearch.length > 0) {
+		approvefrdata = approvedfriendsdatasearch;
+	}
+			
+	var approvedFr = approvefrdata.filter(function(fr) { 
+	return (fr.approved == true || fr.approved == "true")
+	&& (fr.blocked == false || fr.blocked == "false") && 
+	(fr.blockedBy == false || fr.blockedBy == "false")});
+			if(countfriendshere > 0){ %>
+			<div><input type="text" class="searchforfriendsinprofile" placeholder="Search" /></div>
+			<div class="friends_data_in_acc"><div><b><%= translate("Friends ") %>(<%=countfriendshere %>)</b></div>
+			<% _.each(approvedFr, function(friendOne){ %>
+		
+			<div class="big_image_about_chatUser">
+				<div class="minichatMakeCircleImage imageCircleForChat">
+					<a href="#<%=friendOne.email %>"><img class="miniChatFloatingFriendsPhoto" src="<%=getFilesUrl() %>/files/<%=friendOne.email %>/<%=friendOne.pic %>" alt=""></a>
+				</div>
+				<div class="big_img_chatRight"><a href="#<%=friendOne.email %>"><%= friendOne.firstname %> <%= friendOne.lastname %></a></div>
+				<div class="big_img_chatRight rightMessageButton">
+					<button data-user="<%= friendOne._id %>" class="general_button messageToUserAcc"><%= translate("Message") %></button>
+					<% if (friendOne.follower == true || friendOne.follower == "true") { %><%= translate("Follower") %><% } %>
+					<% if (friendOne.following == true || friendOne.following == "true") { %><div title="Following" class="glyphicon glyphicon-signal icon-in-menu icon-turn-off" aria-hidden="true"></div><% } %>
+				</div>
+			</div>
+				
+			<% }); %>
+			</div>
+			<% 
+				if (approvedFr.length < countfriendshere && approvedfriendsdatasearch.length == 0) {
+					%>
+						<div class="loadmorefriends">
+							<button class="general_button loadmorefriendshere"><%= translate("Load more friends") %></button>
+						</div>
+					<%
+				}
+			}
+			if(followerscount > 0){ %>
+			<div class="friends_data_in_acc"><div><b><%= translate("Followers ") %>(<%=followerscount %>)</b></div>
+			<% _.each(followersdata, function(friendOne){ %>
+		
+			<div class="big_image_about_chatUser">
+				<div class="minichatMakeCircleImage imageCircleForChat">
+					<a href="#<%=friendOne.email %>"><img class="miniChatFloatingFriendsPhoto" src="<%=getFilesUrl() %>/files/<%=friendOne.email %>/<%=friendOne.pic %>" alt=""></a>
+				</div>
+				<div class="big_img_chatRight"><a href="#<%=friendOne.email %>"><%= friendOne.firstname %> <%= friendOne.lastname %></a></div>
+				<div class="big_img_chatRight rightMessageButton">
+					<% if (friendOne.follower == true || friendOne.follower == "true") { %><%= translate("Follower") %><% } %>
+					<% if (friendOne.following == true || friendOne.following == "true") { %><div title="Following" class="glyphicon glyphicon-signal icon-in-menu icon-turn-off" aria-hidden="true"></div><% } %>
+				</div>
+			</div>
+				
+			<% }); %>
+			</div>
+			<% 
+				if (followersdata.length < followerscount) {
+					%>
+						<div class="loadmorefriends">
+							<button class="general_button loadmorefollowershere">Load more followers</button>
+						</div>
+					<%
+				}
+			}
+			%>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

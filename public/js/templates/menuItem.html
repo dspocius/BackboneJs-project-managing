@@ -1,0 +1,21 @@
+<%
+var isformobileclass = "";
+if (typeof formobile != "undefined" && formobile) {
+	isformobileclass = "formobilemeniu";
+}
+var onclickk = "onclick="+'"'+"$('#left-menu').hide()"+'"';
+if (title.indexOf("Menu") > -1) {
+onclickk = "";
+}
+%>
+<% if(name == 'right'){ %>
+<div class="<%= isformobileclass %>" id="rightitem"><%= title %></div>
+<% } %>
+<% if(name == 'link'){ %>
+<a <%=onclickk%>  class="<%= isformobileclass %>" href="<%= link %>"><%= title %></a>
+<% } %>
+<% if(name == ''){ %>
+<button <%=onclickk%> class="<%= isformobileclass %>" id="menitem"><%= title %></button>
+<% } if(name != '' && name != 'right' && name != 'link'){ %>
+<a <%=onclickk%>  class="<%= isformobileclass %>" href="#<%= name %>"><%= title %></a>
+<% } %>

@@ -1,0 +1,39 @@
+<div id="navigation_main"></div>
+<div class="container">
+<div class="whitebackground container" style="width:auto;">
+	<div>
+		<div style="padding-bottom:10px; "><%= translate("Account photo") %></div>
+		<h1><%= firstname %> <%= lastname %></h1>
+		<div style="clear:both;"></div>
+		<div>Emai: <%=username %></div>
+		<% if(friends.length > 0){ %>
+		<div class="friends_data_in_acc">Friends: 
+		<% _.each(friends, function(friendOne){ %>
+            <div><h3><%= friendOne.firstname %> <%= friendOne.lastname %></h3> <b><%= friendOne.email %><b></div>
+			<div>
+			<% if(friendOne.pic != ""){
+			%>
+				<img id="friends_photo" src="/files/<%=friendOne.email %>/<%=friendOne.pic %>" alt="" />
+			<%
+			}
+			%>
+			</div>
+        <% }); %>
+		</div>
+		<% } %>
+		<div>
+		<%= translate("Upload image photo:") %>
+			<input type="file" id="fileToUpload" identity="ProjectManagementFiles" style="display:none;" />
+			<button identity="ProjectManagementFiles" class="projectsUploadFile glyphicon glyphicon-open-file"></button>
+		</div>
+		<div>
+			<% if(backgroundPicture != ""){
+			%>
+				<img id="backround_image" src="/files/<%=username %>/<%=backgroundPicture %>" alt="" />
+			<%
+			}
+			%>
+		</div>
+	</div>
+</div>
+</div>

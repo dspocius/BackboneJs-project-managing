@@ -1,0 +1,48 @@
+<div id="navigation_main"></div>
+<div class="container">
+<div class="whitebackground container" style="width:auto;">
+	<div>
+		<div style="padding-bottom:10px; "><%= translate("Settings") %></div>
+		<div style="clear:both;"></div>
+		<div><%= translate("Default project color:") %><input type="color" id="settingColor" value="<%=color %>" /></div>
+		<div><%= translate("Default lists color:") %><input type="color" id="listsColor" value="<%=listsColor %>" /></div>
+		<div><%= translate("Default entry color:") %><input type="color" id="entryColorrr" value="<%=entryColor %>" /></div>
+
+		<div><%= translate("Style:") %>
+			<select id="websiteStyle">
+				<option value="Default"><%= translate("Default") %></option>
+				<option value="gray_blue"><%= translate("Gray - blue") %></option>
+			</select>
+		</div>
+		<div><%= translate("Default view:") %>
+			<select id="defaultViewOfSite">
+				<option value="board_view_show"><%= translate("Board view") %></option>
+				<option value="calendar_view_show"><%= translate("Calendar view") %></option>
+				<option value="list_view_show"><%= translate("List view") %></option>
+			</select>
+		</div>
+		
+		<div id="use_def_style" style="cursor:pointer;">
+			<%= translate("Use defined style:") %><input onclick="$('#use_defined_style').trigger('click'); " type="checkbox" id="use_defined_style" />
+		</div>
+		<div id="optional_fields_on_off" style="display:none;">
+		
+		<div id="projectManagementFilesProg">
+		<%= translate("Upload background picture:") %>
+			<input type="file" id="fileToUpload" identity="ProjectManagementFiles" style="display:none;" />
+			<input readonly type="text" id="backgroundPicture" value="<%=backgroundPicture %>" />
+			<button identity="ProjectManagementFiles" class="projectsUploadFile glyphicon glyphicon-open-file"></button>
+		</div>
+		<div>
+		<%= translate("Border radius (in pixels):") %> <input type="number" id="borderRadius" value="<%=borderRadius %>" />
+		</div>
+		<div><%= translate("Icons inner color:") %> <input type="color" id="innerIconsColor" value="<%=innerIconsColor %>" /></div>
+		<div><%= translate("Icons outer color:") %> <input type="color" id="outerIconsColor" value="<%=outerIconsColor %>" /></div>
+		
+		</div>
+		<div style="padding-top:10px; ">
+			<button class="btn btn-default" type="button" id="changeSettings"><%= translate("Change") %></button>
+		</div>
+	</div>
+</div>
+</div>

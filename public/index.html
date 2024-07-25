@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en" data-framework="marionettejs">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="author" content="">
+<link rel="manifest" href="/manifest.json">
+
+		<meta name="google-signin-scope" content="profile email">
+<!--		<meta name="google-signin-client_id" content="373958717742-ve8vr9hg9sb27jmjv5nn1kieopqqaks4.apps.googleusercontent.com">
+		<script src="https://apis.google.com/js/platform.js" async defer></script> !-->
+<script type="module">  
+
+  // Import the functions you need from the SDKs you need
+  window.onload = function () {
+bonload();
+  let goget = getCookieINDEX("toksid");
+
+  if (jQuery) {
+		  jQuery.ajax({
+		  url: "/checkifuserloggedin"
+		}).done(function(datgo) {
+			//if (!goget || goget.indexOf("___"+datgo.username+"___") == -1) {
+				allok(datgo.username,goget);
+			//}
+		});
+	} else {
+		setTimeout(() => {
+		if (jQuery) {
+			jQuery.ajax({
+			  url: "/checkifuserloggedin"
+			}).done(function(datgo) {
+				//if (!goget || goget.indexOf("___"+datgo.username+"___") == -1) {
+					allok(datgo.username,goget);
+				//}
+			});
+			}
+		},1000);
+	}
+}
+function setCookieINDEX(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+function getCookieINDEX(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+
+async function allok(username,goget) {
+
+ const {initializeApp} = await import('/javascripts/fire/firebase/firebase-app.js');
+const {isSupported, getMessaging,getToken} = await import('/javascripts/fire/firebase/firebase-messaging.js');
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCKQfiA31wfzjYgUTkX7AetGef3nuf84RM",
+    authDomain: "doingtalk-8dfef.firebaseapp.com",
+    projectId: "doingtalk-8dfef",
+    storageBucket: "doingtalk-8dfef.appspot.com",
+    messagingSenderId: "221004296062",
+    appId: "1:221004296062:web:26e4bb54b51a3efb7acd2f",
+    measurementId: "G-WHGS7PDTF3"
+  };
+
+  // Initialize Firebase
+  const appfirebase = initializeApp(firebaseConfig);
+let ookk = await isSupported();
+  if (("Notification" in window)) {
+		Notification.requestPermission().then((result) => {
+		  if ('serviceWorker' in navigator && result == "granted") {
+				navigator.serviceWorker.register('/firebase-messaging-sw.js')
+				.then(() => {
+					if (!goget || goget.indexOf("___"+username+"___") == -1) {
+					const messaging = getMessaging();
+					getToken(messaging, { vapidKey: 'BJ3ARP2RGOzN3sxhLMza-7Hk0Twc9337E_r5kIo6Fo9JeYPCJBRbgauUamB35eKcBepVoML5s2yVdxhTzTSzfb4' }).then((currentToken) => {
+					  
+					  if (currentToken) {
+						jQuery.ajax({
+						  method: "POST",
+						  url: "/updateUsertoks",
+						  data: { act: "add", tokid: currentToken }
+						})
+						  .done(function( msg ) {
+							var nowadd = "___"+username+"___";
+							if (goget) {
+								nowadd = goget+nowadd;
+							}
+							setCookieINDEX("toksid", nowadd, 160);
+						  });
+					  } else {
+						// Show permission request UI
+						console.log('No registration token available. Request permission to generate one.');
+					  }
+					}).catch((err) => {
+					  console.log('An error occurred while retrieving token. ', err);
+					});
+					}
+				});
+				
+				//subscribe();
+			} else {
+				console.warn('Service workers aren\'t supported in this browser.');
+			}
+		});
+	}
+}
+		if(location.href.indexOf("waymanage.com") > -1){
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-88272778-1', 'auto');
+		  ga('send', 'pageview');
+		}
+		var lang = {
+		"Home":"Home",
+		"Login":"Login",
+		"Register":"Register",
+		"mename":"Me",
+		"projectsname":"Projects",
+		"searchname":"Search",
+		"messagingname":"Messaging",
+		"notificationname":"Notifications",
+		"cookiesformoreinfo":" for more information",
+		"cookiesinfo":" Information About Cookies",
+		"cookiesabout": "This website uses cookies. By continuing to browse you are agreeing to our use of cookies. Click"
+		};
+		if (location.href.indexOf("bendrauju") > -1) {
+			lang = {
+			"Home":"Pagrindinis",
+			"Login":"Prisijungti",
+			"Register":"Registruoti",
+			"mename":"Aš",
+			"searchname":"Paieška",
+			"projectsname":"Projektai",
+			"notificationname":"Pranešimai",
+			"messagingname":"Žinutės",
+			"cookiesabout":"Mes naudojame sausainėlius (angl. Cookies). Naršydami toliau jus sutinkate su tuo. Spauskite: ",
+			"cookiesformoreinfo":" norėdami sužinoti daugiau",
+			"cookiesinfo":" Informacija apie sausainėlius"
+			};
+		}
+		function bonload() {
+			loadclass("homename","Home");
+			loadclass("loginname","Login");
+			loadclass("registername","Register");
+			loadclass("cookiesabout","cookiesabout");
+			loadclass("cookiesinfo","cookiesinfo");
+			loadclass("cookiesformoreinfo","cookiesformoreinfo");
+			loadclass("messagingname","messagingname");
+			loadclass("notificationname","notificationname");
+			loadclass("projectsname","projectsname");
+			loadclass("searchname","searchname");
+			loadclass("mename","mename");
+		}
+		function loadclass(clasnm, tname) {
+			var gmm = document.getElementsByClassName(clasnm);
+			for (var i=0; i < gmm.length; i++) {
+				gmm[i].innerHTML = lang[tname];
+			}
+		}
+		</script>
+		<title></title>
+		<style id="stylingBackgroundGo"></style>
+<style>
+	#calendar {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+
+</style>
+		<link rel="stylesheet" href="stylesheets/projects/fullcalendar.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="stylesheets/projects/min_programs.css">
+		<link rel="stylesheet" id="looking_style" href="stylesheets/projects/blue_grey_lightweight_style.css">
+		<link rel="stylesheet" id="brand_style" href="files/brand/brand.css">
+		<link rel="stylesheet" href="css/style.css">
+        <style id="manual_style">
+		
+		</style>
+		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+	</head>
+
+    <body ondragend="dataDrop(event)">
+	<div class="just_on_the_start_loading_ok"><div class="just_on_the_start_loading_ok_inner" id="just_on_the_start_loading_ok_innergo">
+	</div></div>
+		<div class="info_screen_data text_cookies" style="display:none;">
+		<button type="button" class="cookies_button generalbutton">Agree</button>
+				<p style="text-align:left;">
+					<p><span class="cookiesabout"></span> <a href='/#/entry/583359379ec6e7d402cd96a9'><span class="cookiesinfo"></span></a> <span class="cookiesformoreinfo"></span></p>
+				</p>
+		</div>
+	
+        <div>
+
+<button id="showNotifications" class="bottom0px" style="display:none;">
+<div class="openCloseMiniNot glyphicon glyphicon-comment"></div>
+<div class="miniChatmessagesNewUsers"></div>
+<span><span class="messagingname"></span></span>
+</button>
+
+<div id="miniNotificationsView"></div>
+<div id="notificationsView" style="display:none;">
+	<div id="chatVieww">
+		<div id="friendsView"></div>
+		<div id="channelsView"></div>
+	</div>
+</div>
+<div id="miniChatUsersFriendsViewFloating"></div>
+<div id="notifications"></div>
+            <div id="right_menu_for_data"></div>
+            <div id="left-menu"></div>
+            <div class="header-height"></div>
+            <div class="headerNotLogged headercoloradded headFixedOnTop" id="headerNotLogged_only_top" style="display:none;">
+				<script>
+					   function signOut() {
+						var auth2 = gapi.auth2.getAuthInstance();
+						auth2.signOut();
+					  }
+					  function onSignIn(googleUser) {
+						var profile = googleUser.getBasicProfile();
+						var users_email = profile.getEmail();
+						var id_token = googleUser.getAuthResponse().id_token;
+						var firstname_of_person = profile.getGivenName();
+						var lastname_of_person = profile.getFamilyName();
+						if(typeof $ !== "undefined" && $("#headerNotLogged_only_top").is(":visible")){
+							$.post( "/login_google", { email:users_email, id_token: id_token }).done(function(data){
+								if(typeof data.pic !== "undefined" && typeof data.programson !== "undefined"){
+									location.reload();
+								}
+							}).fail(function() {
+										window.google_login = {users_email:users_email, id_token:id_token, firstname_of_person:firstname_of_person, lastname_of_person:lastname_of_person };
+										location.href = "/#/page/register";
+										setTimeout(function(){
+											$("#google_id_token").val(id_token);
+											$("#real_email").attr("type","hidden");
+											$("#firstname").attr("type","hidden");
+											$("#lastname").attr("type","hidden");
+											$("#password").attr("type","hidden");
+											$("#passwordConfirmation").attr("type","hidden");
+											$("#real_email").val(users_email);
+											$("#firstname").val(firstname_of_person);
+											$("#lastname").val(lastname_of_person);
+											$("#username").val(users_email.split("@")[0]);
+										},1000);
+							});
+						}
+					  };
+				</script>
+			
+			
+				<div class="marginleft15 marginbottom10 marginright15 height55">
+					<div class="logotypeOnLeft">
+						<a id="mainlogofallpagesSecLink" href="/"><img id="mainlogofallpagesSec" alt="" /></a>
+					</div>
+					<div style="display:inline-block;">
+						<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+					</div>
+					<div class="menutoppositioning">
+					<a class="padding10 backgroundOrange marginleft2 relativezindex defaultLinkOf defaultMenuLink width80" href="#home"><div class="glyphicon glyphicon-home fontsize23"></div><div></div><span class="homename"></span></a>
+					<a class="padding10 backgroundOrange marginleft2 relativezindex defaultLinkOf defaultMenuLink width80" href="#page/login"><div class="glyphicon glyphicon-heart fontsize23"></div><div></div><span class="loginname"></span></a>
+					<a class="padding10 backgroundOrange marginleft2 relativezindex defaultLinkOf defaultMenuLink width80" href="#page/register"><div class="glyphicon glyphicon-upload fontsize23"></div><div></div><span class="registername"></span></a>
+					</div>
+					<!-- <button  onclick="$('.info_about').toggle();" type="button"class="padding5 marginleft5 relativezindex defaultLinkOf" id="about">About</button> -->
+				</div>
+				<div class="info_about">
+						<div class="info_screen_data">
+						<div class="login-screen info_screen_data">
+							<h1 class="login-header">About</h1>
+							<div style="text-align:left;">
+								<p>Testas</p>
+								<p>Testas</p>
+							</div>
+					</div>
+					</div>
+				</div>
+			</div>
+            <div class="header headercoloradded headFixedOnTop" style="display:none;">
+			<div class="marginleft15 marginbottom10 marginright15 height55">
+					<div class="logotypeOnLeft">
+						<a id="mainlogofallpagesLink" href="/#/home"><span id="mainlogofallpages"></span></a>
+						<input id="valueSearch" autocomplete="off" type="text" placeholder="" class="searchOnTopHeader" onkeyup="lookup(this.value);" />
+							<span>
+								<ul class="nav nav-pills searchPositionIcon">
+									<li style="padding-left:2px;padding-right:0px; position:relative;">
+									<button id="menitem" onclick="goToSearch()"><div class="glyphicon glyphicon-search icon-in-menu icon-turn-off" aria-hidden="true"></div></button>
+									<div id="suggestions"></div>
+									</li>
+								</ul>
+							</span>
+						<script>
+function goToSearch(){
+var value = $('#valueSearch').val();
+location.href = "#search/"+value;
+removeValueFromSearch();
+}
+function removeValueFromSearch(){
+$('#valueSearch').val('');
+$('#suggestions').fadeOut();
+}
+function lookup(inputString) {
+	if(inputString.length == 0) {
+		$('#suggestions').fadeOut(); // Hide the suggestions box
+	} else {
+		var vv1 = $.get("/users/"+inputString);
+		var sendData = {
+			search: inputString,
+			idd: app.userData._id,
+			skip: 0,
+			type: '-',
+			assigned: "",
+			infriends: true
+		};
+		
+		var vv2 = $.ajax({
+				  method: "POST",
+				  data: sendData,
+				  url: '/projectsFind',
+				dataType: 'json'
+			});
+	
+		$.when(vv1, vv2).done(function ( dataa, dataa2 ) {
+		var data = dataa2[0];
+		var data2 = dataa[0];
+			var dt = JSON.parse(data2);
+			var showSearch = '';
+			for(var i=0; i < dt.length; i++){
+				var email = dt[i].email;
+				var pic = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-user icon-in-menu icon-turn-off" aria-hidden="true"></div></div>';
+				if(typeof dt[i].pic != "undefined" && dt[i].pic != ""){ pic = '<div class="searchOneTypeOf"><img src="/files/'+dt[i].email+'/'+dt[i].pic+'" alt="" /></div>'; }
+				var first_last = dt[i].firstname+' '+dt[i].lastname;
+				showSearch += '<a onclick="removeValueFromSearch()" href="#'+email+'"><div class="break searchOne">'+pic+'<div class="searchAboutComplete">'+first_last.substring(0,20)+'<div class="searchOneBottomSmall">'+email.substring(0,20)+'</div></div></div></a><div class="clear_both"></div>';
+			}
+			var infoType = "";
+			for(var i=0; i < data.length; i++){
+				if(data[i].name.match(inputString)){
+				var del = '';
+				if(data[i].name.length > 20){
+					del = ' ...';
+				}
+					infoType = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-link icon-in-menu icon-turn-off" aria-hidden="true"></div></div>';
+					if(data[i].isProject){ infoType = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-list-alt icon-in-menu icon-turn-off" aria-hidden="true"></div></div>'; }
+					if(data[i].isHeader){ infoType = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-equalizer icon-in-menu icon-turn-off" aria-hidden="true"></div></div>'; }
+					showSearch += '<a onclick="removeValueFromSearch()" href="#/entry/'+data[i]._id+'"><div class="break searchOne searchOneTypeOfText">'+infoType+data[i].name.substring(0,20)+del+'</div></a><div class="clear_both"></div>';
+				}
+				if(data[i].text.match(inputString)){
+					var del = '';
+					if(data[i].text.length > 20){
+						del = ' ...';
+					}
+					infoType = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-link icon-in-menu icon-turn-off" aria-hidden="true"></div></div>';
+					if(data[i].isProject){ infoType = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-list-alt icon-in-menu icon-turn-off" aria-hidden="true"></div></div>'; }
+					if(data[i].isHeader){ infoType = '<div class="searchOneTypeOf"><div class="glyphicon glyphicon-equalizer icon-in-menu icon-turn-off" aria-hidden="true"></div></div>'; }
+					showSearch += '<a onclick="removeValueFromSearch()" href="#/entry/'+data[i]._id+'"><div class="break searchOne searchOneTypeOfText">'+infoType+data[i].text.substring(0,20)+del+'</div></a><div class="clear_both"></div>';
+				}
+			}
+			$('#suggestions').fadeIn();
+			$('#suggestions').html(showSearch);
+		
+		
+		});
+	}
+}
+						</script>
+					</div>
+					<div class="menutoppositioning">
+						<a class="padding10 backgroundOrange marginleft2 relativezindex defaultLinkOf defaultMenuLink width80" href="/#timeline"><div class="glyphicon glyphicon-home fontsize23"></div><div></div><span class="homename"></span></a>
+						<a class="padding10 backgroundOrange marginleft2 relativezindex defaultLinkOf defaultMenuLink width80" href="/#home"><div class="glyphicon glyphicon-tasks fontsize23"></div><div></div><span class="projectsname"></span></a>
+						<a class="padding10 backgroundOrange marginleft2 relativezindex defaultLinkOf defaultMenuLink width80" href="/#speople/"><div class="glyphicon glyphicon-search fontsize23"></div><div></div><span class="searchname"></span></a>
+						<a class="padding10 backgroundOrange marginleft2 relativezindex defaultLinkOf defaultMenuLink width80" href="/chat"><div class="glyphicon glyphicon-comment fontsize23"></div><div></div><span class="messagingname"></span></a>
+						<a class="padding10 backgroundOrange marginleft2 relativezindex defaultLinkOf defaultMenuLink width80 notifsgo"><div class="glyphicon glyphicon-bell fontsize23"></div><div></div><span class="notificationname"></span><span class="notificationstop"></span></a>
+						<a class="padding10 backgroundOrange marginleft2 relativezindex defaultLinkOf defaultMenuLink width80" href="/#account"><div class="hereProfilePhoto" style="display:none;"></div><div class="glyphicon glyphicon-user fontsize23 meHerePro"></div><div></div><span class="mename"></span></a>
+						
+						<span id="main-nav-left" class="navigationDisplayInlineBlock"></span>
+						<span id="main-nav" class="navigationDisplayInlineBlock menuRightHere"></span>
+					</div>
+					<!-- <button  onclick="$('.info_about').toggle();" type="button"class="padding5 marginleft5 relativezindex defaultLinkOf" id="about">About</button> -->
+				</div>
+                <div class="clear_both"></div>
+            </div>
+			
+			<div class="meniu_of_whole" id="meniu_for_whole"></div>
+			
+            <div class="container" ondragenter="return resetData(event);" >
+                <div id="notification"></div><!-- /#notification -->
+            <div id="main-header"></div>
+            </div>
+            <div id="main"></div>
+            <div class="footer-container" ondragenter="return resetData(event);" >
+                <div class="footer" id="footer" style="display:none;">
+                    <span id="footer-nav-left"></span>
+                    <div id="footer-nav-center"></div>
+                    <span id="footer-nav-right"></span>
+                </div>
+            </div>
+			<div id="allTheBottom" class="background_default" style="display:none;"></div>
+
+            <div class="container" ondragenter="return resetData(event);" >
+                <!-- To be used as modal and notifications-->
+                <div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-hidden="true">
+                </div><!-- /.modal -->
+            </div>
+        </div> <!-- /container -->
+
+
+
+        <script data-main="js/main" src="bower_components/requirejs/require.js"></script>
+    </body>
+
+</html>
